@@ -15,6 +15,11 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int _selectedIndex = 0;
 
+  Map<String, String> selectedLanguage = {
+    "language_id": "eng",
+    "language_name": "English",
+  };
+
   final List _pages = [ReaderPage(), SearchPage(), NotesPage(), NotesPage()];
 
   void _navigateBottomBar(int index) {
@@ -23,9 +28,13 @@ class _AppState extends State<App> {
     });
   }
 
-  void _showBottomSheet(BuildContext context) {
+  void _showBibleVersionMenu(BuildContext context) {
     TextEditingController searchController = TextEditingController();
-    List<Map<String, String>> filteredItems = List.from(bibleVersions);
+    List<Map<String, String>> filteredItems =
+        bibleVersions.where((bibleVersion) {
+          return bibleVersion["language_id"]! ==
+              selectedLanguage['language_id'];
+        }).toList();
 
     showModalBottomSheet(
       context: context,
@@ -53,7 +62,6 @@ class _AppState extends State<App> {
               initialChildSize: 0.9, // Start at 60% of screen height
               minChildSize: 0.4, // Minimum height (40%)
               maxChildSize: 0.9, // Maximum height (90%)
-              // expand: true,
               builder: (context, scrollController) {
                 return Padding(
                   padding: EdgeInsets.all(0),
@@ -127,6 +135,21 @@ class _AppState extends State<App> {
                             ),
                           ),
                         ),
+
+                        // Language selector
+                        ListTile(
+                          title: Text("Language"),
+                          leading: Icon(Icons.language),
+                          trailing: Text(selectedLanguage['language_name']!),
+                          onTap: () {
+                            showLanguageMenu(context, (newLanguage) {
+                              setState(() {
+                                selectedLanguage = newLanguage;
+                              });
+                            });
+                          },
+                        ),
+
                         Divider(),
 
                         // List of items
@@ -148,6 +171,120 @@ class _AppState extends State<App> {
                         SizedBox(height: 10),
                       ],
                     ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  List<Map<String, String>> getUniqueLanguages() {
+    Set<String> uniqueLanguageIds = {}; // Track unique language IDs
+
+    return bibleVersions
+        .where((bibleVersion) {
+          return uniqueLanguageIds.add(
+            bibleVersion["language_id"]!,
+          ); // Adds only if unique
+        })
+        .map((bibleVersion) {
+          return {
+            "language_id": bibleVersion["language_id"]!,
+            "language_name": bibleVersion["language_name"]!,
+            "language_name_local": bibleVersion["language_name"]!,
+          };
+        })
+        .toList();
+  }
+
+  void showLanguageMenu(
+    BuildContext context,
+    Function(Map<String, String>) onLanguageSelected,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent, // Makes the background transparent
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            final List<Map<String, String>> languages = getUniqueLanguages();
+
+            return DraggableScrollableSheet(
+              initialChildSize: 0.9, // Start at 60% of screen height
+              minChildSize: 0.4, // Minimum height (40%)
+              maxChildSize: 0.9, // Maximum height (90%)
+              builder: (context, scrollController) {
+                return Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Ensure sheet has a background
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Header with Back Button
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () {
+                              Navigator.pop(
+                                context,
+                              ); // Close this sheet to return to first one
+                            },
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                "Sub Menu",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(),
+
+                      // List of languages
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: languages.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(languages[index]["language_name"]!),
+                              trailing:
+                                  selectedLanguage['language_id'] ==
+                                          languages[index]["language_id"]
+                                      ? Icon(Icons.check)
+                                      : null,
+                              onTap: () {
+                                setState(() {
+                                  selectedLanguage =
+                                      languages[index]; // Update selected language
+                                });
+                                onLanguageSelected(
+                                  languages[index],
+                                ); // Update main modal
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },
@@ -195,7 +332,7 @@ class _AppState extends State<App> {
               ),
               TextButton(
                 onPressed: () {
-                  _showBottomSheet(context);
+                  _showBibleVersionMenu(context);
                 },
                 // style: TextButton.styleFrom(padding: EdgeInsets.zero),
                 child: Text(
