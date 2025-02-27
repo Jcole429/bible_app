@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/data/bible_versions.dart';
 import 'package:flutter_tutorial/pages/bibles.dart';
 import 'package:flutter_tutorial/pages/notes.dart';
 import 'package:flutter_tutorial/pages/reader.dart';
@@ -23,73 +24,135 @@ class _AppState extends State<App> {
   }
 
   void _showBottomSheet(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
+    List<Map<String, String>> filteredItems = List.from(items);
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Allows it to take more space
+      backgroundColor: Colors.transparent, // ✅ Makes the background transparent
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
       builder: (BuildContext context) {
-        return Padding(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.black, // Sets the text color
-                    ),
-                    child: Text(
-                      "Done",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+        return StatefulBuilder(
+          builder: (context, setState) {
+            void filterList(String query) {
+              setState(() {
+                filteredItems =
+                    items.where((item) {
+                      String name = item["name"]!.toLowerCase();
+                      String abbreviation = item["abbreviation"]!.toLowerCase();
+                      return name.contains(query.toLowerCase()) ||
+                          abbreviation.contains(query.toLowerCase());
+                    }).toList();
+              });
+            }
+
+            return DraggableScrollableSheet(
+              initialChildSize: 0.9, // Start at 60% of screen height
+              minChildSize: 0.4, // Minimum height (40%)
+              maxChildSize: 0.9, // Maximum height (90%)
+              // expand: true,
+              builder: (context, scrollController) {
+                return Padding(
+                  padding: EdgeInsets.all(0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white, // ✅ Ensure sheet has a background
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(16),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        "Choose a Version",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(padding: EdgeInsets.all(5)),
+                        // Header with "Done" button
+                        Row(
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.black,
+                              ),
+                              child: Text(
+                                "Done",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Choose a Version",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Versions: ${items.length} in ${items.map((item) => item["language_id"]) // or "language_name"
+                                      .toSet() // Removes duplicates
+                                      .length} languages",
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 60), // Balancing spacing
+                          ],
                         ),
-                      ),
+                        // Search Bar
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: TextField(
+                            controller: searchController,
+                            onChanged: (value) {
+                              filterList(value);
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Name or abbreviation",
+                              prefixIcon: Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 10,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Divider(),
+
+                        // List of items
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: filteredItems.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(
+                                  filteredItems[index]["abbreviation"]!,
+                                ),
+                                subtitle: Text(filteredItems[index]["name"]!),
+                                onTap: () => Navigator.pop(context),
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    width: 60,
-                  ), // Ensures balance since there's no button on the right
-                ],
-              ),
-              ListTile(
-                title: Text("Bible Version"),
-                subtitle: Text("Description"),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                title: Text("Bible Version"),
-                subtitle: Text("Description"),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                title: Text("Bible Version"),
-                subtitle: Text("Description"),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                title: Text("Bible Version"),
-                subtitle: Text("Description"),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                title: Text("Bible Version"),
-                subtitle: Text("Description"),
-                onTap: () => Navigator.pop(context),
-              ),
-            ],
-          ),
+                );
+              },
+            );
+          },
         );
       },
     );
