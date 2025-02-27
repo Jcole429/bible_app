@@ -25,12 +25,12 @@ class _AppState extends State<App> {
 
   void _showBottomSheet(BuildContext context) {
     TextEditingController searchController = TextEditingController();
-    List<Map<String, String>> filteredItems = List.from(items);
+    List<Map<String, String>> filteredItems = List.from(bibleVersions);
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Allows it to take more space
-      backgroundColor: Colors.transparent, // ✅ Makes the background transparent
+      backgroundColor: Colors.transparent, // Makes the background transparent
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -40,7 +40,7 @@ class _AppState extends State<App> {
             void filterList(String query) {
               setState(() {
                 filteredItems =
-                    items.where((item) {
+                    bibleVersions.where((item) {
                       String name = item["name"]!.toLowerCase();
                       String abbreviation = item["abbreviation"]!.toLowerCase();
                       return name.contains(query.toLowerCase()) ||
@@ -59,7 +59,7 @@ class _AppState extends State<App> {
                   padding: EdgeInsets.all(0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white, // ✅ Ensure sheet has a background
+                      color: Colors.white, // Ensure sheet has a background
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(16),
                       ),
@@ -96,7 +96,7 @@ class _AppState extends State<App> {
                                       ),
                                     ),
                                     Text(
-                                      "Versions: ${items.length} in ${items.map((item) => item["language_id"]) // or "language_name"
+                                      "Versions: ${bibleVersions.length} in ${bibleVersions.map((item) => item["language_id"]) // or "language_name"
                                       .toSet() // Removes duplicates
                                       .length} languages",
                                     ),

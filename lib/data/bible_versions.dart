@@ -1,4 +1,4 @@
-final List<Map<String, String>> items = [
+final List<Map<String, String>> bibleVersions = [
   {
     "name": "Berean Standard Bible",
     "description": "Berean Standard Bible",
