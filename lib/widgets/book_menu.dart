@@ -71,7 +71,9 @@ void showBookMenu(
                         Expanded(
                           child: Center(
                             child: Text(
-                              selectedBook.name,
+                              selectedBookForChapters != null
+                                  ? selectedBookForChapters!.name
+                                  : "Books",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
