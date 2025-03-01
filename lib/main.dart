@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/pages/app.dart';
-import 'package:flutter_tutorial/pages/bibles.dart';
 import 'package:flutter_tutorial/pages/notes.dart';
 import 'package:flutter_tutorial/pages/reader.dart';
 import 'package:flutter_tutorial/pages/search.dart';
@@ -20,7 +19,6 @@ class MyApp extends StatelessWidget {
         '/reader': (context) => ReaderPage(),
         '/search': (context) => SearchPage(),
         '/notes': (context) => NotesPage(),
-        '/bibles': (context) => BiblesScreen(),
       },
     );
   }
