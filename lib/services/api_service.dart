@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   final String baseUrl = "https://api.scripture.api.bible/v1";
 
-  Future<List<dynamic>> fetchPosts() async {
+  Future<List<dynamic>> fetchBibleVersions() async {
     final response = await http.get(
       Uri.parse('$baseUrl/bibles?language=ENG&include-full-details=true'),
       headers: {"api-key": "b30ca5e2d584010694eb2747ac25c1e1"},

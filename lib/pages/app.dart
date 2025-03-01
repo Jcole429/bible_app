@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/data/bible_versions.dart';
-import 'package:flutter_tutorial/pages/bibles.dart';
+import 'package:flutter_tutorial/pages/bible_versions.dart';
 import 'package:flutter_tutorial/pages/notes.dart';
 import 'package:flutter_tutorial/pages/reader.dart';
 import 'package:flutter_tutorial/pages/search.dart';
@@ -157,7 +157,7 @@ class _AppState extends State<App> {
                           leading: Icon(Icons.language),
                           trailing: Text(selectedLanguage['language_name']!),
                           onTap: () {
-                            showLanguageMenu(context, (newLanguage) {
+                            _showLanguageMenu(context, (newLanguage) {
                               setState(() {
                                 selectedLanguage = newLanguage;
                               });
@@ -227,7 +227,7 @@ class _AppState extends State<App> {
         .toList();
   }
 
-  void showLanguageMenu(
+  void _showLanguageMenu(
     BuildContext context,
     Function(Map<String, String>) onLanguageSelected,
   ) {
