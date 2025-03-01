@@ -45,6 +45,7 @@ class _AppState extends State<App> {
     Function(Map<String, String>) onBibleVersionSelected,
   ) {
     TextEditingController searchController = TextEditingController();
+    FocusNode searchFocusNode = FocusNode(); // Add FocusNode
     List<Map<String, String>> filteredItems =
         bibleVersions.where((bibleVersion) {
           return bibleVersion["language_id"]! ==
@@ -135,6 +136,11 @@ class _AppState extends State<App> {
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: TextField(
                             controller: searchController,
+                            focusNode: searchFocusNode,
+                            onTap: () {
+                              searchFocusNode
+                                  .requestFocus(); // Make sure keyboard opens
+                            },
                             onChanged: (value) {
                               filterList(value);
                             },
