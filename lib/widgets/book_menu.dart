@@ -14,6 +14,8 @@ void showBookMenu(
     selectedBibleVersion.id,
   );
 
+  if (!context.mounted) return; // Check if the widget is still there
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
