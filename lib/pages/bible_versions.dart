@@ -6,17 +6,17 @@ class BiblesScreen extends StatefulWidget {
   const BiblesScreen({super.key});
 
   @override
-  _BiblesScreenState createState() => _BiblesScreenState();
+  BiblesScreenState createState() => BiblesScreenState();
 }
 
-class _BiblesScreenState extends State<BiblesScreen> {
+class BiblesScreenState extends State<BiblesScreen> {
   final ApiService apiService = ApiService();
   late Future<List<dynamic>> futurePosts;
 
   @override
   void initState() {
     super.initState();
-    futurePosts = apiService.fetchPosts();
+    futurePosts = apiService.fetchBibleVersions();
   }
 
   @override
