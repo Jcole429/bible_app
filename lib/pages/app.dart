@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/data/bible_versions.dart';
-import 'package:flutter_tutorial/pages/bible_versions.dart';
+import 'package:flutter_tutorial/models/bible_version.dart';
+import 'package:flutter_tutorial/models/language.dart';
 import 'package:flutter_tutorial/pages/notes.dart';
 import 'package:flutter_tutorial/pages/reader.dart';
 import 'package:flutter_tutorial/pages/search.dart';
+import '../services/api_service.dart';
 
 class App extends StatefulWidget {
   App({super.key});
@@ -13,24 +14,48 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final ApiService apiService = ApiService();
+
   int _selectedIndex = 0;
 
-  Map<String, String> selectedLanguage = {
-    "language_id": "eng",
-    "language_name": "English",
-  };
+  Language selectedLanguage = Language.fromJson({
+    "id": "eng",
+    "name": "English",
+    "nameLocal": "English",
+    "script": "Latin",
+    "scriptDirection": "LTR",
+  });
 
-  Map<String, String> selectedBibleVersion = {
-    "name": "The Holy Bible, American Standard Version",
-    "description": "Bible",
-    "language_id": "eng",
-    "language_name": "English",
-    "abbreviation": "ASV",
-    "countries": "United States of America",
-    "copyright": "PUBLIC DOMAIN",
-    "info":
-        "<p>This public domain Bible translation is brought to you courtesy of <a href=\"https://eBible.org\">eBible.org</a>.</p> <p>For additional formats and downloads, please see <a href=\"https://eBible.org/find/details.php?id=eng-asv\">https://eBible.org/find/details.php?id=eng-asv</a>.</p>",
-  };
+  BibleVersion selectedBibleVersion = BibleVersion.fromJson({
+    "id": "bba9f40183526463-01",
+    "dblId": "bba9f40183526463",
+    "name": "Berean Standard Bible",
+    "nameLocal": "English: Berean Standard Bible",
+    "abbreviation": "BSB",
+    "abbreviationLocal": "BSB",
+    "description": "Berean Standard Bible",
+    "descriptionLocal": "English: Berean Standard Bible",
+    "language": {
+      "id": "eng",
+      "name": "English",
+      "nameLocal": "English",
+      "script": "Latin",
+      "scriptDirection": "LTR",
+    },
+    "countries": [
+      {
+        "id": "US",
+        "name": "United States of America",
+        "nameLocal": "United States of America",
+      },
+    ],
+    "type": "text",
+    "updatedAt": "2024-06-29T00:44:58.000Z",
+    "copyright":
+        "The Holy Bible, Berean Standard Bible, BSB is produced in cooperation with Bible Hub, Discovery Bible, OpenBible.com, and the Berean Bible Translation Committee. This text of God's Word has been dedicated to the public domain",
+    "info": "<p>https://berean.bible/</p>",
+    "audioBibles": [],
+  });
 
   final List _pages = [ReaderPage(), SearchPage(), NotesPage(), NotesPage()];
 
@@ -42,14 +67,17 @@ class _AppState extends State<App> {
 
   void _showBibleVersionMenu(
     BuildContext context,
-    Function(Map<String, String>) onBibleVersionSelected,
-  ) {
+    Function(BibleVersion) onBibleVersionSelected,
+  ) async {
     TextEditingController searchController = TextEditingController();
     FocusNode searchFocusNode = FocusNode(); // Add FocusNode
-    List<Map<String, String>> filteredItems =
+
+    final List<BibleVersion> bibleVersions = await apiService
+        .fetchBibleVersions(selectedLanguage.id);
+
+    List<BibleVersion> filteredBibleVersions =
         bibleVersions.where((bibleVersion) {
-          return bibleVersion["language_id"]! ==
-              selectedLanguage['language_id'];
+          return bibleVersion.language.id == selectedLanguage.id;
         }).toList();
 
     showModalBottomSheet(
@@ -64,10 +92,11 @@ class _AppState extends State<App> {
           builder: (context, setState) {
             void filterList(String query) {
               setState(() {
-                filteredItems =
-                    bibleVersions.where((item) {
-                      String name = item["name"]!.toLowerCase();
-                      String abbreviation = item["abbreviation"]!.toLowerCase();
+                filteredBibleVersions =
+                    bibleVersions.where((bibleVersion) {
+                      String name = bibleVersion.name.toLowerCase();
+                      String abbreviation =
+                          bibleVersion.abbreviation.toLowerCase();
                       return name.contains(query.toLowerCase()) ||
                           abbreviation.contains(query.toLowerCase());
                     }).toList();
@@ -120,7 +149,7 @@ class _AppState extends State<App> {
                                       ),
                                     ),
                                     Text(
-                                      "Versions: ${bibleVersions.length} in ${bibleVersions.map((item) => item["language_id"]) // or "language_name"
+                                      "Versions: ${bibleVersions.length} in ${bibleVersions.map((bibleVersion) => bibleVersion.language.id) // or "language_name"
                                       .toSet() // Removes duplicates
                                       .length} languages",
                                     ),
@@ -161,12 +190,19 @@ class _AppState extends State<App> {
                         ListTile(
                           title: Text("Language"),
                           leading: Icon(Icons.language),
-                          trailing: Text(selectedLanguage['language_name']!),
+                          trailing: Text(selectedLanguage.name),
                           onTap: () {
-                            _showLanguageMenu(context, (newLanguage) {
+                            _showLanguageMenu(context, bibleVersions, (
+                              newLanguage,
+                            ) {
                               setState(() {
                                 selectedLanguage = newLanguage;
                               });
+                              filteredBibleVersions =
+                                  bibleVersions.where((bibleVersion) {
+                                    return bibleVersion.language.id ==
+                                        selectedLanguage.id;
+                                  }).toList();
                             });
                           },
                         ),
@@ -177,24 +213,29 @@ class _AppState extends State<App> {
                         Expanded(
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: filteredItems.length,
+                            itemCount: filteredBibleVersions.length,
                             itemBuilder: (context, index) {
                               return ListTile(
                                 title: Text(
-                                  filteredItems[index]["abbreviation"]!,
+                                  filteredBibleVersions[index].abbreviation,
                                 ),
-                                subtitle: Text(filteredItems[index]["name"]!),
+                                subtitle: Text(
+                                  filteredBibleVersions[index].name,
+                                ),
                                 onTap: () {
                                   setState(() {
                                     selectedBibleVersion =
-                                        filteredItems[index]; // Update selected bibleVersion
+                                        filteredBibleVersions[index]; // Update selected bibleVersion
                                   });
-                                  onBibleVersionSelected(filteredItems[index]);
+                                  onBibleVersionSelected(
+                                    filteredBibleVersions[index],
+                                  );
                                   Navigator.pop(context);
                                 },
                                 trailing:
-                                    selectedBibleVersion['abbreviation'] ==
-                                            filteredItems[index]["abbreviation"]
+                                    selectedBibleVersion.abbreviation ==
+                                            filteredBibleVersions[index]
+                                                .abbreviation
                                         ? Icon(Icons.check)
                                         : null,
                               );
@@ -214,28 +255,32 @@ class _AppState extends State<App> {
     );
   }
 
-  List<Map<String, String>> getUniqueLanguages() {
-    Set<String> uniqueLanguageIds = {}; // Track unique language IDs
+  List<Language> getUniqueLanguages(List<BibleVersion> bibleVersions) {
+    Set<String> seenLanguageIds = {};
+    List<Language> uniqueLanguages = [];
 
-    return bibleVersions
-        .where((bibleVersion) {
-          return uniqueLanguageIds.add(
-            bibleVersion["language_id"]!,
-          ); // Adds only if unique
-        })
-        .map((bibleVersion) {
-          return {
-            "language_id": bibleVersion["language_id"]!,
-            "language_name": bibleVersion["language_name"]!,
-            "language_name_local": bibleVersion["language_name"]!,
-          };
-        })
-        .toList();
+    for (var version in bibleVersions) {
+      if (!seenLanguageIds.contains(version.language.id)) {
+        seenLanguageIds.add(version.language.id);
+        uniqueLanguages.add(version.language);
+      }
+    }
+
+    uniqueLanguages.sort((a, b) {
+      if (a.id == "eng") return -1;
+      if (b.id == "eng") return 1;
+      if (a.id == "spa") return -1;
+      if (b.id == "spa") return 1;
+      return a.name.compareTo(b.name);
+    });
+
+    return uniqueLanguages;
   }
 
   void _showLanguageMenu(
     BuildContext context,
-    Function(Map<String, String>) onLanguageSelected,
+    List<BibleVersion> bibleVersions,
+    Function(Language) onLanguageSelected,
   ) {
     showModalBottomSheet(
       context: context,
@@ -247,7 +292,7 @@ class _AppState extends State<App> {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (context, setState) {
-            final List<Map<String, String>> languages = getUniqueLanguages();
+            final List<Language> languages = getUniqueLanguages(bibleVersions);
 
             return DraggableScrollableSheet(
               initialChildSize: 0.9, // Start at 60% of screen height
@@ -268,18 +313,29 @@ class _AppState extends State<App> {
                       // Header with Back Button
                       Row(
                         children: [
-                          IconButton(
-                            icon: Icon(Icons.arrow_back),
+                          TextButton.icon(
                             onPressed: () {
                               Navigator.pop(
                                 context,
-                              ); // Close this sheet to return to first one
+                              ); // Close this sheet to return to the first one
                             },
+                            icon: Icon(Icons.chevron_left),
+                            // style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                            label: Text(
+                              "Versions",
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                overflow: TextOverflow.fade,
+                              ),
+                            ),
                           ),
-                          Expanded(
+                          Center(
                             child: Center(
                               child: Text(
-                                "Sub Menu",
+                                "Bible Languages",
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -298,12 +354,11 @@ class _AppState extends State<App> {
                           itemCount: languages.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              title: Text(languages[index]["language_name"]!),
+                              title: Text(languages[index].nameLocal),
                               trailing:
-                                  selectedLanguage['language_id'] ==
-                                          languages[index]["language_id"]
+                                  selectedLanguage.id == languages[index].id
                                       ? Icon(Icons.check)
-                                      : null,
+                                      : Text(languages[index].name),
                               onTap: () {
                                 setState(() {
                                   selectedLanguage =
@@ -373,7 +428,7 @@ class _AppState extends State<App> {
                 },
                 // style: TextButton.styleFrom(padding: EdgeInsets.zero),
                 child: Text(
-                  selectedBibleVersion["abbreviation"]!,
+                  selectedBibleVersion.abbreviation,
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     color: Colors.white,
