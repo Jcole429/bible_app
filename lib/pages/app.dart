@@ -67,9 +67,9 @@ class _AppState extends State<App> {
                     context,
                     selectedBibleVersion,
                     selectedBibleBook,
-                    (newBibleBook) {
+                    (newChapter) {
                       setState(() {
-                        selectedBibleBook = newBibleBook;
+                        selectBibleChapter = newChapter;
                       });
                     },
                   );

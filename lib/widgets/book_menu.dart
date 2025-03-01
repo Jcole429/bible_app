@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/models/book.dart';
+import 'package:flutter_tutorial/models/chapter.dart';
 import '../models/bible_version.dart';
 import '../services/api_service.dart';
 
 void showBookMenu(
   BuildContext context,
   BibleVersion selectedBibleVersion,
-  Book selectedBibleBook,
-  Function(Book) onBookSelected,
+  Book selectedBook,
+  Function(Chapter) onChapterSelected,
 ) async {
   final ApiService apiService = ApiService();
+
   final List<Book> bibleBooks = await apiService.fetchBibleBooks(
     selectedBibleVersion.id,
   );
 
-  if (!context.mounted) return; // Check if the widget is still there
+  if (!context.mounted) return; // Prevent execution if widget is unmounted
+
+  Book? selectedBookForChapters;
 
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    backgroundColor: Colors.transparent, // Makes the background transparent
+    backgroundColor: Colors.transparent,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
@@ -27,80 +31,75 @@ void showBookMenu(
       return StatefulBuilder(
         builder: (context, setState) {
           return DraggableScrollableSheet(
-            initialChildSize: 0.9, // Start at 60% of screen height
-            minChildSize: 0.4, // Minimum height (40%)
-            maxChildSize: 0.9, // Maximum height (90%)
+            initialChildSize: 0.9,
+            minChildSize: 0.4,
+            maxChildSize: 0.9,
             builder: (context, scrollController) {
               return Container(
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white, // Ensure sheet has a background
+                  color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Header with Back Button
+                    // Header with Back Button & Title
                     Row(
                       children: [
                         TextButton.icon(
                           onPressed: () {
-                            Navigator.pop(
-                              context,
-                            ); // Close this sheet to return to the first one
+                            if (selectedBookForChapters == null) {
+                              Navigator.pop(context); // Close modal
+                            } else {
+                              setState(() {
+                                selectedBookForChapters =
+                                    null; // Go back to book selection
+                              });
+                            }
                           },
-                          icon: Icon(Icons.chevron_left),
-                          // style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                          icon: Icon(Icons.close),
                           label: Text(
-                            "Cancel",
-                            textAlign: TextAlign.start,
+                            selectedBookForChapters != null ? "Back" : "Cancel",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              overflow: TextOverflow.fade,
+                              fontSize: 14,
                             ),
                           ),
                         ),
-
-                        Center(
-                          child: Text(
-                            "Books",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              selectedBook.name,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
+                        SizedBox(width: 48), // Align title properly
                       ],
                     ),
 
                     Divider(),
 
-                    // List of books
+                    // Either show Books or Chapters based on selectedBook
                     Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: bibleBooks.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(bibleBooks[index].name),
-                            trailing:
-                                selectedBibleBook.id == bibleBooks[index].id
-                                    ? Icon(Icons.check)
-                                    : Text(bibleBooks[index].abbreviation),
-                            onTap: () {
-                              setState(() {
-                                selectedBibleBook =
-                                    bibleBooks[index]; // Update selected language
-                              });
-                              onBookSelected(
-                                bibleBooks[index],
-                              ); // Update main modal
-                            },
-                          );
-                        },
-                      ),
+                      // child: _buildBookList(bibleBooks, onChapterSelected),
+                      child:
+                          selectedBookForChapters == null
+                              ? _buildBookList(bibleBooks, (book) {
+                                setState(() {
+                                  selectedBookForChapters = book;
+                                });
+                              })
+                              : _buildChapterGrid(
+                                selectedBookForChapters!,
+                                onChapterSelected,
+                                context,
+                              ),
                     ),
                   ],
                 ),
@@ -108,6 +107,62 @@ void showBookMenu(
             },
           );
         },
+      );
+    },
+  );
+}
+
+Widget _buildBookList(List<Book> books, Function(Book) onBookSelected) {
+  return ListView.builder(
+    itemCount: books.length,
+    itemBuilder: (context, index) {
+      return ListTile(
+        title: Text(books[index].name),
+        trailing: Text(books[index].abbreviation),
+        onTap: () {
+          // setState(() => books[index]); // Switch to chapter view
+
+          print('Clicked Book: ${books[index].name}');
+          // _buildChapterGrid(books[index], onChapterSelected, context);
+          onBookSelected(books[index]); // Updates state to show chapter grid
+        },
+      );
+    },
+  );
+}
+
+Widget _buildChapterGrid(
+  Book selectedBook,
+  Function(Chapter) onChapterSelected,
+  BuildContext context,
+) {
+  print('In _buildChapterGrid');
+  // final ApiService apiService = ApiService();
+  int totalChapters = selectedBook.chapters.length;
+
+  // final List<Chapter> chapters = await apiService.fetchBibleChapters(selectedBook.bibleId);
+
+  return GridView.builder(
+    itemCount: totalChapters,
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 5,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+    ),
+    itemBuilder: (context, index) {
+      return ElevatedButton(
+        onPressed: () {
+          onChapterSelected(selectedBook.chapters[index]);
+          Navigator.pop(context);
+        },
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+        child: Text(
+          selectedBook.chapters[index].number,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
       );
     },
   );
