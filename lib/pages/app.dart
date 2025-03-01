@@ -20,6 +20,18 @@ class _AppState extends State<App> {
     "language_name": "English",
   };
 
+  Map<String, String> selectedBibleVersion = {
+    "name": "The Holy Bible, American Standard Version",
+    "description": "Bible",
+    "language_id": "eng",
+    "language_name": "English",
+    "abbreviation": "ASV",
+    "countries": "United States of America",
+    "copyright": "PUBLIC DOMAIN",
+    "info":
+        "<p>This public domain Bible translation is brought to you courtesy of <a href=\"https://eBible.org\">eBible.org</a>.</p> <p>For additional formats and downloads, please see <a href=\"https://eBible.org/find/details.php?id=eng-asv\">https://eBible.org/find/details.php?id=eng-asv</a>.</p>",
+  };
+
   final List _pages = [ReaderPage(), SearchPage(), NotesPage(), NotesPage()];
 
   void _navigateBottomBar(int index) {
@@ -28,7 +40,10 @@ class _AppState extends State<App> {
     });
   }
 
-  void _showBibleVersionMenu(BuildContext context) {
+  void _showBibleVersionMenu(
+    BuildContext context,
+    Function(Map<String, String>) onBibleVersionSelected,
+  ) {
     TextEditingController searchController = TextEditingController();
     List<Map<String, String>> filteredItems =
         bibleVersions.where((bibleVersion) {
@@ -163,7 +178,19 @@ class _AppState extends State<App> {
                                   filteredItems[index]["abbreviation"]!,
                                 ),
                                 subtitle: Text(filteredItems[index]["name"]!),
-                                onTap: () => Navigator.pop(context),
+                                onTap: () {
+                                  setState(() {
+                                    selectedBibleVersion =
+                                        filteredItems[index]; // Update selected bibleVersion
+                                  });
+                                  onBibleVersionSelected(filteredItems[index]);
+                                  Navigator.pop(context);
+                                },
+                                trailing:
+                                    selectedBibleVersion['abbreviation'] ==
+                                            filteredItems[index]["abbreviation"]
+                                        ? Icon(Icons.check)
+                                        : null,
                               );
                             },
                           ),
@@ -332,11 +359,15 @@ class _AppState extends State<App> {
               ),
               TextButton(
                 onPressed: () {
-                  _showBibleVersionMenu(context);
+                  _showBibleVersionMenu(context, (newBibleVersion) {
+                    setState(() {
+                      selectedBibleVersion = newBibleVersion;
+                    });
+                  });
                 },
                 // style: TextButton.styleFrom(padding: EdgeInsets.zero),
                 child: Text(
-                  "NLT",
+                  selectedBibleVersion["abbreviation"]!,
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     color: Colors.white,
