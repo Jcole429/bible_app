@@ -3,8 +3,11 @@ import 'package:flutter_tutorial/pages/app.dart';
 import 'package:flutter_tutorial/pages/notes.dart';
 import 'package:flutter_tutorial/pages/reader.dart';
 import 'package:flutter_tutorial/pages/search.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter is ready
+  await dotenv.load();
   runApp(const MyApp());
 }
 
