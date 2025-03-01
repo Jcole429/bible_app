@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/models/bible_version.dart';
+import 'package:flutter_tutorial/models/book.dart';
+import 'package:flutter_tutorial/models/chapter.dart';
 import 'package:flutter_tutorial/models/language.dart';
 import 'package:flutter_tutorial/pages/notes.dart';
 import 'package:flutter_tutorial/pages/reader.dart';
@@ -55,6 +57,38 @@ class _AppState extends State<App> {
         "The Holy Bible, Berean Standard Bible, BSB is produced in cooperation with Bible Hub, Discovery Bible, OpenBible.com, and the Berean Bible Translation Committee. This text of God's Word has been dedicated to the public domain",
     "info": "<p>https://berean.bible/</p>",
     "audioBibles": [],
+  });
+
+  Book selectedBibleBook = Book.fromJson({
+    "id": "GEN",
+    "bibleId": "bba9f40183526463-01",
+    "abbreviation": "GEN",
+    "name": "Genesis",
+    "nameLong": "Genesis",
+    "chapters": [
+      {
+        "id": "GEN.intro",
+        "bibleId": "bba9f40183526463-01",
+        "bookId": "GEN",
+        "number": "intro",
+        "position": 0,
+      },
+      {
+        "id": "GEN.1",
+        "bibleId": "bba9f40183526463-01",
+        "bookId": "GEN",
+        "number": "1",
+        "position": 1,
+      },
+    ],
+  });
+
+  Chapter selectBibleChapter = Chapter.fromJson({
+    "id": "GEN.intro",
+    "bibleId": "bba9f40183526463-01",
+    "bookId": "GEN",
+    "number": "intro",
+    "position": 0,
   });
 
   final List _pages = [ReaderPage(), SearchPage(), NotesPage(), NotesPage()];
@@ -383,6 +417,113 @@ class _AppState extends State<App> {
     );
   }
 
+  void _showBookMenu(
+    BuildContext context,
+    Function(Book) onBookSelected,
+  ) async {
+    final List<Book> bibleBooks = await apiService.fetchBibleBooks(
+      selectedBibleVersion.id,
+    );
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent, // Makes the background transparent
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return DraggableScrollableSheet(
+              initialChildSize: 0.9, // Start at 60% of screen height
+              minChildSize: 0.4, // Minimum height (40%)
+              maxChildSize: 0.9, // Maximum height (90%)
+              builder: (context, scrollController) {
+                return Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Ensure sheet has a background
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Header with Back Button
+                      Row(
+                        children: [
+                          TextButton.icon(
+                            onPressed: () {
+                              Navigator.pop(
+                                context,
+                              ); // Close this sheet to return to the first one
+                            },
+                            icon: Icon(Icons.chevron_left),
+                            // style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                            label: Text(
+                              "Cancel",
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                overflow: TextOverflow.fade,
+                              ),
+                            ),
+                          ),
+
+                          Center(
+                            child: Text(
+                              "Books",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      Divider(),
+
+                      // List of books
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: bibleBooks.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(bibleBooks[index].name),
+                              trailing:
+                                  selectedBibleBook.id == bibleBooks[index].id
+                                      ? Icon(Icons.check)
+                                      : Text(bibleBooks[index].abbreviation),
+                              onTap: () {
+                                setState(() {
+                                  selectedBibleBook =
+                                      bibleBooks[index]; // Update selected language
+                                });
+                                onBookSelected(
+                                  bibleBooks[index],
+                                ); // Update main modal
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -401,23 +542,37 @@ class _AppState extends State<App> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "Hebrews 9",
-                textAlign: TextAlign.end,
-                maxLines: 1,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  // overflow: TextOverflow.ellipsis,
+              // Bible Book-Chapter-Verse menu
+              TextButton(
+                onPressed: () {
+                  _showBookMenu(context, (newBibleBook) {
+                    setState(() {
+                      selectedBibleBook = newBibleBook;
+                    });
+                  });
+                },
+                // style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                child: Text(
+                  "${selectedBibleBook.name} ${selectBibleChapter.number}",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    overflow: TextOverflow.fade,
+                  ),
                 ),
               ),
+
+              // Divider
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 8.0),
                 // height: 20.0,
                 width: 2,
                 color: Colors.grey,
               ),
+
+              // Bible version menu
               TextButton(
                 onPressed: () {
                   _showBibleVersionMenu(context, (newBibleVersion) {
