@@ -7,6 +7,7 @@ import 'package:flutter_tutorial/models/bible_version.dart';
 import 'package:flutter_tutorial/models/book.dart';
 import 'package:flutter_tutorial/models/chapter.dart';
 import 'package:flutter_tutorial/models/language.dart';
+import 'package:flutter_tutorial/pages/more.dart';
 import 'package:flutter_tutorial/pages/notes.dart';
 import 'package:flutter_tutorial/pages/reader.dart';
 import 'package:flutter_tutorial/pages/search.dart';
@@ -75,7 +76,7 @@ class _AppState extends State<App> {
       ),
       SearchPage(),
       NotesPage(),
-      NotesPage(),
+      MorePage(),
     ];
     return Scaffold(
       appBar: AppBar(
