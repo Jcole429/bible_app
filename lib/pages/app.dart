@@ -22,6 +22,22 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  @override
+  void initState() {
+    super.initState();
+    _fetchInitialChapter();
+  }
+
+  void _fetchInitialChapter() async {
+    final fetchedChapter = await apiService.fetchBibleChapter(
+      selectedBibleVersion.id,
+      selectedBibleChapter.id,
+    );
+    setState(() {
+      selectedBibleChapter = fetchedChapter;
+    });
+  }
+
   final ApiService apiService = ApiService();
 
   int _selectedIndex = 0;
