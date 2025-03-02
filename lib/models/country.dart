@@ -5,7 +5,7 @@ class Country {
 
   Country({required this.id, required this.name, required this.nameLocal});
 
-  // Convert a JSON map to a BibleVersion object
+  // Convert a JSON map to a Country object
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
       id: json['id'] as String,
@@ -14,7 +14,7 @@ class Country {
     );
   }
 
-  // Convert a BibleVersion object to a JSON map
+  // Convert a Country object to a JSON map
   Map<String, dynamic> toJson() {
     return {'id': id, 'name': name, 'nameLocal': nameLocal};
   }

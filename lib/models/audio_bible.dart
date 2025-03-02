@@ -11,7 +11,7 @@ class AudioBible {
     required this.dblId,
   });
 
-  // Convert a JSON map to a BibleVersion object
+  // Convert a JSON map to a AudioBible object
   factory AudioBible.fromJson(Map<String, dynamic> json) {
     return AudioBible(
       id: json['id'] as String,
@@ -21,7 +21,7 @@ class AudioBible {
     );
   }
 
-  // Convert a BibleVersion object to a JSON map
+  // Convert a AudioBible object to a JSON map
   Map<String, dynamic> toJson() {
     return {'id': id, 'name': name, 'nameLocal': nameLocal, 'dblId': dblId};
   }

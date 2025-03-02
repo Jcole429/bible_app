@@ -17,7 +17,7 @@ class Book {
     required this.chapters,
   });
 
-  // Convert a JSON map to a BibleVersion object
+  // Convert a JSON map to a Boook object
   factory Book.fromJson(Map<String, dynamic> json) {
     return Book(
       id: json['id'] as String,
@@ -33,7 +33,7 @@ class Book {
     );
   }
 
-  // Convert a BibleVersion object to a JSON map
+  // Convert a Boook object to a JSON map
   Map<String, dynamic> toJson() {
     return {
       'id': id,

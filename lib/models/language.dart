@@ -13,7 +13,7 @@ class Language {
     required this.scriptDirection,
   });
 
-  // Convert a JSON map to a BibleVersion object
+  // Convert a JSON map to a Language object
   factory Language.fromJson(Map<String, dynamic> json) {
     return Language(
       id: json['id'] as String,
@@ -24,7 +24,7 @@ class Language {
     );
   }
 
-  // Convert a BibleVersion object to a JSON map
+  // Convert a Language object to a JSON map
   Map<String, dynamic> toJson() {
     return {
       'id': id,
