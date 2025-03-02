@@ -58,23 +58,61 @@ class _ReaderPageState extends State<ReaderPage> {
             padding: EdgeInsets.all(10),
             height: double.infinity,
             child: SingleChildScrollView(
-              child: Html(
-                data: widget.selectedBibleChapter.content,
-                style: {
-                  ".s1": Style(
-                    fontWeight: FontWeight.bold,
-                    fontSize: FontSize.larger,
+              child: Column(
+                children: [
+                  Html(
+                    data:
+                        '<span class="scripture-styles">${widget.selectedBibleChapter.content}</span>',
+                    style: {
+                      // Global
+                      ".scripture-styles": Style(fontFamily: "Noto Serif"),
+                      // Chapter Section Title
+                      ".s1": Style(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.larger,
+                        margin: Margins.only(bottom: 5),
+                      ),
+                      // Related Verses (Under chapter title)
+                      ".r": Style(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        margin: Margins.only(top: -0),
+                      ),
+                      // Chapter Sub-Section Titles
+                      ".s2": Style(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.large,
+                        margin: Margins.only(bottom: 0, top: 30),
+                      ),
+                      // Verse Numbers
+                      ".v": Style(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.small,
+                        verticalAlign: VerticalAlign.sup,
+                      ),
+                      // Footnotes
+                      ".f": Style(
+                        fontSize: FontSize.small,
+                        fontStyle: FontStyle.italic,
+                        display: Display.block,
+                        margin: Margins.all(10),
+                      ),
+                    },
                   ),
-                  ".s2": Style(
-                    fontWeight: FontWeight.bold,
-                    fontSize: FontSize.large,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 15,
+                      right: 15,
+                      top: 15,
+                      bottom: 100,
+                    ),
+                    child: Text(
+                      widget.selectedBibleChapter.copyright ?? "",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 10),
+                    ),
                   ),
-                  ".v": Style(
-                    fontWeight: FontWeight.bold,
-                    fontSize: FontSize.small,
-                    verticalAlign: VerticalAlign.sup,
-                  ),
-                },
+                ],
               ),
             ),
           ),

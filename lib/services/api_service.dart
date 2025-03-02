@@ -103,16 +103,23 @@ class ApiService {
 
   Future<Chapter> fetchBibleChapter(
     String bibleVersionId,
-    String chapterId,
-  ) async {
+    String chapterId, {
+    String contentType = "html",
+    bool includeNotes = true, // Inline footnotes
+    bool includeTitles = true, // The titles of chapter sections
+    bool includeChapterNumbers = false, // Display the chapter number
+    bool includeVerseNumbers = true,
+    bool includeVerseSpans = true,
+  }) async {
+    String url =
+        '$baseUrl/bibles/$bibleVersionId/chapters/$chapterId?content-type=$contentType&include-notes=$includeNotes&include-titles=$includeTitles&include-chapter-numbers=$includeChapterNumbers&include-verse-numbers=$includeVerseNumbers&include-verse-spans=$includeVerseSpans';
+
     print(
-      'fetchBibleChapter(bibleVersionId: $bibleVersionId, chapterId: $chapterId)',
+      'fetchBibleChapter(bibleVersionId: $bibleVersionId, chapterId: $chapterId): $url',
     );
 
     final response = await http.get(
-      Uri.parse(
-        '$baseUrl/bibles/$bibleVersionId/chapters/$chapterId?content-type=html&include-notes=true&include-titles=true&include-chapter-numbers=true&include-verse-numbers=true&include-verse-spans=true',
-      ),
+      Uri.parse(url),
       headers: {"api-key": apiKey},
     );
 
