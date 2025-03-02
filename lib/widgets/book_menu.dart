@@ -89,7 +89,6 @@ void showBookMenu(
 
                     // Either show Books or Chapters based on selectedBook
                     Expanded(
-                      // child: _buildBookList(bibleBooks, onChapterSelected),
                       child:
                           selectedBookForChapters == null
                               ? _buildBookList(bibleBooks, (book) {
@@ -125,7 +124,6 @@ Widget _buildBookList(List<Book> books, Function(Book) onBookSelected) {
           // setState(() => books[index]); // Switch to chapter view
 
           print('Clicked Book: ${books[index].name}');
-          // _buildChapterGrid(books[index], onChapterSelected, context);
           onBookSelected(books[index]); // Updates state to show chapter grid
         },
       );
@@ -138,11 +136,7 @@ Widget _buildChapterGrid(
   Function(Chapter) onChapterSelected,
   BuildContext context,
 ) {
-  print('In _buildChapterGrid');
-  // final ApiService apiService = ApiService();
   int totalChapters = selectedBook.chapters.length;
-
-  // final List<Chapter> chapters = await apiService.fetchBibleChapters(selectedBook.bibleId);
 
   return GridView.builder(
     itemCount: totalChapters,
