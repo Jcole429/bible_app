@@ -23,6 +23,7 @@ class ReaderPage extends StatefulWidget {
 class _ReaderPageState extends State<ReaderPage> {
   final ApiService apiService = ApiService();
   late Future<Chapter> _futureChapter;
+  String snapshotContent = "No Data";
 
   @override
   void initState() {
@@ -52,6 +53,8 @@ class _ReaderPageState extends State<ReaderPage> {
             return Center(child: Text("Error: ${snapshot.error}"));
           } else if (!snapshot.hasData) {
             return const Center(child: Text("No data available."));
+          } else {
+            snapshotContent = snapshot.data!.content!;
           }
 
           return Stack(
@@ -60,10 +63,24 @@ class _ReaderPageState extends State<ReaderPage> {
                 padding: EdgeInsets.all(10),
                 height: double.infinity,
                 child: SingleChildScrollView(
-                  child:
-                      snapshot.data?.content != null
-                          ? Html(data: snapshot.data!.content)
-                          : Text('No data'),
+                  child: Html(
+                    data: snapshotContent,
+                    style: {
+                      ".s1": Style(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.larger,
+                      ),
+                      ".s2": Style(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.large,
+                      ),
+                      ".v": Style(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.small,
+                        verticalAlign: VerticalAlign.sup,
+                      ),
+                    },
+                  ),
                 ),
               ),
               Positioned(
