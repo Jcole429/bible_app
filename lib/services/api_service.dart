@@ -52,9 +52,12 @@ class ApiService {
     }
   }
 
-  Future<List<Chapter>> fetchBibleChapters(String bibleVersionId) async {
+  Future<List<Chapter>> fetchBibleChapters(
+    String bibleVersionId,
+    String bookId,
+  ) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/bibles/$bibleVersionId/books'),
+      Uri.parse('$baseUrl/bibles/$bibleVersionId/books/$bookId/chapters'),
       headers: {"api-key": apiKey},
     );
 
