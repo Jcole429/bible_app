@@ -10,6 +10,7 @@ class ApiService {
   final String apiKey = dotenv.env['API_KEY']!;
 
   Future<List<BibleVersion>> fetchBibleVersions(String languageId) async {
+    print('fetchBibleChapter(languageId: $languageId)');
     final response = await http.get(
       // Uri.parse(
       //   '$baseUrl/bibles?language=$languageId&include-full-details=true',
@@ -33,6 +34,8 @@ class ApiService {
   }
 
   Future<List<Book>> fetchBibleBooks(String bibleVersionId) async {
+    print('fetchBibleChapter(bibleVersionId: $bibleVersionId)');
+
     final response = await http.get(
       Uri.parse('$baseUrl/bibles/$bibleVersionId/books?include-chapters=true'),
       headers: {"api-key": apiKey},
@@ -56,6 +59,10 @@ class ApiService {
     String bibleVersionId,
     String bookId,
   ) async {
+    print(
+      'fetchBibleChapter(bibleVersionId: $bibleVersionId, bookId: $bookId)',
+    );
+
     final response = await http.get(
       Uri.parse('$baseUrl/bibles/$bibleVersionId/books/$bookId/chapters'),
       headers: {"api-key": apiKey},
@@ -78,6 +85,10 @@ class ApiService {
     String bibleVersionId,
     String chapterId,
   ) async {
+    print(
+      'fetchBibleChapter(bibleVersionId: $bibleVersionId, chapterId: $chapterId)',
+    );
+
     final response = await http.get(
       Uri.parse(
         '$baseUrl/bibles/$bibleVersionId/chapters/$chapterId?content-type=html&include-notes=true&include-titles=true&include-chapter-numbers=true&include-verse-numbers=true&include-verse-spans=true',
