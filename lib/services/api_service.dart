@@ -55,6 +55,26 @@ class ApiService {
     }
   }
 
+  Future<Book> fetchBibleBook(String bibleVersionId, String bibleBookId) async {
+    print(
+      'fetchBibleBook(bibleVersionId: $bibleVersionId, bibleBookId: $bibleBookId)',
+    );
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/bibles/$bibleVersionId/books/$bibleBookId'),
+      headers: {"api-key": apiKey},
+    );
+
+    if (response.statusCode == 200) {
+      final dynamic data = jsonDecode(response.body)['data'];
+      final Book book = Book.fromJson(data);
+
+      return book;
+    } else {
+      throw Exception("Failed to load bible book");
+    }
+  }
+
   Future<List<Chapter>> fetchBibleChapters(
     String bibleVersionId,
     String bookId,
@@ -77,7 +97,7 @@ class ApiService {
       }
       return chapters;
     } else {
-      throw Exception("Failed to load bible books");
+      throw Exception("Failed to load bible chapters");
     }
   }
 
@@ -101,8 +121,16 @@ class ApiService {
       final Chapter chapter = Chapter.fromJson(data);
 
       return chapter;
+    } else if (response.statusCode == 404) {
+      // Chapter not found error
+      // The chapter requested does not exist in the selected bible (translation/version)
+      // Return first available chapter in the requested translation instead
+      List<Book> validBooks = await fetchBibleBooks(bibleVersionId);
+      return fetchBibleChapter(bibleVersionId, validBooks[0].chapters[0].id);
     } else {
-      throw Exception("Failed to load bible books");
+      throw Exception(
+        "Failed to load bible chapter - bibleVersionId: $bibleVersionId, chapterId: $chapterId",
+      );
     }
   }
 }
