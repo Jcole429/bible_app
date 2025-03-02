@@ -1,5 +1,3 @@
-import 'package:flutter_tutorial/models/chapter_info.dart';
-
 class Chapter {
   final String id;
   final String? bibleId;
