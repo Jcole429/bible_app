@@ -31,6 +31,14 @@ class _ReaderPageState extends State<ReaderPage> {
     _fetchChapterText();
   }
 
+  @override
+  void didUpdateWidget(covariant ReaderPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedBibleChapter != widget.selectedBibleChapter) {
+      _fetchChapterText();
+    }
+  }
+
   void _fetchChapterText() {
     setState(() {
       _futureChapter = apiService.fetchBibleChapter(

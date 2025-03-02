@@ -8,6 +8,7 @@ void showBookMenu(
   BuildContext context,
   BibleVersion selectedBibleVersion,
   Book selectedBook,
+  Function(Book) onBookSelected,
   Function(Chapter) onChapterSelected,
 ) async {
   final ApiService apiService = ApiService();
@@ -98,8 +99,8 @@ void showBookMenu(
                               })
                               : _buildChapterGrid(
                                 selectedBookForChapters!,
+                                onBookSelected,
                                 onChapterSelected,
-                                context,
                               ),
                     ),
                   ],
@@ -133,8 +134,8 @@ Widget _buildBookList(List<Book> books, Function(Book) onBookSelected) {
 
 Widget _buildChapterGrid(
   Book selectedBook,
+  Function(Book) onBookSelected,
   Function(Chapter) onChapterSelected,
-  BuildContext context,
 ) {
   int totalChapters = selectedBook.chapters.length;
 
@@ -148,6 +149,7 @@ Widget _buildChapterGrid(
     itemBuilder: (context, index) {
       return ElevatedButton(
         onPressed: () {
+          onBookSelected(selectedBook);
           onChapterSelected(selectedBook.chapters[index]);
           Navigator.pop(context);
         },
