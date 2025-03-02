@@ -138,6 +138,7 @@ Widget _buildChapterGrid(
   Function(Chapter) onChapterSelected,
 ) {
   int totalChapters = selectedBook.chapters.length;
+  ApiService apiService = ApiService();
 
   return GridView.builder(
     itemCount: totalChapters,
@@ -148,9 +149,18 @@ Widget _buildChapterGrid(
     ),
     itemBuilder: (context, index) {
       return ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           onBookSelected(selectedBook);
-          onChapterSelected(selectedBook.chapters[index]);
+          Chapter newChapter = await apiService.fetchBibleChapter(
+            selectedBook.bibleId,
+            selectedBook.chapters[index].id,
+          );
+          onChapterSelected(newChapter);
+
+          if (!context.mounted) {
+            return; // Prevent execution if widget is unmounted
+          }
+
           Navigator.pop(context);
         },
         style: ElevatedButton.styleFrom(

@@ -47,6 +47,15 @@ class _AppState extends State<App> {
         selectedBibleVersion: selectedBibleVersion,
         selectedBibleBook: selectedBibleBook,
         selectedBibleChapter: selectedBibleChapter,
+        onChapterChange: (newChapter) async {
+          final fetchedChapter = await apiService.fetchBibleChapter(
+            selectedBibleVersion.id,
+            newChapter.id,
+          );
+          setState(() {
+            selectedBibleChapter = fetchedChapter;
+          });
+        },
       ),
       SearchPage(),
       NotesPage(),
