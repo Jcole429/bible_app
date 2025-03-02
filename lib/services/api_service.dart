@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_tutorial/models/bible_version.dart';
 import 'package:flutter_tutorial/models/book.dart';
 import 'package:flutter_tutorial/models/chapter.dart';
+import 'package:flutter_tutorial/models/chapter_info.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -66,6 +67,25 @@ class ApiService {
         chapters.add(Chapter.fromJson(data[i]));
       }
       return chapters;
+    } else {
+      throw Exception("Failed to load bible books");
+    }
+  }
+
+  Future<Chapter> fetchBibleChapter(
+    String bibleVersionId,
+    String chapterId,
+  ) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/bibles/$bibleVersionId/chapters/$chapterId'),
+      headers: {"api-key": apiKey},
+    );
+
+    if (response.statusCode == 200) {
+      final dynamic data = jsonDecode(response.body)['data'];
+      final Chapter chapter = Chapter.fromJson(data);
+
+      return chapter;
     } else {
       throw Exception("Failed to load bible books");
     }

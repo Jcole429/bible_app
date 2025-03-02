@@ -32,9 +32,7 @@ class _AppState extends State<App> {
 
   Book selectedBibleBook = defaultBook;
 
-  Chapter selectBibleChapter = defaultChapter;
-
-  final List _pages = [ReaderPage(), SearchPage(), NotesPage(), NotesPage()];
+  Chapter selectedBibleChapter = defaultChapter;
 
   void _navigateBottomBar(int index) {
     setState(() {
@@ -44,6 +42,16 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    final List pages = [
+      ReaderPage(
+        selectedBibleVersion: selectedBibleVersion,
+        selectedBibleBook: selectedBibleBook,
+        selectedBibleChapter: selectedBibleChapter,
+      ),
+      SearchPage(),
+      NotesPage(),
+      NotesPage(),
+    ];
     return Scaffold(
       appBar: AppBar(
         // title: Text("My Bible"),
@@ -69,14 +77,14 @@ class _AppState extends State<App> {
                     selectedBibleBook,
                     (newChapter) {
                       setState(() {
-                        selectBibleChapter = newChapter;
+                        selectedBibleChapter = newChapter;
                       });
                     },
                   );
                 },
                 // style: TextButton.styleFrom(padding: EdgeInsets.zero),
                 child: Text(
-                  "${selectedBibleBook.name} ${selectBibleChapter.number}",
+                  "${selectedBibleBook.name} ${selectedBibleChapter.number}",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     color: Colors.white,
@@ -139,7 +147,7 @@ class _AppState extends State<App> {
           BottomNavigationBarItem(icon: Icon(Icons.menu), label: "More"),
         ],
       ),
-      body: _pages[_selectedIndex],
+      body: pages[_selectedIndex],
     );
   }
 }
