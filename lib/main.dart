@@ -21,16 +21,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: App(),
-      routes: {
-        '/reader':
-            (context) => ReaderPage(
-              selectedBibleVersion: defaultBibleVersion,
-              selectedBibleBook: defaultBook,
-              selectedBibleChapter: defaultChapter,
-            ),
-        '/search': (context) => SearchPage(),
-        '/notes': (context) => NotesPage(),
-      },
+      // routes: {
+      //   '/reader':
+      //       (context) => ReaderPage(
+      //         selectedBibleVersion: defaultBibleVersion,
+      //         selectedBibleBook: defaultBook,
+      //         selectedBibleChapter: defaultChapter,
+      //         onChapterChange: {() => {}},
+      //       ),
+      //   '/search': (context) => SearchPage(),
+      //   '/notes': (context) => NotesPage(),
+      // },
     );
   }
 }
