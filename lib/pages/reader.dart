@@ -43,7 +43,6 @@ class _ReaderPageState extends State<ReaderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Reader")),
       body: FutureBuilder<Chapter>(
         future: _futureChapter,
         builder: (context, snapshot) {
