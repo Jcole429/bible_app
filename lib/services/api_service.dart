@@ -76,7 +76,9 @@ class ApiService {
     String chapterId,
   ) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/bibles/$bibleVersionId/chapters/$chapterId'),
+      Uri.parse(
+        '$baseUrl/bibles/$bibleVersionId/chapters/$chapterId?content-type=html&include-notes=true&include-titles=true&include-chapter-numbers=true&include-verse-numbers=true&include-verse-spans=true',
+      ),
       headers: {"api-key": apiKey},
     );
 
