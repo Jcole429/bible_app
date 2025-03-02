@@ -10,7 +10,7 @@ class ApiService {
   final String apiKey = dotenv.env['API_KEY']!;
 
   Future<List<BibleVersion>> fetchBibleVersions(String languageId) async {
-    print('fetchBibleChapter(languageId: $languageId)');
+    print('fetchBibleVersions(languageId: $languageId)');
     final response = await http.get(
       // Uri.parse(
       //   '$baseUrl/bibles?language=$languageId&include-full-details=true',
@@ -34,7 +34,7 @@ class ApiService {
   }
 
   Future<List<Book>> fetchBibleBooks(String bibleVersionId) async {
-    print('fetchBibleChapter(bibleVersionId: $bibleVersionId)');
+    print('fetchBibleBooks(bibleVersionId: $bibleVersionId)');
 
     final response = await http.get(
       Uri.parse('$baseUrl/bibles/$bibleVersionId/books?include-chapters=true'),
@@ -60,7 +60,7 @@ class ApiService {
     String bookId,
   ) async {
     print(
-      'fetchBibleChapter(bibleVersionId: $bibleVersionId, bookId: $bookId)',
+      'fetchBibleChapters(bibleVersionId: $bibleVersionId, bookId: $bookId)',
     );
 
     final response = await http.get(
