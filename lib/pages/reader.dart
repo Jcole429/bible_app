@@ -3,6 +3,7 @@ import 'package:flutter_tutorial/models/bible_version.dart';
 import 'package:flutter_tutorial/models/book.dart';
 import 'package:flutter_tutorial/models/chapter.dart';
 import 'package:flutter_tutorial/services/api_service.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ReaderPage extends StatefulWidget {
   final BibleVersion selectedBibleVersion;
@@ -59,11 +60,10 @@ class _ReaderPageState extends State<ReaderPage> {
                 padding: EdgeInsets.all(10),
                 height: double.infinity,
                 child: SingleChildScrollView(
-                  child: Text(
-                    snapshot.data?.content != null
-                        ? snapshot.data!.content!
-                        : 'No data',
-                  ),
+                  child:
+                      snapshot.data?.content != null
+                          ? Html(data: snapshot.data!.content)
+                          : Text('No data'),
                 ),
               ),
               Positioned(
