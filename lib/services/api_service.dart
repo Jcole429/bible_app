@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bible_app/models/bible_version.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
+import 'package:bible_app/utils/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -9,14 +10,32 @@ class ApiService {
   final String baseUrl = "https://api.scripture.api.bible/v1";
   final String apiKey = dotenv.env['API_KEY']!;
 
-  Future<List<BibleVersion>> fetchBibleVersions(String languageId) async {
-    print('fetchBibleVersions(languageId: $languageId)');
+  Future<List<BibleVersion>> fetchBibleVersions({
+    String? languageId,
+    includeFullDetails = true,
+  }) async {
+    String url = '$baseUrl/bibles?include-full-details=$includeFullDetails';
+    if (languageId != null) {
+      url = '$url&language=$languageId';
+    }
+
+    String cacheKey = 'bibleVersions_${includeFullDetails}_$languageId';
+
+    String logString =
+        'fetchBibleVersions(includeFullDetails: $includeFullDetails, languageId: $languageId)';
+
+    // Check cache first
+    List<dynamic>? cachedData = SharedPreferencesHelper.getList(cacheKey);
+    if (cachedData != null) {
+      print('CACHED - $logString');
+      return cachedData.map((json) => BibleVersion.fromJson(json)).toList();
+    }
+
+    // Cache miss
+    print('$logString');
     final response = await http.get(
-      // Uri.parse(
-      //   '$baseUrl/bibles?language=$languageId&include-full-details=true',
-      // ),
-      Uri.parse('$baseUrl/bibles?&include-full-details=true'),
-      headers: {"api-key": apiKey},
+      Uri.parse(url),
+      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
     );
 
     if (response.statusCode == 200) {
@@ -26,6 +45,10 @@ class ApiService {
       for (int i = 0; i < data.length; i++) {
         bibleVersions.add(BibleVersion.fromJson(data[i]));
       }
+
+      // Store response in cache
+      print('SAVING TO CACHE');
+      await SharedPreferencesHelper.saveList(cacheKey, data);
 
       return bibleVersions;
     } else {
@@ -38,7 +61,7 @@ class ApiService {
 
     final response = await http.get(
       Uri.parse('$baseUrl/bibles/$bibleVersionId/books?include-chapters=true'),
-      headers: {"api-key": apiKey},
+      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
     );
 
     if (response.statusCode == 200) {
@@ -62,7 +85,7 @@ class ApiService {
 
     final response = await http.get(
       Uri.parse('$baseUrl/bibles/$bibleVersionId/books/$bibleBookId'),
-      headers: {"api-key": apiKey},
+      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
     );
 
     if (response.statusCode == 200) {
@@ -85,7 +108,7 @@ class ApiService {
 
     final response = await http.get(
       Uri.parse('$baseUrl/bibles/$bibleVersionId/books/$bookId/chapters'),
-      headers: {"api-key": apiKey},
+      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
     );
 
     if (response.statusCode == 200) {
@@ -120,7 +143,7 @@ class ApiService {
 
     final response = await http.get(
       Uri.parse(url),
-      headers: {"api-key": apiKey},
+      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
     );
 
     if (response.statusCode == 200) {

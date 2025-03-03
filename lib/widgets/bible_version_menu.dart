@@ -14,9 +14,8 @@ Future<void> showBibleVersionMenu(
   TextEditingController searchController = TextEditingController();
   FocusNode searchFocusNode = FocusNode(); // Add FocusNode
 
-  final List<BibleVersion> bibleVersions = await apiService.fetchBibleVersions(
-    selectedLanguage.id,
-  );
+  final List<BibleVersion> bibleVersions =
+      await apiService.fetchBibleVersions();
 
   List<BibleVersion> filteredBibleVersions =
       bibleVersions.where((bibleVersion) {
