@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:bible_app/models/bible_version.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
-import 'package:bible_app/services/api_service.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class ReaderPage extends StatefulWidget {
@@ -10,6 +9,7 @@ class ReaderPage extends StatefulWidget {
   final Book selectedBibleBook;
   final Chapter selectedBibleChapter;
   final Function(Chapter) onChapterChange;
+  final ScrollController scrollController;
 
   const ReaderPage({
     super.key,
@@ -17,6 +17,7 @@ class ReaderPage extends StatefulWidget {
     required this.selectedBibleBook,
     required this.selectedBibleChapter,
     required this.onChapterChange,
+    required this.scrollController,
   });
 
   @override
@@ -24,18 +25,11 @@ class ReaderPage extends StatefulWidget {
 }
 
 class _ReaderPageState extends State<ReaderPage> {
-  final ApiService apiService = ApiService();
-  final ScrollController _scrollController = ScrollController();
-
   String snapshotContent = "No Data";
 
   @override
   void initState() {
     super.initState();
-    // Scroll to the top when the page is loaded
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(0);
-    });
   }
 
   @override
@@ -46,14 +40,12 @@ class _ReaderPageState extends State<ReaderPage> {
   void _goToPreviousChapter() {
     if (widget.selectedBibleChapter.previous != null) {
       widget.onChapterChange(widget.selectedBibleChapter.previous!);
-      _scrollController.jumpTo(0);
     }
   }
 
   void _goToNextChapter() {
     if (widget.selectedBibleChapter.next != null) {
       widget.onChapterChange(widget.selectedBibleChapter.next!);
-      _scrollController.jumpTo(0);
     }
   }
 
@@ -66,7 +58,7 @@ class _ReaderPageState extends State<ReaderPage> {
             padding: EdgeInsets.all(10),
             height: double.infinity,
             child: SingleChildScrollView(
-              controller: _scrollController,
+              controller: widget.scrollController,
               child: Column(
                 children: [
                   Html(

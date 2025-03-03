@@ -45,6 +45,8 @@ class _AppState extends State<App> {
   bool _isBookMenuOpen = false;
   bool _isBibleVersionMenuOpen = false;
 
+  final ScrollController _readerScrollController = ScrollController();
+
   Language selectedLanguage = defaultLanguage;
 
   BibleVersion selectedBibleVersion = defaultBibleVersion;
@@ -74,7 +76,9 @@ class _AppState extends State<App> {
           setState(() {
             selectedBibleChapter = fetchedChapter;
           });
+          _readerScrollController.jumpTo(0);
         },
+        scrollController: _readerScrollController,
       ),
       SearchPage(),
       NotesPage(),
