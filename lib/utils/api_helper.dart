@@ -20,7 +20,7 @@ class ApiHelper {
     if (response.statusCode == 200) {
       return jsonDecode(response.body)['data'];
     } else {
-      throw Exception("Failed to load data from $url");
+      throw Exception(response.body);
     }
   }
 
@@ -39,13 +39,16 @@ class ApiHelper {
     }
 
     // Cache miss - make API call
-    final dynamic data = await _makeHttpGetRequest(url, logString);
+    try {
+      final dynamic data = await _makeHttpGetRequest(url, logString);
+      // Store in cache
+      print('SAVING TO CACHE');
+      await SharedPreferencesHelper.saveString(cacheKey, jsonEncode(data));
 
-    // Store in cache
-    print('SAVING TO CACHE');
-    await SharedPreferencesHelper.saveString(cacheKey, jsonEncode(data));
-
-    return fromJson(data as Map<String, dynamic>);
+      return fromJson(data as Map<String, dynamic>);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   // Cached API call for lists

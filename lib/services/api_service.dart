@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bible_app/models/bible_version.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
@@ -95,12 +97,29 @@ class ApiService {
         'bibleChapter_${bibleVersionId}_${chapterId}_${contentType}_${includeNotes}_${includeTitles}_${includeChapterNumbers}_${includeVerseNumbers}_$includeVerseSpans';
     String logString =
         'fetchBibleChapter(bibleVersionId: $bibleVersionId, chapterId: $chapterId, contentType: $contentType, includeNotes: $includeNotes, includeTitles: $includeTitles, includeChapterNumbers: $includeChapterNumbers, includeVerseNumbers: $includeVerseNumbers, includeVerseSpans: $includeVerseSpans): $url';
+    try {
+      return await ApiHelper.cachedApiCallSingle<Chapter>(
+        url: url,
+        cacheKey: cacheKey,
+        logString: logString,
+        fromJson: Chapter.fromJson,
+      );
+    } catch (e) {
+      String errorString = e.toString();
+      String jsonString = errorString.replaceFirst('Exception: ', '');
+      Map<String, dynamic> errorJson = jsonDecode(jsonString);
+      int statusCode = errorJson['statusCode'] as int;
 
-    return ApiHelper.cachedApiCallSingle<Chapter>(
-      url: url,
-      cacheKey: cacheKey,
-      logString: logString,
-      fromJson: Chapter.fromJson,
-    );
+      if (statusCode == 404) {
+        // Selected bibleVersion does not contain the requested chapter
+        List<Book> validBooks = await fetchBibleBooks(bibleVersionId);
+        return await fetchBibleChapter(
+          bibleVersionId,
+          validBooks[0].chapters[0].id,
+        );
+      } else {
+        rethrow;
+      }
+    }
   }
 }
