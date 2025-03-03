@@ -4,7 +4,7 @@ import 'package:flutter_tutorial/models/chapter.dart';
 import '../models/bible_version.dart';
 import '../services/api_service.dart';
 
-void showBookMenu(
+Future<void> showBookMenu(
   BuildContext context,
   BibleVersion selectedBibleVersion,
   Book selectedBook,

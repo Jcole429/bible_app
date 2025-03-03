@@ -4,7 +4,7 @@ import 'package:flutter_tutorial/widgets/language_menu.dart';
 import '../models/bible_version.dart'; // Import the BibleVersion model
 import '../services/api_service.dart';
 
-void showBibleVersionMenu(
+Future<void> showBibleVersionMenu(
   BuildContext context,
   Language selectedLanguage,
   BibleVersion selectedBibleVersion,

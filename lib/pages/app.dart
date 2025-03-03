@@ -42,6 +42,8 @@ class _AppState extends State<App> {
   final ApiService apiService = ApiService();
 
   int _selectedIndex = 0;
+  bool _isBookMenuOpen = false;
+  bool _isBibleVersionMenuOpen = false;
 
   Language selectedLanguage = defaultLanguage;
 
@@ -97,6 +99,8 @@ class _AppState extends State<App> {
               // Bible Book-Chapter-Verse menu
               TextButton(
                 onPressed: () {
+                  if (_isBookMenuOpen) return; // Prevent duplicate opening
+                  _isBookMenuOpen = true;
                   showBookMenu(
                     context,
                     selectedBibleVersion,
@@ -111,7 +115,9 @@ class _AppState extends State<App> {
                         selectedBibleChapter = newChapter;
                       });
                     },
-                  );
+                  ).then((_) {
+                    _isBookMenuOpen = false; // Reset when menu is closed
+                  });
                 },
                 // style: TextButton.styleFrom(padding: EdgeInsets.zero),
                 child: Text(
@@ -137,6 +143,9 @@ class _AppState extends State<App> {
               // Bible version menu
               TextButton(
                 onPressed: () {
+                  if (_isBibleVersionMenuOpen)
+                    return; // Prevent duplicate opening
+                  _isBibleVersionMenuOpen = true;
                   showBibleVersionMenu(
                     context,
                     selectedLanguage,
@@ -159,7 +168,10 @@ class _AppState extends State<App> {
                         selectedBibleChapter = fetchedChapter;
                       });
                     },
-                  );
+                  ).then((_) {
+                    _isBibleVersionMenuOpen =
+                        false; // Reset when menu is closed
+                  });
                 },
                 // style: TextButton.styleFrom(padding: EdgeInsets.zero),
                 child: Text(
