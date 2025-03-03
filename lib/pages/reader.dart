@@ -110,10 +110,10 @@ class _ReaderPageState extends State<ReaderPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: 15,
-                      right: 15,
+                      left: 30,
+                      right: 30,
                       top: 15,
-                      bottom: 100,
+                      bottom: 80,
                     ),
                     child: Text(
                       widget.selectedBibleChapter.copyright ?? "",
