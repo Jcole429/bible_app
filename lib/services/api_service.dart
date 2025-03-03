@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:bible_app/models/bible_version.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
-import 'package:bible_app/utils/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:bible_app/utils/api_helper.dart';
 
 class ApiService {
   final String baseUrl = "https://api.scripture.api.bible/v1";
@@ -18,110 +16,67 @@ class ApiService {
     if (languageId != null) {
       url = '$url&language=$languageId';
     }
-
     String cacheKey = 'bibleVersions_${includeFullDetails}_$languageId';
-
     String logString =
         'fetchBibleVersions(includeFullDetails: $includeFullDetails, languageId: $languageId)';
 
-    // Check cache first
-    List<dynamic>? cachedData = SharedPreferencesHelper.getList(cacheKey);
-    if (cachedData != null) {
-      print('CACHED - $logString');
-      return cachedData.map((json) => BibleVersion.fromJson(json)).toList();
-    }
-
-    // Cache miss
-    print('$logString');
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
+    return ApiHelper.cachedApiCallList<BibleVersion>(
+      url: url,
+      cacheKey: cacheKey,
+      logString: logString,
+      fromJson: BibleVersion.fromJson,
     );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body)['data'];
-      final List<BibleVersion> bibleVersions = [];
-
-      for (int i = 0; i < data.length; i++) {
-        bibleVersions.add(BibleVersion.fromJson(data[i]));
-      }
-
-      // Store response in cache
-      print('SAVING TO CACHE');
-      await SharedPreferencesHelper.saveList(cacheKey, data);
-
-      return bibleVersions;
-    } else {
-      throw Exception("Failed to load bible versions");
-    }
   }
 
-  Future<List<Book>> fetchBibleBooks(String bibleVersionId) async {
-    print('fetchBibleBooks(bibleVersionId: $bibleVersionId)');
+  Future<List<Book>> fetchBibleBooks(
+    String bibleVersionId, {
+    bool includeChapters = true,
+  }) async {
+    String url =
+        '$baseUrl/bibles/$bibleVersionId/books?include-chapters=$includeChapters';
 
-    final response = await http.get(
-      Uri.parse('$baseUrl/bibles/$bibleVersionId/books?include-chapters=true'),
-      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
+    String cacheKey = 'bibleBooks_${bibleVersionId}_$includeChapters';
+
+    String logString =
+        'fetchBibleBooks(bibleVersionId: $bibleVersionId, includeChapters: $includeChapters)';
+
+    return ApiHelper.cachedApiCallList<Book>(
+      url: url,
+      cacheKey: cacheKey,
+      logString: logString,
+      fromJson: Book.fromJson,
     );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body)['data'];
-      final List<Book> books = [];
-
-      for (int i = 0; i < data.length; i++) {
-        books.add(Book.fromJson(data[i]));
-      }
-
-      return books;
-    } else {
-      throw Exception("Failed to load bible books");
-    }
   }
 
   Future<Book> fetchBibleBook(String bibleVersionId, String bibleBookId) async {
-    print(
-      'fetchBibleBook(bibleVersionId: $bibleVersionId, bibleBookId: $bibleBookId)',
+    String url = '$baseUrl/bibles/$bibleVersionId/books/$bibleBookId';
+    String cacheKey = 'bibleBook_${bibleVersionId}_$bibleBookId';
+    String logString =
+        'fetchBibleBook(bibleVersionId: $bibleVersionId, bibleBookId: $bibleBookId)';
+
+    return ApiHelper.cachedApiCallSingle<Book>(
+      url: url,
+      cacheKey: cacheKey,
+      logString: logString,
+      fromJson: Book.fromJson,
     );
-
-    final response = await http.get(
-      Uri.parse('$baseUrl/bibles/$bibleVersionId/books/$bibleBookId'),
-      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
-    );
-
-    if (response.statusCode == 200) {
-      final dynamic data = jsonDecode(response.body)['data'];
-      final Book book = Book.fromJson(data);
-
-      return book;
-    } else {
-      throw Exception("Failed to load bible book");
-    }
   }
 
   Future<List<Chapter>> fetchBibleChapters(
     String bibleVersionId,
     String bookId,
   ) async {
-    print(
-      'fetchBibleChapters(bibleVersionId: $bibleVersionId, bookId: $bookId)',
+    String url = '$baseUrl/bibles/$bibleVersionId/books/$bookId/chapters';
+    String cacheKey = 'bibleChapters_${bibleVersionId}_${bookId}';
+    String logString =
+        'fetchBibleChapters(bibleVersionId: $bibleVersionId, bibleVersionId: $bibleVersionId: $url';
+
+    return ApiHelper.cachedApiCallList<Chapter>(
+      url: url,
+      cacheKey: cacheKey,
+      logString: logString,
+      fromJson: Chapter.fromJson,
     );
-
-    final response = await http.get(
-      Uri.parse('$baseUrl/bibles/$bibleVersionId/books/$bookId/chapters'),
-      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
-    );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body)['data'];
-      final List<Chapter> chapters = [];
-
-      for (int i = 0; i < data.length; i++) {
-        chapters.add(Chapter.fromJson(data[i]));
-      }
-      return chapters;
-    } else {
-      throw Exception("Failed to load bible chapters");
-    }
   }
 
   Future<Chapter> fetchBibleChapter(
@@ -136,31 +91,16 @@ class ApiService {
   }) async {
     String url =
         '$baseUrl/bibles/$bibleVersionId/chapters/$chapterId?content-type=$contentType&include-notes=$includeNotes&include-titles=$includeTitles&include-chapter-numbers=$includeChapterNumbers&include-verse-numbers=$includeVerseNumbers&include-verse-spans=$includeVerseSpans';
+    String cacheKey =
+        'bibleChapter_${bibleVersionId}_${chapterId}_${contentType}_${includeNotes}_${includeTitles}_${includeChapterNumbers}_${includeVerseNumbers}_$includeVerseSpans';
+    String logString =
+        'fetchBibleChapter(bibleVersionId: $bibleVersionId, chapterId: $chapterId, contentType: $contentType, includeNotes: $includeNotes, includeTitles: $includeTitles, includeChapterNumbers: $includeChapterNumbers, includeVerseNumbers: $includeVerseNumbers, includeVerseSpans: $includeVerseSpans): $url';
 
-    print(
-      'fetchBibleChapter(bibleVersionId: $bibleVersionId, chapterId: $chapterId): $url',
+    return ApiHelper.cachedApiCallSingle<Chapter>(
+      url: url,
+      cacheKey: cacheKey,
+      logString: logString,
+      fromJson: Chapter.fromJson,
     );
-
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {"api-key": apiKey, "Accept-Encoding": "gzip"},
-    );
-
-    if (response.statusCode == 200) {
-      final dynamic data = jsonDecode(response.body)['data'];
-      final Chapter chapter = Chapter.fromJson(data);
-
-      return chapter;
-    } else if (response.statusCode == 404) {
-      // Chapter not found error
-      // The chapter requested does not exist in the selected bible (translation/version)
-      // Return first available chapter in the requested translation instead
-      List<Book> validBooks = await fetchBibleBooks(bibleVersionId);
-      return fetchBibleChapter(bibleVersionId, validBooks[0].chapters[0].id);
-    } else {
-      throw Exception(
-        "Failed to load bible chapter - bibleVersionId: $bibleVersionId, chapterId: $chapterId",
-      );
-    }
   }
 }
