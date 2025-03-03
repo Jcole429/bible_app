@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/data/default_bible_version.dart';
-import 'package:flutter_tutorial/data/default_book.dart';
-import 'package:flutter_tutorial/data/default_chapter.dart';
-import 'package:flutter_tutorial/data/default_language.dart';
-import 'package:flutter_tutorial/models/bible_version.dart';
-import 'package:flutter_tutorial/models/book.dart';
-import 'package:flutter_tutorial/models/chapter.dart';
-import 'package:flutter_tutorial/models/language.dart';
-import 'package:flutter_tutorial/pages/more.dart';
-import 'package:flutter_tutorial/pages/notes.dart';
-import 'package:flutter_tutorial/pages/reader.dart';
-import 'package:flutter_tutorial/pages/search.dart';
-import 'package:flutter_tutorial/widgets/bible_version_menu.dart';
-import 'package:flutter_tutorial/widgets/book_menu.dart';
+import 'package:bible_app/data/default_bible_version.dart';
+import 'package:bible_app/data/default_book.dart';
+import 'package:bible_app/data/default_chapter.dart';
+import 'package:bible_app/data/default_language.dart';
+import 'package:bible_app/models/bible_version.dart';
+import 'package:bible_app/models/book.dart';
+import 'package:bible_app/models/chapter.dart';
+import 'package:bible_app/models/language.dart';
+import 'package:bible_app/pages/more.dart';
+import 'package:bible_app/pages/notes.dart';
+import 'package:bible_app/pages/reader.dart';
+import 'package:bible_app/pages/search.dart';
+import 'package:bible_app/widgets/bible_version_menu.dart';
+import 'package:bible_app/widgets/book_menu.dart';
 import '../services/api_service.dart';
 
 class App extends StatefulWidget {

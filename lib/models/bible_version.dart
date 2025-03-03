@@ -1,6 +1,6 @@
-import 'package:flutter_tutorial/models/audio_bible.dart';
-import 'package:flutter_tutorial/models/country.dart';
-import 'package:flutter_tutorial/models/language.dart';
+import 'package:bible_app/models/audio_bible.dart';
+import 'package:bible_app/models/country.dart';
+import 'package:bible_app/models/language.dart';
 
 class BibleVersion {
   final String id;

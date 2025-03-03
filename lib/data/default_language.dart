@@ -1,4 +1,4 @@
-import 'package:flutter_tutorial/models/language.dart';
+import 'package:bible_app/models/language.dart';
 
 Language defaultLanguage = Language.fromJson({
   "id": "eng",

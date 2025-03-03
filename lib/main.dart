@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/data/default_bible_version.dart';
-import 'package:flutter_tutorial/data/default_book.dart';
-import 'package:flutter_tutorial/data/default_chapter.dart';
-import 'package:flutter_tutorial/pages/app.dart';
-import 'package:flutter_tutorial/pages/notes.dart';
-import 'package:flutter_tutorial/pages/reader.dart';
-import 'package:flutter_tutorial/pages/search.dart';
+import 'package:bible_app/data/default_bible_version.dart';
+import 'package:bible_app/data/default_book.dart';
+import 'package:bible_app/data/default_chapter.dart';
+import 'package:bible_app/pages/app.dart';
+import 'package:bible_app/pages/notes.dart';
+import 'package:bible_app/pages/reader.dart';
+import 'package:bible_app/pages/search.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {

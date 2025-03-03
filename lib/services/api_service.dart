@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:flutter_tutorial/models/bible_version.dart';
-import 'package:flutter_tutorial/models/book.dart';
-import 'package:flutter_tutorial/models/chapter.dart';
+import 'package:bible_app/models/bible_version.dart';
+import 'package:bible_app/models/book.dart';
+import 'package:bible_app/models/chapter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

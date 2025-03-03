@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/models/language.dart';
-import 'package:flutter_tutorial/widgets/language_menu.dart';
+import 'package:bible_app/models/language.dart';
+import 'package:bible_app/widgets/language_menu.dart';
 import '../models/bible_version.dart'; // Import the BibleVersion model
 import '../services/api_service.dart';
 

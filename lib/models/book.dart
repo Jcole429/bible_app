@@ -1,4 +1,4 @@
-import 'package:flutter_tutorial/models/chapter.dart';
+import 'package:bible_app/models/chapter.dart';
 
 class Book {
   final String id;

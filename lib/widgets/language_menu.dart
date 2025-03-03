@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/models/language.dart';
+import 'package:bible_app/models/language.dart';
 import '../models/bible_version.dart'; // Import the BibleVersion model
 
 List<Language> getUniqueLanguages(List<BibleVersion> bibleVersions) {

@@ -1,4 +1,4 @@
-import 'package:flutter_tutorial/models/book.dart';
+import 'package:bible_app/models/book.dart';
 
 Book defaultBook = Book.fromJson({
   "id": "GEN",

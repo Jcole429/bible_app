@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/models/book.dart';
-import 'package:flutter_tutorial/models/chapter.dart';
+import 'package:bible_app/models/book.dart';
+import 'package:bible_app/models/chapter.dart';
 import '../models/bible_version.dart';
 import '../services/api_service.dart';
 

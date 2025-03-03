@@ -1,4 +1,4 @@
-import 'package:flutter_tutorial/models/bible_version.dart';
+import 'package:bible_app/models/bible_version.dart';
 
 BibleVersion defaultBibleVersion = BibleVersion.fromJson({
   "id": "bba9f40183526463-01",

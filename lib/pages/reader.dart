@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/models/bible_version.dart';
-import 'package:flutter_tutorial/models/book.dart';
-import 'package:flutter_tutorial/models/chapter.dart';
-import 'package:flutter_tutorial/services/api_service.dart';
+import 'package:bible_app/models/bible_version.dart';
+import 'package:bible_app/models/book.dart';
+import 'package:bible_app/models/chapter.dart';
+import 'package:bible_app/services/api_service.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class ReaderPage extends StatefulWidget {
