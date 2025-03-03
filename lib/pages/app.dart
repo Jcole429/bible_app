@@ -176,7 +176,6 @@ class _AppState extends State<App> {
             ],
           ),
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.logout))],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.grey,
