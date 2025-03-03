@@ -70,13 +70,13 @@ class _ReaderPageState extends State<ReaderPage> {
                       ".s1": Style(
                         fontWeight: FontWeight.bold,
                         fontSize: FontSize.larger,
-                        margin: Margins.only(bottom: 5),
+                        margin: Margins.only(bottom: 0),
                       ),
                       // Related Verses (Under chapter title)
                       ".r": Style(
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
-                        margin: Margins.only(top: -0),
+                        margin: Margins.only(top: 0),
                       ),
                       // Chapter Sub-Section Titles
                       ".s2": Style(
