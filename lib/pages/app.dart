@@ -60,17 +60,17 @@ class _AppState extends State<App> {
         ];
         return Scaffold(
           appBar: AppBar(
-            // title: Text("My Bible"),
             backgroundColor: Colors.grey,
-            leadingWidth: 250,
-            leading: Container(
-              margin: EdgeInsets.only(left: 5, bottom: 5, top: 10),
+            leadingWidth: 0,
+            centerTitle: false,
+            title: Container(
+              height: 35,
               decoration: BoxDecoration(
                 color: Colors.grey[700],
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Row(
-                // mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -83,8 +83,9 @@ class _AppState extends State<App> {
                         _isBookMenuOpen = false; // Reset when menu is closed
                       });
                     },
-                    // style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                    style: TextButton.styleFrom(minimumSize: Size(50, 50)),
                     child: Text(
+                      softWrap: false,
                       "${bibleState.selectedBook!.name} ${bibleState.selectedChapter!.number}",
                       textAlign: TextAlign.start,
                       style: TextStyle(
@@ -97,14 +98,9 @@ class _AppState extends State<App> {
                   ),
 
                   // Divider
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8.0),
-                    // height: 20.0,
-                    width: 2,
-                    color: Colors.grey,
-                  ),
+                  Container(height: 35.0, width: 2, color: Colors.grey),
 
-                  // Bible version menu
+                  // Bible menu
                   TextButton(
                     onPressed: () {
                       if (_isBibleMenuOpen) {
@@ -115,7 +111,7 @@ class _AppState extends State<App> {
                         _isBibleMenuOpen = false; // Reset when menu is closed
                       });
                     },
-                    // style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                    style: TextButton.styleFrom(minimumSize: Size(50, 50)),
                     child: Text(
                       bibleState.selectedBible!.abbreviation,
                       textAlign: TextAlign.start,
