@@ -12,6 +12,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesHelper {
   static SharedPreferences? _prefs;
 
+  static const String _languageKey = 'selectedLanguage';
+  static const String _bibleKey = 'selectedBible';
+  static const String _bookKey = 'selectedBook';
+  static const String _chapterKey = 'selectedChapter';
+
   // Initialize SharedPreferences once
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -45,11 +50,11 @@ class SharedPreferencesHelper {
   }
 
   static Future<void> saveSelectedLanguage(Language language) async {
-    return saveString('selectedLanguage', jsonEncode(language.toJson()));
+    return saveString(_languageKey, jsonEncode(language.toJson()));
   }
 
   static Future<Language> getSelectedLanguage() async {
-    String? data = getString('selectedLanguage');
+    String? data = getString(_languageKey);
     if (data != null) {
       return Language.fromJson(jsonDecode(data));
     } else {
@@ -58,11 +63,11 @@ class SharedPreferencesHelper {
   }
 
   static Future<void> saveSelectedBible(Bible bible) async {
-    return saveString('selectedBible', jsonEncode(bible.toJson()));
+    return saveString(_bibleKey, jsonEncode(bible.toJson()));
   }
 
   static Future<Bible> getSelectedBible() async {
-    String? data = getString('selectedBible');
+    String? data = getString(_bibleKey);
     if (data != null) {
       return Bible.fromJson(jsonDecode(data));
     } else {
@@ -71,11 +76,11 @@ class SharedPreferencesHelper {
   }
 
   static Future<void> saveSelectedBook(Book book) async {
-    return saveString('selectedBook', jsonEncode(book.toJson()));
+    return saveString(_bookKey, jsonEncode(book.toJson()));
   }
 
   static Future<Book> getSelectedBook() async {
-    String? data = getString('selectedBook');
+    String? data = getString(_bookKey);
     if (data != null) {
       return Book.fromJson(jsonDecode(data));
     } else {
@@ -84,11 +89,11 @@ class SharedPreferencesHelper {
   }
 
   static Future<void> saveSelectedChapter(Chapter chapter) async {
-    return saveString('selectedChapter', jsonEncode(chapter.toJson()));
+    return saveString(_chapterKey, jsonEncode(chapter.toJson()));
   }
 
   static Future<Chapter> getSelectedChapter() async {
-    String? data = getString('selectedChapter');
+    String? data = getString(_chapterKey);
     if (data != null) {
       return Chapter.fromJson(jsonDecode(data));
     } else {
