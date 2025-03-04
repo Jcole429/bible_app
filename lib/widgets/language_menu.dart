@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bible_app/models/language.dart';
-import '../models/bible_version.dart'; // Import the BibleVersion model
+import '../models/bible.dart'; // Import the Bible model
 
-List<Language> getUniqueLanguages(List<BibleVersion> bibleVersions) {
+List<Language> getUniqueLanguages(List<Bible> bibleVersions) {
   Set<String> seenLanguageIds = {};
   List<Language> uniqueLanguages = [];
 
@@ -26,7 +26,7 @@ List<Language> getUniqueLanguages(List<BibleVersion> bibleVersions) {
 
 void showLanguageMenu(
   BuildContext context,
-  List<BibleVersion> bibleVersions,
+  List<Bible> bibleVersions,
   Language selectedLanguage,
   Function(Language) onLanguageSelected,
 ) {

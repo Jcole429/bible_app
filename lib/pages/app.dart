@@ -4,7 +4,7 @@ import 'package:bible_app/pages/more.dart';
 import 'package:bible_app/pages/notes.dart';
 import 'package:bible_app/pages/reader.dart';
 import 'package:bible_app/pages/search.dart';
-import 'package:bible_app/widgets/bible_version_menu.dart';
+import 'package:bible_app/widgets/bible_menu.dart';
 import 'package:bible_app/widgets/book_menu.dart';
 import 'package:provider/provider.dart';
 import '../services/api_service.dart';
@@ -21,7 +21,7 @@ class _AppState extends State<App> {
 
   int _selectedIndex = 0;
   bool _isBookMenuOpen = false;
-  bool _isBibleVersionMenuOpen = false;
+  bool _isBibleMenuOpen = false;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _AppState extends State<App> {
     return Consumer<BibleState>(
       builder: (context, bibleState, _) {
         if (bibleState.selectedLanguage == null ||
-            bibleState.selectedBibleVersion == null ||
+            bibleState.selectedBible == null ||
             bibleState.selectedBook == null ||
             bibleState.selectedChapter == null) {
           return const Scaffold(
@@ -107,18 +107,17 @@ class _AppState extends State<App> {
                   // Bible version menu
                   TextButton(
                     onPressed: () {
-                      if (_isBibleVersionMenuOpen) {
+                      if (_isBibleMenuOpen) {
                         return; // Prevent duplicate opening
                       }
-                      _isBibleVersionMenuOpen = true;
-                      showBibleVersionMenu(context).then((_) {
-                        _isBibleVersionMenuOpen =
-                            false; // Reset when menu is closed
+                      _isBibleMenuOpen = true;
+                      showBibleMenu(context).then((_) {
+                        _isBibleMenuOpen = false; // Reset when menu is closed
                       });
                     },
                     // style: TextButton.styleFrom(padding: EdgeInsets.zero),
                     child: Text(
-                      bibleState.selectedBibleVersion!.abbreviation,
+                      bibleState.selectedBible!.abbreviation,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.white,

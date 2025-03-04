@@ -32,7 +32,7 @@ class ReaderPageState extends State<ReaderPage> {
     Chapter? previousChapter = bibleState.selectedChapter!.previous;
     if (previousChapter != null) {
       final fetchedChapter = await apiService.fetchBibleChapter(
-        bibleState.selectedBibleVersion!.id,
+        bibleState.selectedBible!.id,
         previousChapter.id,
       );
       bibleState.updateChapter(fetchedChapter);
@@ -44,7 +44,7 @@ class ReaderPageState extends State<ReaderPage> {
     Chapter? nextChapter = bibleState.selectedChapter!.next;
     if (nextChapter != null) {
       final fetchedChapter = await apiService.fetchBibleChapter(
-        bibleState.selectedBibleVersion!.id,
+        bibleState.selectedBible!.id,
         nextChapter.id,
       );
       bibleState.updateChapter(fetchedChapter);

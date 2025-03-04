@@ -1,6 +1,6 @@
-import 'package:bible_app/models/bible_version.dart';
+import 'package:bible_app/models/bible.dart';
 
-BibleVersion defaultBibleVersion = BibleVersion.fromJson({
+Bible defaultBible = Bible.fromJson({
   "id": "bba9f40183526463-01",
   "dblId": "bba9f40183526463",
   "name": "Berean Standard Bible",

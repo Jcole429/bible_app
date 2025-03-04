@@ -23,19 +23,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: App(),
-      // routes: {
-      //   '/reader':
-      //       (context) => ReaderPage(
-      //         selectedBibleVersion: defaultBibleVersion,
-      //         selectedBibleBook: defaultBook,
-      //         selectedBibleChapter: defaultChapter,
-      //         onChapterChange: {() => {}},
-      //       ),
-      //   '/search': (context) => SearchPage(),
-      //   '/notes': (context) => NotesPage(),
-      // },
-    );
+    return MaterialApp(home: App());
   }
 }

@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:bible_app/data/default_bible_version.dart';
+import 'package:bible_app/data/default_bible.dart';
 import 'package:bible_app/data/default_book.dart';
 import 'package:bible_app/data/default_chapter.dart';
 import 'package:bible_app/data/default_language.dart';
-import 'package:bible_app/models/bible_version.dart';
+import 'package:bible_app/models/bible.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
 import 'package:bible_app/models/language.dart';
@@ -57,16 +57,16 @@ class SharedPreferencesHelper {
     }
   }
 
-  static Future<void> saveSelectedBible(BibleVersion bible) async {
+  static Future<void> saveSelectedBible(Bible bible) async {
     return saveString('selectedBible', jsonEncode(bible.toJson()));
   }
 
-  static Future<BibleVersion> getSelectedBible() async {
+  static Future<Bible> getSelectedBible() async {
     String? data = getString('selectedBible');
     if (data != null) {
-      return BibleVersion.fromJson(jsonDecode(data));
+      return Bible.fromJson(jsonDecode(data));
     } else {
-      return defaultBibleVersion;
+      return defaultBible;
     }
   }
 

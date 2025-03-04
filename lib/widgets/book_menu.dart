@@ -11,7 +11,7 @@ Future<void> showBookMenu(BuildContext context) async {
   final bibleState = Provider.of<BibleState>(context, listen: false);
 
   final List<Book> bibleBooks = await apiService.fetchBibleBooks(
-    bibleState.selectedBibleVersion!.id,
+    bibleState.selectedBible!.id,
   );
 
   if (!context.mounted) return; // Prevent execution if widget is unmounted

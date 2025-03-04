@@ -2,7 +2,7 @@ import 'package:bible_app/models/audio_bible.dart';
 import 'package:bible_app/models/country.dart';
 import 'package:bible_app/models/language.dart';
 
-class BibleVersion {
+class Bible {
   final String id;
   final String dblId;
   final String? relatedDbl;
@@ -20,7 +20,7 @@ class BibleVersion {
   final String info;
   final List<AudioBible> audioBibles;
 
-  BibleVersion({
+  Bible({
     required this.id,
     required this.dblId,
     this.relatedDbl,
@@ -39,9 +39,9 @@ class BibleVersion {
     required this.audioBibles,
   });
 
-  // Convert a JSON map to a BibleVersion object
-  factory BibleVersion.fromJson(Map<String, dynamic> json) {
-    return BibleVersion(
+  // Convert a JSON map to a Bible object
+  factory Bible.fromJson(Map<String, dynamic> json) {
+    return Bible(
       id: json['id'] as String,
       dblId: json['dblId'] as String,
       relatedDbl: json['relatedDbl'] as String?,
@@ -69,7 +69,7 @@ class BibleVersion {
     );
   }
 
-  // Convert a BibleVersion object to a JSON map
+  // Convert a Bible object to a JSON map
   Map<String, dynamic> toJson() {
     return {
       'id': id,

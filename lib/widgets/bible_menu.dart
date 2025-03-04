@@ -2,11 +2,11 @@ import 'package:bible_app/models/language.dart';
 import 'package:bible_app/utils/bible_state.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_app/widgets/language_menu.dart';
-import '../models/bible_version.dart';
+import '../models/bible.dart';
 import '../services/api_service.dart';
 import 'package:provider/provider.dart';
 
-Future<void> showBibleVersionMenu(BuildContext context) async {
+Future<void> showBibleMenu(BuildContext context) async {
   final ApiService apiService = ApiService();
   TextEditingController searchController = TextEditingController();
   FocusNode searchFocusNode = FocusNode(); // Add FocusNode
@@ -16,8 +16,7 @@ Future<void> showBibleVersionMenu(BuildContext context) async {
   Language startingLanguage = bibleState.selectedLanguage!;
   Language selectedLanguage = startingLanguage;
 
-  final List<BibleVersion> bibleVersions =
-      await apiService.fetchBibleVersions();
+  final List<Bible> bibleVersions = await apiService.fetchBibles();
 
   showModalBottomSheet(
     context: context,
@@ -29,14 +28,14 @@ Future<void> showBibleVersionMenu(BuildContext context) async {
     builder: (BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) {
-          List<BibleVersion> filteredBibleVersions =
+          List<Bible> filteredBibles =
               bibleVersions.where((bibleVersion) {
                 return bibleVersion.language.id == selectedLanguage.id;
               }).toList();
 
           void filterListFromSearch(String query) {
             setState(() {
-              filteredBibleVersions =
+              filteredBibles =
                   bibleVersions.where((bibleVersion) {
                     String name = bibleVersion.name.toLowerCase();
                     String abbreviation =
@@ -141,7 +140,7 @@ Future<void> showBibleVersionMenu(BuildContext context) async {
                             (newLanguage) {
                               setState(() {
                                 selectedLanguage = newLanguage;
-                                filteredBibleVersions =
+                                filteredBibles =
                                     bibleVersions.where((bibleVersion) {
                                       return bibleVersion.language.id ==
                                           newLanguage.id;
@@ -158,21 +157,19 @@ Future<void> showBibleVersionMenu(BuildContext context) async {
                       Expanded(
                         child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: filteredBibleVersions.length,
+                          itemCount: filteredBibles.length,
                           itemBuilder: (context, index) {
-                            final version = filteredBibleVersions[index];
+                            final version = filteredBibles[index];
                             return ListTile(
                               title: Text(version.abbreviation),
                               subtitle: Text(version.name),
                               onTap: () {
-                                bibleState.updateBibleVersion(version);
+                                bibleState.updateBible(version);
                                 bibleState.updateLanguage(selectedLanguage);
                                 Navigator.pop(context);
                               },
                               trailing:
-                                  bibleState
-                                              .selectedBibleVersion!
-                                              .abbreviation ==
+                                  bibleState.selectedBible!.abbreviation ==
                                           version.abbreviation
                                       ? const Icon(Icons.check)
                                       : null,

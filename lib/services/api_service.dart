@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bible_app/models/bible_version.dart';
+import 'package:bible_app/models/bible.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,7 +10,7 @@ class ApiService {
   final String baseUrl = "https://api.scripture.api.bible/v1";
   final String apiKey = dotenv.env['API_KEY']!;
 
-  Future<List<BibleVersion>> fetchBibleVersions({
+  Future<List<Bible>> fetchBibles({
     String? languageId,
     includeFullDetails = true,
   }) async {
@@ -20,13 +20,13 @@ class ApiService {
     }
     String cacheKey = 'bibleVersions_${includeFullDetails}_$languageId';
     String logString =
-        'fetchBibleVersions(includeFullDetails: $includeFullDetails, languageId: $languageId)';
+        'fetchBibles(includeFullDetails: $includeFullDetails, languageId: $languageId)';
 
-    return ApiHelper.cachedApiCallList<BibleVersion>(
+    return ApiHelper.cachedApiCallList<Bible>(
       url: url,
       cacheKey: cacheKey,
       logString: logString,
-      fromJson: BibleVersion.fromJson,
+      fromJson: Bible.fromJson,
     );
   }
 

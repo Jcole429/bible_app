@@ -1,7 +1,7 @@
 import 'package:bible_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_app/models/language.dart';
-import 'package:bible_app/models/bible_version.dart';
+import 'package:bible_app/models/bible.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
 import 'package:bible_app/utils/shared_preferences_helper.dart'; // Your SharedPreferences helper
@@ -11,20 +11,20 @@ class BibleState extends ChangeNotifier {
   ApiService apiService = ApiService();
 
   Language? _selectedLanguage;
-  BibleVersion? _selectedBibleVersion;
+  Bible? _selectedBible;
   Book? _selectedBook;
   Chapter? _selectedChapter;
 
   // Getters
   Language? get selectedLanguage => _selectedLanguage;
-  BibleVersion? get selectedBibleVersion => _selectedBibleVersion;
+  Bible? get selectedBible => _selectedBible;
   Book? get selectedBook => _selectedBook;
   Chapter? get selectedChapter => _selectedChapter;
 
   // Initialize state from SharedPreferences
   Future<void> initialize() async {
     _selectedLanguage = await SharedPreferencesHelper.getSelectedLanguage();
-    _selectedBibleVersion = await SharedPreferencesHelper.getSelectedBible();
+    _selectedBible = await SharedPreferencesHelper.getSelectedBible();
     _selectedBook = await SharedPreferencesHelper.getSelectedBook();
     _selectedChapter = await SharedPreferencesHelper.getSelectedChapter();
     notifyListeners();
@@ -43,7 +43,7 @@ class BibleState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateBibleVersion(BibleVersion newVersion) async {
+  void updateBible(Bible newVersion) async {
     Chapter newChapter = await apiService.fetchBibleChapter(
       newVersion.id,
       selectedChapter!.id,
@@ -53,7 +53,7 @@ class BibleState extends ChangeNotifier {
       newChapter.bookId,
     );
 
-    _selectedBibleVersion = newVersion;
+    _selectedBible = newVersion;
     _selectedChapter = newChapter;
     _selectedBook = newBook;
 
