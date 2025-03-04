@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:bible_app/data/default_bible.dart';
 import 'package:bible_app/data/default_book.dart';
 import 'package:bible_app/data/default_chapter.dart';
@@ -16,6 +17,7 @@ class SharedPreferencesHelper {
   static const String _bibleKey = 'selectedBible';
   static const String _bookKey = 'selectedBook';
   static const String _chapterKey = 'selectedChapter';
+  static const String _sortAlphabeticalKey = 'sortAlphabetical';
 
   // Initialize SharedPreferences once
   static Future<void> init() async {
@@ -42,6 +44,14 @@ class SharedPreferencesHelper {
   static List<dynamic>? getList(String key) {
     String? jsonString = _prefs?.getString(key);
     return jsonString != null ? jsonDecode(jsonString) : null;
+  }
+
+  static Future<void> saveBool(String key, bool value) async {
+    await _prefs?.setBool(key, value);
+  }
+
+  static bool? getBool(String key) {
+    return _prefs?.getBool(key);
   }
 
   // Clear cache
@@ -98,6 +108,19 @@ class SharedPreferencesHelper {
       return Chapter.fromJson(jsonDecode(data));
     } else {
       return defaultChapter;
+    }
+  }
+
+  static Future<void> saveSortAlphabetical(bool sortAlphabetical) async {
+    return saveBool(_sortAlphabeticalKey, sortAlphabetical);
+  }
+
+  static Future<bool> getSortAlphabetical() async {
+    bool? data = getBool(_sortAlphabeticalKey);
+    if (data != null) {
+      return data;
+    } else {
+      return false;
     }
   }
 }

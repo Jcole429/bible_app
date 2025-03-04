@@ -15,11 +15,14 @@ class BibleState extends ChangeNotifier {
   Book? _selectedBook;
   Chapter? _selectedChapter;
 
+  bool _sortAlphabetical = false;
+
   // Getters
   Language? get selectedLanguage => _selectedLanguage;
   Bible? get selectedBible => _selectedBible;
   Book? get selectedBook => _selectedBook;
   Chapter? get selectedChapter => _selectedChapter;
+  bool get sortAlphabetical => _sortAlphabetical;
 
   // Initialize state from SharedPreferences
   Future<void> initialize() async {
@@ -27,6 +30,7 @@ class BibleState extends ChangeNotifier {
     _selectedBible = await SharedPreferencesHelper.getSelectedBible();
     _selectedBook = await SharedPreferencesHelper.getSelectedBook();
     _selectedChapter = await SharedPreferencesHelper.getSelectedChapter();
+    _sortAlphabetical = await SharedPreferencesHelper.getSortAlphabetical();
     notifyListeners();
   }
 
@@ -67,6 +71,12 @@ class BibleState extends ChangeNotifier {
   void updateLanguage(Language newLanguage) {
     _selectedLanguage = newLanguage;
     SharedPreferencesHelper.saveSelectedLanguage(newLanguage);
+    notifyListeners();
+  }
+
+  void updateSortAlphabetical(bool newSortAlphabetical) {
+    _sortAlphabetical = newSortAlphabetical;
+    SharedPreferencesHelper.saveSortAlphabetical(newSortAlphabetical);
     notifyListeners();
   }
 }
