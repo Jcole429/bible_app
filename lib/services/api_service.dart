@@ -85,11 +85,12 @@ class ApiService {
     String bibleVersionId,
     String chapterId, {
     String contentType = "html",
-    bool includeNotes = true, // Inline footnotes
-    bool includeTitles = true, // The titles of chapter sections
-    bool includeChapterNumbers = false, // Display the chapter number
-    bool includeVerseNumbers = true,
-    bool includeVerseSpans = true,
+    bool includeNotes = true, // Include footnotes in content
+    bool includeTitles = true, // Include section titles in content
+    bool includeChapterNumbers = false, // Include chapter numbers in content
+    bool includeVerseNumbers = true, // Include verse numbers in content
+    bool includeVerseSpans =
+        false, //nclude spans that wrap verse numbers and verse text for bible content.
   }) async {
     String url =
         '$baseUrl/bibles/$bibleVersionId/chapters/$chapterId?content-type=$contentType&include-notes=$includeNotes&include-titles=$includeTitles&include-chapter-numbers=$includeChapterNumbers&include-verse-numbers=$includeVerseNumbers&include-verse-spans=$includeVerseSpans';
