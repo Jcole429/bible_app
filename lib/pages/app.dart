@@ -41,6 +41,12 @@ class _AppState extends State<App> {
     _initializePreferencesAndData();
   }
 
+  @override
+  void dispose() {
+    _readerScrollController.dispose();
+    super.dispose();
+  }
+
   // Initialize SharedPreferences and load initial data
   Future<void> _initializePreferencesAndData() async {
     final savedLanguage = await SharedPreferencesHelper.getSelectedLanguage();
