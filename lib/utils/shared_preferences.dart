@@ -57,17 +57,12 @@ class SharedPreferencesHelper {
     }
   }
 
-  static Future<void> saveSelectedBibleVersion(
-    BibleVersion bibleVersion,
-  ) async {
-    return saveString(
-      'selectedBibleVersion',
-      jsonEncode(bibleVersion.toJson()),
-    );
+  static Future<void> saveSelectedBible(BibleVersion bible) async {
+    return saveString('selectedBible', jsonEncode(bible.toJson()));
   }
 
-  static Future<BibleVersion> getSelectedBibleVersion() async {
-    String? data = getString('selectedBibleVersion');
+  static Future<BibleVersion> getSelectedBible() async {
+    String? data = getString('selectedBible');
     if (data != null) {
       return BibleVersion.fromJson(jsonDecode(data));
     } else {
