@@ -122,32 +122,34 @@ class ReaderPageState extends State<ReaderPage> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 20,
-                left: 20,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.grey[700],
-                  onPressed: () {
-                    _goToPreviousChapter(bibleState);
-                  },
-                  shape: CircleBorder(),
-                  foregroundColor: Colors.white,
-                  child: Icon(Icons.arrow_back),
+              if (bibleState.selectedChapter!.previous != null)
+                Positioned(
+                  bottom: 20,
+                  left: 20,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.grey[700],
+                    onPressed: () {
+                      _goToPreviousChapter(bibleState);
+                    },
+                    shape: CircleBorder(),
+                    foregroundColor: Colors.white,
+                    child: Icon(Icons.arrow_back),
+                  ),
                 ),
-              ),
-              Positioned(
-                bottom: 20,
-                right: 20,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.grey[700],
-                  onPressed: () {
-                    _goToNextChapter(bibleState);
-                  },
-                  shape: CircleBorder(),
-                  foregroundColor: Colors.white,
-                  child: Icon(Icons.arrow_forward),
+              if (bibleState.selectedChapter!.next != null)
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.grey[700],
+                    onPressed: () {
+                      _goToNextChapter(bibleState);
+                    },
+                    shape: CircleBorder(),
+                    foregroundColor: Colors.white,
+                    child: Icon(Icons.arrow_forward),
+                  ),
                 ),
-              ),
             ],
           ),
         );
