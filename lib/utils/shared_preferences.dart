@@ -1,4 +1,12 @@
 import 'dart:convert';
+import 'package:bible_app/data/default_bible_version.dart';
+import 'package:bible_app/data/default_book.dart';
+import 'package:bible_app/data/default_chapter.dart';
+import 'package:bible_app/data/default_language.dart';
+import 'package:bible_app/models/bible_version.dart';
+import 'package:bible_app/models/book.dart';
+import 'package:bible_app/models/chapter.dart';
+import 'package:bible_app/models/language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesHelper {
@@ -34,5 +42,62 @@ class SharedPreferencesHelper {
   // Clear cache
   static Future<void> clear() async {
     await _prefs?.clear();
+  }
+
+  static Future<void> saveSelectedLanguage(Language language) async {
+    return saveString('selectedLanguage', jsonEncode(language.toJson()));
+  }
+
+  static Future<Language> getSelectedLanguage() async {
+    String? data = getString('selectedLanguage');
+    if (data != null) {
+      return Language.fromJson(jsonDecode(data));
+    } else {
+      return defaultLanguage;
+    }
+  }
+
+  static Future<void> saveSelectedBibleVersion(
+    BibleVersion bibleVersion,
+  ) async {
+    return saveString(
+      'selectedBibleVersion',
+      jsonEncode(bibleVersion.toJson()),
+    );
+  }
+
+  static Future<BibleVersion> getSelectedBibleVersion() async {
+    String? data = getString('selectedBibleVersion');
+    if (data != null) {
+      return BibleVersion.fromJson(jsonDecode(data));
+    } else {
+      return defaultBibleVersion;
+    }
+  }
+
+  static Future<void> saveSelectedBook(Book book) async {
+    return saveString('selectedBook', jsonEncode(book.toJson()));
+  }
+
+  static Future<Book> getSelectedBook() async {
+    String? data = getString('selectedBook');
+    if (data != null) {
+      return Book.fromJson(jsonDecode(data));
+    } else {
+      return defaultBook;
+    }
+  }
+
+  static Future<void> saveSelectedChapter(Chapter chapter) async {
+    return saveString('selectedChapter', jsonEncode(chapter.toJson()));
+  }
+
+  static Future<Chapter> getSelectedChapter() async {
+    String? data = getString('selectedChapter');
+    if (data != null) {
+      return Chapter.fromJson(jsonDecode(data));
+    } else {
+      return defaultChapter;
+    }
   }
 }
