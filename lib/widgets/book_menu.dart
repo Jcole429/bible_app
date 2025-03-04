@@ -173,23 +173,51 @@ Widget _buildBookList(
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ToggleButtons(
-              borderRadius: BorderRadius.circular(8),
-              selectedColor: Colors.white,
-              fillColor: Colors.blue,
-              color: Colors.black,
-              children: const [Text("Traditional"), Text("Alphabetical")],
-              isSelected: [
-                !bibleState.sortAlphabetical,
-                bibleState.sortAlphabetical,
-              ],
-              onPressed: (int index) {
-                setState(() {
-                  bibleState.updateSortAlphabetical(index == 1);
-                });
-              },
+          SafeArea(
+            child: Container(
+              // width: 150.0, // hardcoded for testing purpose
+              height: 30,
+              // color: Colors.grey[700],
+              decoration: BoxDecoration(
+                color: Colors.grey[700],
+                border: Border.all(color: Colors.black, width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              // borderRadius: BorderRadius.circular(5),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return ToggleButtons(
+                    renderBorder: false,
+                    constraints: BoxConstraints.expand(
+                      width: constraints.maxWidth / 2,
+                    ),
+                    color: Colors.white,
+                    selectedColor: Colors.white,
+                    fillColor: Colors.grey,
+                    // splashColor: Colors.blue,
+                    borderRadius: BorderRadius.circular(5),
+                    isSelected: [
+                      !bibleState.sortAlphabetical,
+                      bibleState.sortAlphabetical,
+                    ],
+                    onPressed: (index) {
+                      setState(() {
+                        bibleState.updateSortAlphabetical(index == 1);
+                      });
+                    },
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text("Traditional"),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text("Alphabetical"),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ],
