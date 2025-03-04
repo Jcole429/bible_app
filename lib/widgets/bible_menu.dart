@@ -174,10 +174,7 @@ Future<void> showBibleMenu(BuildContext context) async {
                                 children: [
                                   Text(
                                     version.nameLocal,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      // fontStyle: FontStyle.italic,
-                                    ),
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                   if (version.descriptionLocal != null &&
                                       version.descriptionLocal!.isNotEmpty &&

@@ -124,11 +124,16 @@ Widget _buildBookList(List<Book> books, Function(Book) onBookSelected) {
       final book = books[index];
       return ListTile(
         title: Text(book.name),
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
         subtitle: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(book.nameLong, style: TextStyle(color: Colors.black)),
+            if (book.name != book.nameLong)
+              Text(book.nameLong, style: TextStyle(color: Colors.black)),
             Text("${book.chapters.length} Chapters"),
           ],
         ),
