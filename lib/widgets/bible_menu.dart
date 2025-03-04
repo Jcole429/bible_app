@@ -163,16 +163,42 @@ Future<void> showBibleMenu(BuildContext context) async {
                           itemBuilder: (context, index) {
                             final version = filteredBibles[index];
                             return ListTile(
-                              title: Text(version.abbreviation),
-                              subtitle: Text(version.name),
+                              title: Text(version.abbreviationLocal),
+                              titleTextStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              subtitle: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    version.nameLocal,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      // fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                  if (version.descriptionLocal != null &&
+                                      version.descriptionLocal!.isNotEmpty &&
+                                      version.descriptionLocal !=
+                                          version.nameLocal)
+                                    Text(
+                                      version.descriptionLocal!,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        // fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                ],
+                              ),
                               onTap: () {
                                 bibleState.updateBible(version);
                                 bibleState.updateLanguage(selectedLanguage);
                                 Navigator.pop(context);
                               },
                               trailing:
-                                  bibleState.selectedBible!.abbreviation ==
-                                          version.abbreviation
+                                  bibleState.selectedBible!.id == version.id
                                       ? const Icon(Icons.check)
                                       : null,
                             );

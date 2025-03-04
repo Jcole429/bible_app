@@ -10,8 +10,8 @@ class Bible {
   final String nameLocal;
   final String abbreviation;
   final String abbreviationLocal;
-  final String description;
-  final String descriptionLocal;
+  final String? description;
+  final String? descriptionLocal;
   final Language language;
   final List<Country> countries;
   final String type;
@@ -26,10 +26,10 @@ class Bible {
     this.relatedDbl,
     required this.name,
     required this.nameLocal,
-    required this.abbreviation,
-    required this.abbreviationLocal,
-    required this.description,
-    required this.descriptionLocal,
+    required String abbreviation,
+    required String abbreviationLocal,
+    String? description,
+    String? descriptionLocal,
     required this.language,
     required this.countries,
     required this.type,
@@ -37,7 +37,17 @@ class Bible {
     required this.copyright,
     required this.info,
     required this.audioBibles,
-  });
+  }) : abbreviation = abbreviation.toUpperCase(),
+       abbreviationLocal = abbreviationLocal.toUpperCase(),
+       description =
+           description != null && description.isNotEmpty
+               ? description[0].toUpperCase() + description.substring(1)
+               : description,
+       descriptionLocal =
+           descriptionLocal != null && descriptionLocal.isNotEmpty
+               ? descriptionLocal[0].toUpperCase() +
+                   descriptionLocal.substring(1)
+               : descriptionLocal;
 
   // Convert a JSON map to a Bible object
   factory Bible.fromJson(Map<String, dynamic> json) {
@@ -49,8 +59,8 @@ class Bible {
       nameLocal: json['nameLocal'] as String,
       abbreviation: json['abbreviation'] as String,
       abbreviationLocal: json['abbreviationLocal'] as String,
-      description: json['description'] ?? "[No Description]",
-      descriptionLocal: json['descriptionLocal'] ?? "[No Description]",
+      description: json['description'] ?? "",
+      descriptionLocal: json['descriptionLocal'] ?? "",
       language: Language.fromJson(json['language']),
       countries:
           (json['countries'] as List<dynamic>?)
