@@ -18,6 +18,8 @@ Future<void> showBibleMenu(BuildContext context) async {
 
   final List<Bible> bibleVersions = await apiService.fetchBibles();
 
+  if (!context.mounted) return; // Prevent execution if widget is unmounted
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true, // Allows it to take more space
