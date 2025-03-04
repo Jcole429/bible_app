@@ -145,6 +145,7 @@ Widget _buildBookList(
                 final book = sortedBooks[index];
                 return ListTile(
                   title: Text(book.name),
+                  visualDensity: VisualDensity.compact,
                   titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
