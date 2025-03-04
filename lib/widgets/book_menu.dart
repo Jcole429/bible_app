@@ -45,7 +45,7 @@ Future<void> showBookMenu(BuildContext context) async {
                     // Header with Back Button & Title
                     Row(
                       children: [
-                        TextButton.icon(
+                        TextButton(
                           onPressed: () {
                             if (selectedBookForChapters == null) {
                               Navigator.pop(context); // Close modal
@@ -56,8 +56,7 @@ Future<void> showBookMenu(BuildContext context) async {
                               });
                             }
                           },
-                          icon: Icon(Icons.close),
-                          label: Text(
+                          child: Text(
                             selectedBookForChapters != null ? "Back" : "Cancel",
                             style: TextStyle(
                               color: Colors.black,
@@ -79,7 +78,17 @@ Future<void> showBookMenu(BuildContext context) async {
                             ),
                           ),
                         ),
-                        SizedBox(width: 48), // Align title properly
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "History",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
 
@@ -111,12 +120,23 @@ Widget _buildBookList(List<Book> books, Function(Book) onBookSelected) {
   return ListView.builder(
     itemCount: books.length,
     itemBuilder: (context, index) {
+      final bibleState = Provider.of<BibleState>(context, listen: false);
+      final book = books[index];
       return ListTile(
-        title: Text(books[index].name),
-        trailing: Text(books[index].abbreviation),
+        title: Text(book.name),
+        subtitle: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(book.nameLong, style: TextStyle(color: Colors.black)),
+            Text("${book.chapters.length} Chapters"),
+          ],
+        ),
+        trailing:
+            bibleState.selectedBook!.id == book.id ? Icon(Icons.check) : null,
         onTap: () {
-          print('Clicked Book: ${books[index].name}');
-          onBookSelected(books[index]); // Updates state to show chapter grid
+          print('Clicked Book: ${book.name}');
+          onBookSelected(book); // Updates state to show chapter grid
         },
       );
     },
