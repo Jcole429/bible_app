@@ -110,9 +110,8 @@ void showLanguageMenu(
                                 selectedLanguage =
                                     languages[index]; // Update selected language
                               });
-                              onLanguageSelected(
-                                languages[index],
-                              ); // Update main modal
+                              onLanguageSelected(selectedLanguage);
+                              Navigator.pop(context);
                             },
                           );
                         },

@@ -1,4 +1,4 @@
-import 'package:bible_app/utils/shared_preferences.dart';
+import 'package:bible_app/utils/shared_preferences_helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';

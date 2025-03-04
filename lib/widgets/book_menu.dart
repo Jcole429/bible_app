@@ -1,20 +1,17 @@
+import 'package:bible_app/utils/bible_state.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
-import '../models/bible_version.dart';
 import '../services/api_service.dart';
+import 'package:provider/provider.dart';
 
-Future<void> showBookMenu(
-  BuildContext context,
-  BibleVersion selectedBibleVersion,
-  Book selectedBook,
-  Function(Book) onBookSelected,
-  Function(Chapter) onChapterSelected,
-) async {
+Future<void> showBookMenu(BuildContext context) async {
   final ApiService apiService = ApiService();
 
+  final bibleState = Provider.of<BibleState>(context, listen: false);
+
   final List<Book> bibleBooks = await apiService.fetchBibleBooks(
-    selectedBibleVersion.id,
+    bibleState.selectedBibleVersion!.id,
   );
 
   if (!context.mounted) return; // Prevent execution if widget is unmounted
@@ -97,11 +94,7 @@ Future<void> showBookMenu(
                                   selectedBookForChapters = book;
                                 });
                               })
-                              : _buildChapterGrid(
-                                selectedBookForChapters!,
-                                onBookSelected,
-                                onChapterSelected,
-                              ),
+                              : _buildChapterGrid(selectedBookForChapters!),
                     ),
                   ],
                 ),
@@ -122,8 +115,6 @@ Widget _buildBookList(List<Book> books, Function(Book) onBookSelected) {
         title: Text(books[index].name),
         trailing: Text(books[index].abbreviation),
         onTap: () {
-          // setState(() => books[index]); // Switch to chapter view
-
           print('Clicked Book: ${books[index].name}');
           onBookSelected(books[index]); // Updates state to show chapter grid
         },
@@ -132,11 +123,7 @@ Widget _buildBookList(List<Book> books, Function(Book) onBookSelected) {
   );
 }
 
-Widget _buildChapterGrid(
-  Book selectedBook,
-  Function(Book) onBookSelected,
-  Function(Chapter) onChapterSelected,
-) {
+Widget _buildChapterGrid(Book selectedBook) {
   int totalChapters = selectedBook.chapters.length;
   ApiService apiService = ApiService();
 
@@ -148,14 +135,22 @@ Widget _buildChapterGrid(
       mainAxisSpacing: 8,
     ),
     itemBuilder: (context, index) {
+      final bibleState = Provider.of<BibleState>(context, listen: false);
+
       return ElevatedButton(
         onPressed: () async {
-          onBookSelected(selectedBook);
           Chapter newChapter = await apiService.fetchBibleChapter(
             selectedBook.bibleId,
             selectedBook.chapters[index].id,
           );
-          onChapterSelected(newChapter);
+
+          Book newBook = await apiService.fetchBibleBook(
+            selectedBook.bibleId,
+            newChapter.bookId,
+          );
+
+          bibleState.updateBook(newBook);
+          bibleState.updateChapter(newChapter);
 
           if (!context.mounted) {
             return; // Prevent execution if widget is unmounted

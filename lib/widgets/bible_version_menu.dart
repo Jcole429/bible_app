@@ -1,26 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:bible_app/models/language.dart';
+import 'package:bible_app/utils/bible_state.dart';
+import 'package:flutter/material.dart';
 import 'package:bible_app/widgets/language_menu.dart';
-import '../models/bible_version.dart'; // Import the BibleVersion model
+import '../models/bible_version.dart';
 import '../services/api_service.dart';
+import 'package:provider/provider.dart';
 
-Future<void> showBibleVersionMenu(
-  BuildContext context,
-  Language selectedLanguage,
-  BibleVersion selectedBibleVersion,
-  Function(BibleVersion) onBibleVersionSelected,
-) async {
+Future<void> showBibleVersionMenu(BuildContext context) async {
   final ApiService apiService = ApiService();
   TextEditingController searchController = TextEditingController();
   FocusNode searchFocusNode = FocusNode(); // Add FocusNode
 
+  final bibleState = Provider.of<BibleState>(context, listen: false);
+
+  Language startingLanguage = bibleState.selectedLanguage!;
+  Language selectedLanguage = startingLanguage;
+
   final List<BibleVersion> bibleVersions =
       await apiService.fetchBibleVersions();
-
-  List<BibleVersion> filteredBibleVersions =
-      bibleVersions.where((bibleVersion) {
-        return bibleVersion.language.id == selectedLanguage.id;
-      }).toList();
 
   showModalBottomSheet(
     context: context,
@@ -32,7 +29,12 @@ Future<void> showBibleVersionMenu(
     builder: (BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) {
-          void filterList(String query) {
+          List<BibleVersion> filteredBibleVersions =
+              bibleVersions.where((bibleVersion) {
+                return bibleVersion.language.id == selectedLanguage.id;
+              }).toList();
+
+          void filterListFromSearch(String query) {
             setState(() {
               filteredBibleVersions =
                   bibleVersions.where((bibleVersion) {
@@ -113,7 +115,7 @@ Future<void> showBibleVersionMenu(
                                 .requestFocus(); // Make sure keyboard opens
                           },
                           onChanged: (value) {
-                            filterList(value);
+                            filterListFromSearch(value);
                           },
                           decoration: InputDecoration(
                             hintText: "Name or abbreviation",
@@ -139,12 +141,12 @@ Future<void> showBibleVersionMenu(
                             (newLanguage) {
                               setState(() {
                                 selectedLanguage = newLanguage;
+                                filteredBibleVersions =
+                                    bibleVersions.where((bibleVersion) {
+                                      return bibleVersion.language.id ==
+                                          newLanguage.id;
+                                    }).toList();
                               });
-                              filteredBibleVersions =
-                                  bibleVersions.where((bibleVersion) {
-                                    return bibleVersion.language.id ==
-                                        selectedLanguage.id;
-                                  }).toList();
                             },
                           );
                         },
@@ -152,32 +154,27 @@ Future<void> showBibleVersionMenu(
 
                       Divider(),
 
-                      // List of items
+                      // List of Bibles
                       Expanded(
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: filteredBibleVersions.length,
                           itemBuilder: (context, index) {
+                            final version = filteredBibleVersions[index];
                             return ListTile(
-                              title: Text(
-                                filteredBibleVersions[index].abbreviation,
-                              ),
-                              subtitle: Text(filteredBibleVersions[index].name),
+                              title: Text(version.abbreviation),
+                              subtitle: Text(version.name),
                               onTap: () {
-                                setState(() {
-                                  selectedBibleVersion =
-                                      filteredBibleVersions[index]; // Update selected bibleVersion
-                                });
-                                onBibleVersionSelected(
-                                  filteredBibleVersions[index],
-                                );
+                                bibleState.updateBibleVersion(version);
+                                bibleState.updateLanguage(selectedLanguage);
                                 Navigator.pop(context);
                               },
                               trailing:
-                                  selectedBibleVersion.abbreviation ==
-                                          filteredBibleVersions[index]
-                                              .abbreviation
-                                      ? Icon(Icons.check)
+                                  bibleState
+                                              .selectedBibleVersion!
+                                              .abbreviation ==
+                                          version.abbreviation
+                                      ? const Icon(Icons.check)
                                       : null,
                             );
                           },
