@@ -144,9 +144,12 @@ class ReaderPageState extends State<ReaderPage> {
                             '<span class="scripture-styles">${bibleState.selectedChapter!.content}</span>',
                         style: {
                           // Global
-                          ".scripture-styles": Style(fontFamily: "Noto Serif"),
+                          ".scripture-styles": Style(
+                            fontFamily: "Noto Serif",
+                            fontWeight: FontWeight.normal,
+                          ),
                           // Chapter Section Title
-                          ".s1": Style(
+                          ".s1,.s": Style(
                             fontWeight: FontWeight.bold,
                             fontSize: FontSize.larger,
                             margin: Margins.only(bottom: 0),
@@ -170,7 +173,7 @@ class ReaderPageState extends State<ReaderPage> {
                             verticalAlign: VerticalAlign.sup,
                           ),
                           // Footnotes
-                          ".f": Style(
+                          ".f,.x,": Style(
                             fontSize: FontSize.small,
                             fontStyle: FontStyle.italic,
                             display: Display.block,
