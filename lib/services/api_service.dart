@@ -18,7 +18,7 @@ class ApiService {
     if (languageId != null) {
       url = '$url&language=$languageId';
     }
-    String cacheKey = 'bibleVersions_${includeFullDetails}_$languageId';
+    String cacheKey = 'bibles_${includeFullDetails}_$languageId';
     String logString =
         'fetchBibles(includeFullDetails: $includeFullDetails, languageId: $languageId)';
 
