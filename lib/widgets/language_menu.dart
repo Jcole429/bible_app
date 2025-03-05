@@ -18,6 +18,8 @@ List<Language> getUniqueLanguages(List<Bible> bibleVersions) {
     if (b.id == "eng") return 1;
     if (a.id == "spa") return -1;
     if (b.id == "spa") return 1;
+    if (a.id == "por") return -1;
+    if (b.id == "por") return 1;
     return a.name.compareTo(b.name);
   });
 
