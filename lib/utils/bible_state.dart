@@ -116,7 +116,9 @@ class BibleState extends ChangeNotifier {
 
   void updateIncludeFootnotesInContent(bool newIncludeFootnotesInContent) {
     _includeFootnotesInContent = newIncludeFootnotesInContent;
-    SharedPreferencesHelper.saveSortAlphabetical(newIncludeFootnotesInContent);
+    SharedPreferencesHelper.saveIncludeFootnotesInContent(
+      newIncludeFootnotesInContent,
+    );
     notifyListeners();
   }
 }

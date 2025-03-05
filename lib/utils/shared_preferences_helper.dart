@@ -148,9 +148,9 @@ class SharedPreferencesHelper {
   }
 
   static Future<void> saveIncludeFootnotesInContent(
-    bool IncludeFootnotesInContent,
+    bool includeFootnotesInContent,
   ) async {
-    return saveBool(_includeFootnotesInContentKey, IncludeFootnotesInContent);
+    return saveBool(_includeFootnotesInContentKey, includeFootnotesInContent);
   }
 
   static Future<bool> getIncludeFootnotesInContent() async {
