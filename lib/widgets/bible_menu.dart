@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 Future<void> showBibleMenu(BuildContext context) async {
   final ApiService apiService = ApiService();
   TextEditingController searchController = TextEditingController();
-  FocusNode searchFocusNode = FocusNode(); // Add FocusNode
+  FocusNode searchFocusNode = FocusNode();
 
   final bibleState = Provider.of<BibleState>(context, listen: false);
 
@@ -17,6 +17,11 @@ Future<void> showBibleMenu(BuildContext context) async {
   Language selectedLanguage = startingLanguage;
 
   final List<Bible> bibleVersions = await apiService.fetchBibles();
+
+  List<Bible> filteredBibles =
+      bibleVersions.where((bibleVersion) {
+        return bibleVersion.language.id == selectedLanguage.id;
+      }).toList();
 
   if (!context.mounted) return; // Prevent execution if widget is unmounted
 
@@ -30,18 +35,13 @@ Future<void> showBibleMenu(BuildContext context) async {
     builder: (BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) {
-          List<Bible> filteredBibles =
-              bibleVersions.where((bibleVersion) {
-                return bibleVersion.language.id == selectedLanguage.id;
-              }).toList();
-
           void filterListFromSearch(String query) {
             setState(() {
               filteredBibles =
                   bibleVersions.where((bibleVersion) {
-                    String name = bibleVersion.name.toLowerCase();
+                    String name = bibleVersion.nameLocal.toLowerCase();
                     String abbreviation =
-                        bibleVersion.abbreviation.toLowerCase();
+                        bibleVersion.abbreviationLocal.toLowerCase();
                     return name.contains(query.toLowerCase()) ||
                         abbreviation.contains(query.toLowerCase());
                   }).toList();
@@ -115,9 +115,7 @@ Future<void> showBibleMenu(BuildContext context) async {
                             searchFocusNode
                                 .requestFocus(); // Make sure keyboard opens
                           },
-                          onChanged: (value) {
-                            filterListFromSearch(value);
-                          },
+                          onChanged: filterListFromSearch,
                           decoration: InputDecoration(
                             hintText: "Name or abbreviation",
                             prefixIcon: Icon(Icons.search),
