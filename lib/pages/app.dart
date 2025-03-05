@@ -4,8 +4,6 @@ import 'package:bible_app/pages/more.dart';
 import 'package:bible_app/pages/notes.dart';
 import 'package:bible_app/pages/reader.dart';
 import 'package:bible_app/pages/search.dart';
-import 'package:bible_app/widgets/bible_menu.dart';
-import 'package:bible_app/widgets/book_menu.dart';
 import 'package:provider/provider.dart';
 import '../services/api_service.dart';
 
@@ -20,8 +18,6 @@ class _AppState extends State<App> {
   final ApiService apiService = ApiService();
 
   int _selectedIndex = 0;
-  bool _isBookMenuOpen = false;
-  bool _isBibleMenuOpen = false;
 
   @override
   void initState() {
@@ -59,74 +55,6 @@ class _AppState extends State<App> {
           MorePage(),
         ];
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.grey,
-            leadingWidth: 0,
-            centerTitle: false,
-            title: Container(
-              height: 35,
-              decoration: BoxDecoration(
-                color: Colors.grey[700],
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Bible Book-Chapter-Verse menu
-                  TextButton(
-                    onPressed: () {
-                      if (_isBookMenuOpen) return; // Prevent duplicate opening
-                      _isBookMenuOpen = true;
-                      showBookMenu(context).then((_) {
-                        _isBookMenuOpen = false; // Reset when menu is closed
-                      });
-                    },
-                    style: TextButton.styleFrom(minimumSize: Size(50, 50)),
-                    child: Text(
-                      softWrap: false,
-                      "${bibleState.selectedBook!.name} ${bibleState.selectedChapter!.number}",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        overflow: TextOverflow.fade,
-                      ),
-                    ),
-                  ),
-
-                  // Divider
-                  Container(height: 35.0, width: 2, color: Colors.grey),
-
-                  // Bible menu
-                  TextButton(
-                    onPressed: () {
-                      if (_isBibleMenuOpen) {
-                        return; // Prevent duplicate opening
-                      }
-                      _isBibleMenuOpen = true;
-                      showBibleMenu(context).then((_) {
-                        _isBibleMenuOpen = false; // Reset when menu is closed
-                      });
-                    },
-                    style: TextButton.styleFrom(minimumSize: Size(50, 50)),
-                    child: Text(
-                      bibleState.selectedBible!.abbreviation,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        overflow: TextOverflow.fade,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Colors.grey,
             selectedItemColor: Colors.white,
