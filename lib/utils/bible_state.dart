@@ -4,7 +4,7 @@ import 'package:bible_app/models/language.dart';
 import 'package:bible_app/models/bible.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
-import 'package:bible_app/utils/shared_preferences_helper.dart'; // Your SharedPreferences helper
+import 'package:bible_app/utils/shared_preferences_helper.dart';
 
 // BibleState class to manage state
 class BibleState extends ChangeNotifier {

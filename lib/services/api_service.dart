@@ -4,6 +4,7 @@ import 'package:bible_app/models/bible.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
 import 'package:bible_app/models/search_response.dart';
+import 'package:bible_app/utils/shared_preferences_helper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:bible_app/utils/api_helper.dart';
 
@@ -86,13 +87,15 @@ class ApiService {
     String bibleVersionId,
     String chapterId, {
     String contentType = "html",
-    bool includeNotes = true, // Include footnotes in content
     bool includeTitles = true, // Include section titles in content
     bool includeChapterNumbers = false, // Include chapter numbers in content
     bool includeVerseNumbers = true, // Include verse numbers in content
     bool includeVerseSpans =
         false, //nclude spans that wrap verse numbers and verse text for bible content.
   }) async {
+    bool includeNotes =
+        await SharedPreferencesHelper.getIncludeFootnotesInContent(); // Include footnotes in content
+
     String url =
         '$baseUrl/bibles/$bibleVersionId/chapters/$chapterId?content-type=$contentType&include-notes=$includeNotes&include-titles=$includeTitles&include-chapter-numbers=$includeChapterNumbers&include-verse-numbers=$includeVerseNumbers&include-verse-spans=$includeVerseSpans';
     String cacheKey =
