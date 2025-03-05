@@ -71,12 +71,13 @@ class BibleState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateBookById(String bookId) async {
+  Future<bool> updateBookById(String bookId) async {
     Book newBook = await apiService.fetchBibleBook(selectedBible!.id, bookId);
 
     _selectedBook = newBook;
     SharedPreferencesHelper.saveSelectedBook(newBook);
     notifyListeners();
+    return true;
   }
 
   void updateChapter(Chapter newChapter) {
@@ -85,7 +86,7 @@ class BibleState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateChapterById(String chapterId) async {
+  Future<bool> updateChapterById(String chapterId) async {
     Chapter newChapter = await apiService.fetchBibleChapter(
       selectedBible!.id,
       chapterId,
@@ -94,6 +95,7 @@ class BibleState extends ChangeNotifier {
     _selectedChapter = newChapter;
     SharedPreferencesHelper.saveSelectedChapter(newChapter);
     notifyListeners();
+    return true;
   }
 
   void updateSortAlphabetical(bool newSortAlphabetical) {

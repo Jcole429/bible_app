@@ -127,9 +127,9 @@ Widget _buildBibleVerseTile(BibleState bibleState, Verse verse) {
     horizontalTitleGap: -10,
     subtitle: Text(verse.reference),
 
-    onTap: () {
+    onTap: () async {
       bibleState.updateBookById(verse.bookId);
-      bibleState.updateChapterById(verse.chapterId);
+      await bibleState.updateChapterById(verse.chapterId);
       bibleState.updateSelectedPage(0);
     },
 
