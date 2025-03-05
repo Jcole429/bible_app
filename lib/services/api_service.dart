@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bible_app/models/bible.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
+import 'package:bible_app/models/search_response.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:bible_app/utils/api_helper.dart';
 
@@ -122,5 +123,27 @@ class ApiService {
         rethrow;
       }
     }
+  }
+
+  Future<SearchResponse> fetchSearchResponse(
+    String bibleVersionId,
+    String query, {
+    int limit = 10,
+    int offset = 0,
+    String sort = 'relevance',
+    String fuzziness = 'AUTO',
+  }) async {
+    String url =
+        '$baseUrl/bibles/$bibleVersionId/search?query=$query&limit=$limit&offset=$offset&sort=$sort&fuzziness=$fuzziness';
+    String cacheKey = 'bibleBook_${bibleVersionId}_$query';
+    String logString =
+        'fetchSearchResponse(bibleVersionId: $bibleVersionId, query: $query) | url: $url';
+
+    return ApiHelper.cachedApiCallSingle<SearchResponse>(
+      url: url,
+      cacheKey: cacheKey,
+      logString: logString,
+      fromJson: SearchResponse.fromJson,
+    );
   }
 }
