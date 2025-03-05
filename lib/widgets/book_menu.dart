@@ -144,12 +144,17 @@ Widget _buildBookList(
               itemBuilder: (context, index) {
                 final book = sortedBooks[index];
                 return ListTile(
-                  title: Text(book.name),
-                  visualDensity: VisualDensity.compact,
-                  titleTextStyle: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+                  title: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        book.name,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(" (${book.abbreviation})"),
+                    ],
                   ),
+                  visualDensity: VisualDensity.compact,
                   subtitle: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
