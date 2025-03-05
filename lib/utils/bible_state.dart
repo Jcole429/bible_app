@@ -37,6 +37,8 @@ class BibleState extends ChangeNotifier {
     _selectedChapter = await SharedPreferencesHelper.getSelectedChapter();
     _sortAlphabetical = await SharedPreferencesHelper.getSortAlphabetical();
     _selectedPage = await SharedPreferencesHelper.getSelectedPage();
+    _includeFootnotesInContent =
+        await SharedPreferencesHelper.getIncludeFootnotesInContent();
     notifyListeners();
   }
 
