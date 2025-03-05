@@ -19,6 +19,7 @@ class SharedPreferencesHelper {
   static const String _chapterKey = 'selectedChapter';
   static const String _sortAlphabeticalKey = 'sortAlphabetical';
   static const String _selectedPageKey = 'selectedPage';
+  static const String _includeFootnotesInContentKey = 'selectedPage';
 
   // Initialize SharedPreferences once
   static Future<void> init() async {
@@ -143,6 +144,21 @@ class SharedPreferencesHelper {
       return data;
     } else {
       return 0;
+    }
+  }
+
+  static Future<void> saveIncludeFootnotesInContent(
+    bool IncludeFootnotesInContent,
+  ) async {
+    return saveBool(_includeFootnotesInContentKey, IncludeFootnotesInContent);
+  }
+
+  static Future<bool> getIncludeFootnotesInContent() async {
+    bool? data = getBool(_includeFootnotesInContentKey);
+    if (data != null) {
+      return data;
+    } else {
+      return false;
     }
   }
 }

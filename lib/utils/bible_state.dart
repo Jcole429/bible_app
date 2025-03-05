@@ -17,6 +17,7 @@ class BibleState extends ChangeNotifier {
 
   bool _sortAlphabetical = false;
   int _selectedPage = 0;
+  bool _includeFootnotesInContent = true;
 
   // Getters
   Language? get selectedLanguage => _selectedLanguage;
@@ -26,6 +27,7 @@ class BibleState extends ChangeNotifier {
 
   bool get sortAlphabetical => _sortAlphabetical;
   int get selectedPage => _selectedPage;
+  bool get includeFootnotesInContent => _includeFootnotesInContent;
 
   // Initialize state from SharedPreferences
   Future<void> initialize() async {
@@ -107,6 +109,12 @@ class BibleState extends ChangeNotifier {
   void updateSelectedPage(int newSelectedPage) {
     _selectedPage = newSelectedPage;
     SharedPreferencesHelper.saveSelectedPage(newSelectedPage);
+    notifyListeners();
+  }
+
+  void updateIncludeFootnotesInContent(bool newIncludeFootnotesInContent) {
+    _includeFootnotesInContent = newIncludeFootnotesInContent;
+    SharedPreferencesHelper.saveSortAlphabetical(newIncludeFootnotesInContent);
     notifyListeners();
   }
 }
