@@ -1,4 +1,5 @@
 import 'package:bible_app/models/search_response.dart';
+import 'package:bible_app/models/verse.dart';
 import 'package:bible_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -106,8 +107,8 @@ class _SearchPageState extends State<SearchPage> {
                       _searchResponse != null ? _searchResponse!.limit : 0,
                   itemBuilder: (context, index) {
                     return _buildBibleVerseTile(
-                      _searchResponse!.verses[index].reference,
-                      _searchResponse!.verses[index].text,
+                      bibleState,
+                      _searchResponse!.verses[index],
                     );
                   },
                 ),
@@ -120,11 +121,17 @@ class _SearchPageState extends State<SearchPage> {
   }
 }
 
-Widget _buildBibleVerseTile(String reference, String text) {
+Widget _buildBibleVerseTile(BibleState bibleState, Verse verse) {
   return ListTile(
-    title: Text(text),
+    title: Text(verse.text),
     horizontalTitleGap: -10,
-    subtitle: Text(reference),
+    subtitle: Text(verse.reference),
+
+    onTap: () {
+      bibleState.updateBookById(verse.bookId);
+      bibleState.updateChapterById(verse.chapterId);
+      bibleState.updateSelectedPage(0);
+    },
 
     // Style bar
     leading: Container(

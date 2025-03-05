@@ -16,13 +16,16 @@ class BibleState extends ChangeNotifier {
   Chapter? _selectedChapter;
 
   bool _sortAlphabetical = false;
+  int _selectedPage = 0;
 
   // Getters
   Language? get selectedLanguage => _selectedLanguage;
   Bible? get selectedBible => _selectedBible;
   Book? get selectedBook => _selectedBook;
   Chapter? get selectedChapter => _selectedChapter;
+
   bool get sortAlphabetical => _sortAlphabetical;
+  int get selectedPage => _selectedPage;
 
   // Initialize state from SharedPreferences
   Future<void> initialize() async {
@@ -31,19 +34,13 @@ class BibleState extends ChangeNotifier {
     _selectedBook = await SharedPreferencesHelper.getSelectedBook();
     _selectedChapter = await SharedPreferencesHelper.getSelectedChapter();
     _sortAlphabetical = await SharedPreferencesHelper.getSortAlphabetical();
+    _selectedPage = await SharedPreferencesHelper.getSelectedPage();
     notifyListeners();
   }
 
-  // Update methods
-  void updateBook(Book newBook) {
-    _selectedBook = newBook;
-    SharedPreferencesHelper.saveSelectedBook(newBook);
-    notifyListeners();
-  }
-
-  void updateChapter(Chapter newChapter) {
-    _selectedChapter = newChapter;
-    SharedPreferencesHelper.saveSelectedChapter(newChapter);
+  void updateLanguage(Language newLanguage) {
+    _selectedLanguage = newLanguage;
+    SharedPreferencesHelper.saveSelectedLanguage(newLanguage);
     notifyListeners();
   }
 
@@ -68,15 +65,46 @@ class BibleState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateLanguage(Language newLanguage) {
-    _selectedLanguage = newLanguage;
-    SharedPreferencesHelper.saveSelectedLanguage(newLanguage);
+  void updateBook(Book newBook) {
+    _selectedBook = newBook;
+    SharedPreferencesHelper.saveSelectedBook(newBook);
+    notifyListeners();
+  }
+
+  void updateBookById(String bookId) async {
+    Book newBook = await apiService.fetchBibleBook(selectedBible!.id, bookId);
+
+    _selectedBook = newBook;
+    SharedPreferencesHelper.saveSelectedBook(newBook);
+    notifyListeners();
+  }
+
+  void updateChapter(Chapter newChapter) {
+    _selectedChapter = newChapter;
+    SharedPreferencesHelper.saveSelectedChapter(newChapter);
+    notifyListeners();
+  }
+
+  void updateChapterById(String chapterId) async {
+    Chapter newChapter = await apiService.fetchBibleChapter(
+      selectedBible!.id,
+      chapterId,
+    );
+
+    _selectedChapter = newChapter;
+    SharedPreferencesHelper.saveSelectedChapter(newChapter);
     notifyListeners();
   }
 
   void updateSortAlphabetical(bool newSortAlphabetical) {
     _sortAlphabetical = newSortAlphabetical;
     SharedPreferencesHelper.saveSortAlphabetical(newSortAlphabetical);
+    notifyListeners();
+  }
+
+  void updateSelectedPage(int newSelectedPage) {
+    _selectedPage = newSelectedPage;
+    SharedPreferencesHelper.saveSelectedPage(newSelectedPage);
     notifyListeners();
   }
 }

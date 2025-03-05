@@ -18,6 +18,7 @@ class SharedPreferencesHelper {
   static const String _bookKey = 'selectedBook';
   static const String _chapterKey = 'selectedChapter';
   static const String _sortAlphabeticalKey = 'sortAlphabetical';
+  static const String _selectedPageKey = 'selectedPage';
 
   // Initialize SharedPreferences once
   static Future<void> init() async {
@@ -52,6 +53,14 @@ class SharedPreferencesHelper {
 
   static bool? getBool(String key) {
     return _prefs?.getBool(key);
+  }
+
+  static Future<void> saveInt(String key, int value) async {
+    await _prefs?.setInt(key, value);
+  }
+
+  static int? getInt(String key) {
+    return _prefs?.getInt(key);
   }
 
   // Clear cache
@@ -121,6 +130,19 @@ class SharedPreferencesHelper {
       return data;
     } else {
       return false;
+    }
+  }
+
+  static Future<void> saveSelectedPage(int selectedPage) async {
+    return saveInt(_selectedPageKey, selectedPage);
+  }
+
+  static Future<int> getSelectedPage() async {
+    int? data = getInt(_selectedPageKey);
+    if (data != null) {
+      return data;
+    } else {
+      return 0;
     }
   }
 }

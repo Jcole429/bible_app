@@ -17,8 +17,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   final ApiService apiService = ApiService();
 
-  int _selectedIndex = 0;
-
   @override
   void initState() {
     super.initState();
@@ -27,12 +25,6 @@ class _AppState extends State<App> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  void _navigateBottomBar(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
@@ -58,8 +50,10 @@ class _AppState extends State<App> {
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Colors.grey,
             selectedItemColor: Colors.white,
-            currentIndex: _selectedIndex,
-            onTap: _navigateBottomBar,
+            currentIndex: bibleState.selectedPage,
+            onTap: (newPage) {
+              bibleState.updateSelectedPage(newPage);
+            },
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
@@ -77,7 +71,7 @@ class _AppState extends State<App> {
               BottomNavigationBarItem(icon: Icon(Icons.menu), label: "More"),
             ],
           ),
-          body: pages[_selectedIndex],
+          body: pages[bibleState.selectedPage],
         );
       },
     );
