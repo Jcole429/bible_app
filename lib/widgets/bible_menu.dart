@@ -131,7 +131,13 @@ Future<void> showBibleMenu(BuildContext context) async {
                       ListTile(
                         title: Text("Language"),
                         leading: Icon(Icons.language),
-                        trailing: Text(selectedLanguage.name),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(selectedLanguage.name),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
                         onTap: () {
                           showLanguageMenu(
                             context,
