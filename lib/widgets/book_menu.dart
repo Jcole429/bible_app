@@ -26,6 +26,7 @@ Future<void> showBookMenu(BuildContext context) async {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
+
     builder: (BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) {
@@ -43,54 +44,78 @@ Future<void> showBookMenu(BuildContext context) async {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Header with Back Button & Title
-                    Row(
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            if (selectedBookForChapters == null) {
-                              Navigator.pop(context); // Close modal
-                            } else {
-                              setState(() {
-                                selectedBookForChapters =
-                                    null; // Go back to book selection
-                              });
-                            }
-                          },
-                          child: Text(
-                            selectedBookForChapters != null ? "Back" : "Cancel",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              selectedBookForChapters != null
-                                  ? selectedBookForChapters!.name
-                                  : "Books",
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                    Consumer<BibleState>(
+                      builder: (context, bibleState, _) {
+                        return
+                        // Header with Back Button & Title
+                        Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                if (selectedBookForChapters == null) {
+                                  Navigator.pop(context); // Close modal
+                                } else {
+                                  setState(() {
+                                    selectedBookForChapters =
+                                        null; // Go back to book selection
+                                  });
+                                }
+                              },
+                              child: Text(
+                                selectedBookForChapters != null
+                                    ? "Back"
+                                    : "Cancel",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            "History",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                            Expanded(
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    if (selectedBookForChapters == null)
+                                      Text(
+                                        "Books",
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    if (selectedBookForChapters == null &&
+                                        bibleState.sortAlphabetical)
+                                      Text("Alphabetical"),
+                                    if (selectedBookForChapters == null &&
+                                        !bibleState.sortAlphabetical)
+                                      Text("Traditional"),
+                                    if (selectedBookForChapters != null)
+                                      Text(
+                                        selectedBookForChapters!.name,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                "History",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
 
                     const Divider(),
