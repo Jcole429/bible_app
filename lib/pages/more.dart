@@ -41,8 +41,6 @@ class MorePage extends StatelessWidget {
             ),
           ),
         );
-
-        // return const Scaffold(body: Center(child: CircularProgressIndicator()));
       },
     );
   }
