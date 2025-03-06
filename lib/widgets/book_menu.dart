@@ -164,6 +164,7 @@ Widget _buildBookList(
                             return _buildBookTile(
                               book,
                               bibleState,
+                              false,
                               onBookSelected,
                             );
                           }).toList(),
@@ -192,7 +193,12 @@ Widget _buildSimpleListView(
           controller: ScrollController(),
           itemCount: books.length,
           itemBuilder: (context, index) {
-            return _buildBookTile(books[index], bibleState, onBookSelected);
+            return _buildBookTile(
+              books[index],
+              bibleState,
+              true,
+              onBookSelected,
+            );
           },
         ),
       ),
@@ -204,8 +210,14 @@ Widget _buildSimpleListView(
 Widget _buildBookTile(
   Book book,
   BibleState bibleState,
+  bool includeCategories,
   Function(Book) onBookSelected,
 ) {
+  String parentCategory =
+      getParentCategoryForBook(book.id)[bibleState.selectedLanguage!.id];
+  String category =
+      getCategoryForBook(book.id)[bibleState.selectedLanguage!.id];
+
   return ListTile(
     title: Row(
       mainAxisSize: MainAxisSize.min,
@@ -214,7 +226,15 @@ Widget _buildBookTile(
         Text(" (${book.abbreviation})"),
       ],
     ),
-    subtitle: Text("${book.chapters.length} Chapters"),
+    subtitle: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (includeCategories && parentCategory.isNotEmpty)
+          Text("$parentCategory - $category"),
+        Text("${book.chapters.length} Chapters"),
+      ],
+    ),
     trailing:
         bibleState.selectedBook!.id == book.id ? const Icon(Icons.check) : null,
     onTap: () => onBookSelected(book),
