@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:bible_app/data/default_bible.dart';
 import 'package:bible_app/data/default_book.dart';
 import 'package:bible_app/data/default_chapter.dart';
@@ -19,7 +18,8 @@ class SharedPreferencesHelper {
   static const String _chapterKey = 'selectedChapter';
   static const String _sortAlphabeticalKey = 'sortAlphabetical';
   static const String _selectedPageKey = 'selectedPage';
-  static const String _includeFootnotesInContentKey = 'selectedPage';
+  static const String _includeFootnotesInContentKey =
+      'includeFootNotesInContent';
 
   // Initialize SharedPreferences once
   static Future<void> init() async {
