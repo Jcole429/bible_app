@@ -136,6 +136,7 @@ class ReaderPageState extends State<ReaderPage> {
                 padding: EdgeInsets.all(10),
                 height: double.infinity,
                 child: SingleChildScrollView(
+                  key: PageStorageKey('readerScrollPosition'),
                   controller: _readerScrollController,
                   child: Column(
                     children: [
