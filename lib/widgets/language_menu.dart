@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:bible_app/models/language.dart';
 import '../models/bible.dart'; // Import the Bible model
 
-List<Language> getUniqueLanguages(List<Bible> bibleVersions) {
+List<Language> getUniqueLanguages(List<Bible> bibles) {
   Set<String> seenLanguageIds = {};
   List<Language> uniqueLanguages = [];
 
-  for (var version in bibleVersions) {
-    if (!seenLanguageIds.contains(version.language.id)) {
-      seenLanguageIds.add(version.language.id);
-      uniqueLanguages.add(version.language);
+  for (var bible in bibles) {
+    if (!seenLanguageIds.contains(bible.language.id)) {
+      seenLanguageIds.add(bible.language.id);
+      uniqueLanguages.add(bible.language);
     }
   }
 
@@ -28,7 +28,7 @@ List<Language> getUniqueLanguages(List<Bible> bibleVersions) {
 
 void showLanguageMenu(
   BuildContext context,
-  List<Bible> bibleVersions,
+  List<Bible> bibles,
   Language selectedLanguage,
   Function(Language) onLanguageSelected,
 ) {
@@ -42,7 +42,7 @@ void showLanguageMenu(
     builder: (BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) {
-          final List<Language> languages = getUniqueLanguages(bibleVersions);
+          final List<Language> languages = getUniqueLanguages(bibles);
 
           return DraggableScrollableSheet(
             initialChildSize: 0.9, // Start at 60% of screen height

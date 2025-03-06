@@ -33,16 +33,16 @@ class ApiService {
   }
 
   Future<List<Book>> fetchBibleBooks(
-    String bibleVersionId, {
+    String bibleId, {
     bool includeChapters = true,
   }) async {
     String url =
-        '$baseUrl/bibles/$bibleVersionId/books?include-chapters=$includeChapters';
+        '$baseUrl/bibles/$bibleId/books?include-chapters=$includeChapters';
 
-    String cacheKey = 'bibleBooks_${bibleVersionId}_$includeChapters';
+    String cacheKey = 'bibleBooks_${bibleId}_$includeChapters';
 
     String logString =
-        'fetchBibleBooks(bibleVersionId: $bibleVersionId, includeChapters: $includeChapters)';
+        'fetchBibleBooks(bibleId: $bibleId, includeChapters: $includeChapters)';
 
     return ApiHelper.cachedApiCallList<Book>(
       url: url,
@@ -52,11 +52,11 @@ class ApiService {
     );
   }
 
-  Future<Book> fetchBibleBook(String bibleVersionId, String bibleBookId) async {
-    String url = '$baseUrl/bibles/$bibleVersionId/books/$bibleBookId';
-    String cacheKey = 'bibleBook_${bibleVersionId}_$bibleBookId';
+  Future<Book> fetchBibleBook(String bibleId, String bibleBookId) async {
+    String url = '$baseUrl/bibles/$bibleId/books/$bibleBookId';
+    String cacheKey = 'bibleBook_${bibleId}_$bibleBookId';
     String logString =
-        'fetchBibleBook(bibleVersionId: $bibleVersionId, bibleBookId: $bibleBookId)';
+        'fetchBibleBook(bibleId: $bibleId, bibleBookId: $bibleBookId)';
 
     return ApiHelper.cachedApiCallSingle<Book>(
       url: url,
@@ -67,13 +67,13 @@ class ApiService {
   }
 
   Future<List<Chapter>> fetchBibleChapters(
-    String bibleVersionId,
+    String bibleId,
     String bookId,
   ) async {
-    String url = '$baseUrl/bibles/$bibleVersionId/books/$bookId/chapters';
-    String cacheKey = 'bibleChapters_${bibleVersionId}_${bookId}';
+    String url = '$baseUrl/bibles/$bibleId/books/$bookId/chapters';
+    String cacheKey = 'bibleChapters_${bibleId}_${bookId}';
     String logString =
-        'fetchBibleChapters(bibleVersionId: $bibleVersionId, bibleVersionId: $bibleVersionId: $url';
+        'fetchBibleChapters(bibleId: $bibleId, bibleId: $bibleId: $url';
 
     return ApiHelper.cachedApiCallList<Chapter>(
       url: url,
@@ -84,7 +84,7 @@ class ApiService {
   }
 
   Future<Chapter> fetchBibleChapter(
-    String bibleVersionId,
+    String bibleId,
     String chapterId, {
     String contentType = "html",
     bool includeTitles = true, // Include section titles in content
@@ -97,11 +97,11 @@ class ApiService {
         await SharedPreferencesHelper.getIncludeFootnotesInContent(); // Include footnotes in content
 
     String url =
-        '$baseUrl/bibles/$bibleVersionId/chapters/$chapterId?content-type=$contentType&include-notes=$includeNotes&include-titles=$includeTitles&include-chapter-numbers=$includeChapterNumbers&include-verse-numbers=$includeVerseNumbers&include-verse-spans=$includeVerseSpans';
+        '$baseUrl/bibles/$bibleId/chapters/$chapterId?content-type=$contentType&include-notes=$includeNotes&include-titles=$includeTitles&include-chapter-numbers=$includeChapterNumbers&include-verse-numbers=$includeVerseNumbers&include-verse-spans=$includeVerseSpans';
     String cacheKey =
-        'bibleChapter_${bibleVersionId}_${chapterId}_${contentType}_${includeNotes}_${includeTitles}_${includeChapterNumbers}_${includeVerseNumbers}_$includeVerseSpans';
+        'bibleChapter_${bibleId}_${chapterId}_${contentType}_${includeNotes}_${includeTitles}_${includeChapterNumbers}_${includeVerseNumbers}_$includeVerseSpans';
     String logString =
-        'fetchBibleChapter(bibleVersionId: $bibleVersionId, chapterId: $chapterId, contentType: $contentType, includeNotes: $includeNotes, includeTitles: $includeTitles, includeChapterNumbers: $includeChapterNumbers, includeVerseNumbers: $includeVerseNumbers, includeVerseSpans: $includeVerseSpans): $url';
+        'fetchBibleChapter(bibleId: $bibleId, chapterId: $chapterId, contentType: $contentType, includeNotes: $includeNotes, includeTitles: $includeTitles, includeChapterNumbers: $includeChapterNumbers, includeVerseNumbers: $includeVerseNumbers, includeVerseSpans: $includeVerseSpans): $url';
     try {
       return await ApiHelper.cachedApiCallSingle<Chapter>(
         url: url,
@@ -116,12 +116,9 @@ class ApiService {
       int statusCode = errorJson['statusCode'] as int;
 
       if (statusCode == 404) {
-        // Selected bibleVersion does not contain the requested chapter
-        List<Book> validBooks = await fetchBibleBooks(bibleVersionId);
-        return await fetchBibleChapter(
-          bibleVersionId,
-          validBooks[0].chapters[0].id,
-        );
+        // Selected bible does not contain the requested chapter
+        List<Book> validBooks = await fetchBibleBooks(bibleId);
+        return await fetchBibleChapter(bibleId, validBooks[0].chapters[0].id);
       } else {
         rethrow;
       }
@@ -129,7 +126,7 @@ class ApiService {
   }
 
   Future<SearchResponse> fetchSearchResponse(
-    String bibleVersionId,
+    String bibleId,
     String query, {
     int limit = 10,
     int offset = 0,
@@ -137,10 +134,10 @@ class ApiService {
     String fuzziness = 'AUTO',
   }) async {
     String url =
-        '$baseUrl/bibles/$bibleVersionId/search?query=$query&limit=$limit&offset=$offset&sort=$sort&fuzziness=$fuzziness';
-    String cacheKey = 'bibleBook_${bibleVersionId}_$query';
+        '$baseUrl/bibles/$bibleId/search?query=$query&limit=$limit&offset=$offset&sort=$sort&fuzziness=$fuzziness';
+    String cacheKey = 'bibleBook_${bibleId}_$query';
     String logString =
-        'fetchSearchResponse(bibleVersionId: $bibleVersionId, query: $query) | url: $url';
+        'fetchSearchResponse(bibleId: $bibleId, query: $query) | url: $url';
 
     return ApiHelper.cachedApiCallSingle<SearchResponse>(
       url: url,

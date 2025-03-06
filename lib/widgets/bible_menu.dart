@@ -16,11 +16,11 @@ Future<void> showBibleMenu(BuildContext context) async {
   Language startingLanguage = bibleState.selectedLanguage!;
   Language selectedLanguage = startingLanguage;
 
-  final List<Bible> bibleVersions = await apiService.fetchBibles();
+  final List<Bible> bibles = await apiService.fetchBibles();
 
   List<Bible> filteredBibles =
-      bibleVersions.where((bibleVersion) {
-        return bibleVersion.language.id == selectedLanguage.id;
+      bibles.where((bible) {
+        return bible.language.id == selectedLanguage.id;
       }).toList();
 
   if (!context.mounted) return; // Prevent execution if widget is unmounted
@@ -38,10 +38,9 @@ Future<void> showBibleMenu(BuildContext context) async {
           void filterListFromSearch(String query) {
             setState(() {
               filteredBibles =
-                  bibleVersions.where((bibleVersion) {
-                    String name = bibleVersion.nameLocal.toLowerCase();
-                    String abbreviation =
-                        bibleVersion.abbreviationLocal.toLowerCase();
+                  bibles.where((bible) {
+                    String name = bible.nameLocal.toLowerCase();
+                    String abbreviation = bible.abbreviationLocal.toLowerCase();
                     return name.contains(query.toLowerCase()) ||
                         abbreviation.contains(query.toLowerCase());
                   }).toList();
@@ -94,7 +93,7 @@ Future<void> showBibleMenu(BuildContext context) async {
                                     ),
                                   ),
                                   Text(
-                                    "Versions: ${bibleVersions.length} in ${bibleVersions.map((bibleVersion) => bibleVersion.language.id) // or "language_name"
+                                    "Versions: ${bibles.length} in ${bibles.map((bible) => bible.language.id) // or "language_name"
                                     .toSet() // Removes duplicates
                                     .length} languages",
                                   ),
@@ -139,21 +138,17 @@ Future<void> showBibleMenu(BuildContext context) async {
                           ],
                         ),
                         onTap: () {
-                          showLanguageMenu(
-                            context,
-                            bibleVersions,
-                            selectedLanguage,
-                            (newLanguage) {
-                              setState(() {
-                                selectedLanguage = newLanguage;
-                                filteredBibles =
-                                    bibleVersions.where((bibleVersion) {
-                                      return bibleVersion.language.id ==
-                                          newLanguage.id;
-                                    }).toList();
-                              });
-                            },
-                          );
+                          showLanguageMenu(context, bibles, selectedLanguage, (
+                            newLanguage,
+                          ) {
+                            setState(() {
+                              selectedLanguage = newLanguage;
+                              filteredBibles =
+                                  bibles.where((bible) {
+                                    return bible.language.id == newLanguage.id;
+                                  }).toList();
+                            });
+                          });
                         },
                       ),
 
