@@ -238,11 +238,6 @@ Widget _buildBookTile(
   bool includeCategories,
   Function(Book) onBookSelected,
 ) {
-  String parentCategory =
-      getParentCategoryForBook(book.id)[bibleState.selectedLanguage!.id];
-  String category =
-      getCategoryForBook(book.id)[bibleState.selectedLanguage!.id];
-
   return ListTile(
     title: Row(
       mainAxisSize: MainAxisSize.min,
@@ -255,8 +250,11 @@ Widget _buildBookTile(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (includeCategories && parentCategory.isNotEmpty)
-          Text("$parentCategory - $category"),
+        if (includeCategories &&
+            book.parentCategory[bibleState.selectedLanguage?.id] != null)
+          Text(
+            "${book.parentCategory[bibleState.selectedLanguage!.id]} - ${book.category[bibleState.selectedLanguage!.id]}",
+          ),
         Text("${book.chapters.length} Chapters"),
       ],
     ),
@@ -338,13 +336,12 @@ Map<String, Map<String, List<Book>>> groupBooksByCategory(
 
   for (var book in books) {
     String parentCategory =
-        getParentCategoryForBook(book.id)[bibleState.selectedLanguage?.id] ??
-        '';
-    String category =
-        getCategoryForBook(book.id)[bibleState.selectedLanguage?.id] ?? '';
+        book.parentCategory[bibleState.selectedLanguage?.id] ?? '';
+    String category = book.category[bibleState.selectedLanguage?.id] ?? '';
 
-    if (parentCategory.isEmpty || category.isEmpty)
+    if (parentCategory.isEmpty || category.isEmpty) {
       continue; // Skip books without valid categories
+    }
 
     groupedBooks.putIfAbsent(parentCategory, () => {});
     groupedBooks[parentCategory]!.putIfAbsent(category, () => []);
