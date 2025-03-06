@@ -177,7 +177,8 @@ Future<void> showBibleMenu(BuildContext context) async {
                                   if (version.descriptionLocal != null &&
                                       version.descriptionLocal!.isNotEmpty &&
                                       version.descriptionLocal !=
-                                          version.nameLocal)
+                                          version.nameLocal &&
+                                      version.descriptionLocal != "Bible")
                                     Text(
                                       version.descriptionLocal!,
                                       style: const TextStyle(
