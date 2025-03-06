@@ -93,8 +93,7 @@ Future<void> showBibleMenu(BuildContext context) async {
                                     ),
                                   ),
                                   Text(
-                                    "Versions: ${bibles.length} in ${bibles.map((bible) => bible.language.id) // or "language_name"
-                                    .toSet() // Removes duplicates
+                                    "Versions: ${bibles.length} in ${bibles.map((bible) => bible.language.id).toSet() // Removes duplicates
                                     .length} languages",
                                   ),
                                 ],
