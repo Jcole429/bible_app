@@ -9,6 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter is ready
   await dotenv.load();
   await SharedPreferencesHelper.init(); // Initialize storage
+  // SharedPreferencesHelper.clear(); // Clear SharedPreferences
 
   runApp(
     ChangeNotifierProvider(
