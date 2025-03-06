@@ -47,7 +47,7 @@ Map<int, dynamic> categories = {
   },
   9: {
     "parent_category": 1,
-    "eng": "The Book of Revelations",
+    "eng": "The Book of Revelations/Apocalypse",
     "spa": "Profecía/Apocalipsis",
   },
 };
