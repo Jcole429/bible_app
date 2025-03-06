@@ -1,18 +1,55 @@
 Map<int, dynamic> parentCategories = {
-  0: {"eng": "Old Testament"},
-  1: {"eng": "New Testament"},
+  0: {"eng": "Old Testament", "spa": "El Antiguo Testamento"},
+  1: {"eng": "New Testament", "spa": "El Nuevo Testamento"},
 };
 
 Map<int, dynamic> categories = {
-  0: {"parent_category": 0, "eng": "Books of the Law"},
-  1: {"parent_category": 0, "eng": "Historical Books"},
-  2: {"parent_category": 0, "eng": "Poetic Books"},
-  3: {"parent_category": 0, "eng": "Major Prophetic Books"},
-  4: {"parent_category": 0, "eng": "Minor Prophetic Books"},
-  5: {"parent_category": 1, "eng": "The Gospels"},
-  6: {"parent_category": 1, "eng": "The Historical Book"},
-  7: {"parent_category": 1, "eng": "The Letters"},
-  8: {"parent_category": 1, "eng": "The Book of Vision"},
+  0: {
+    "parent_category": 0,
+    "eng": "Books of the Law/The Pentateuch",
+    "spa": "Pentateuco",
+  },
+  1: {
+    "parent_category": 0,
+    "eng": "Historical Books",
+    "spa": "Libros Historicos",
+  },
+  2: {
+    "parent_category": 0,
+    "eng": "Poetic Books/Books of Wisdom",
+    "spa": "Libros Sapienciales",
+  },
+  3: {
+    "parent_category": 0,
+    "eng": "Major Prophetic Books",
+    "spa": "Profetas Mayores",
+  },
+  4: {
+    "parent_category": 0,
+    "eng": "Minor Prophetic Books",
+    "spa": "Profetas Menores",
+  },
+  5: {"parent_category": 1, "eng": "The Gospels", "spa": "Evangelios"},
+  6: {
+    "parent_category": 1,
+    "eng": "The Acts of the Apostles",
+    "spa": "Historia Apostolica/Narrativa",
+  },
+  7: {
+    "parent_category": 1,
+    "eng": "Paul's Letters (Epistles)",
+    "spa": "Cartas (Epístolas) Paulinas",
+  },
+  8: {
+    "parent_category": 1,
+    "eng": "General Letters (Epistles)",
+    "spa": "Cartas (Epístolas) Generales",
+  },
+  9: {
+    "parent_category": 1,
+    "eng": "The Book of Revelations",
+    "spa": "Profecía/Apocalipsis",
+  },
 };
 
 Map<String, dynamic> bookCategoryMap = {
@@ -73,15 +110,15 @@ Map<String, dynamic> bookCategoryMap = {
   "2TI": 7,
   "TIT": 7,
   "PHM": 7,
-  "HEB": 7,
-  "JAS": 7,
-  "1PE": 7,
-  "2PE": 7,
-  "1JN": 7,
-  "2JN": 7,
-  "3JN": 7,
-  "JUD": 7,
-  "REV": 8,
+  "HEB": 8,
+  "JAS": 8,
+  "1PE": 8,
+  "2PE": 8,
+  "1JN": 8,
+  "2JN": 8,
+  "3JN": 8,
+  "JUD": 8,
+  "REV": 9,
 };
 
 dynamic getCategoryForBook(String bookId) {
