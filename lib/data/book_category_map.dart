@@ -84,15 +84,15 @@ Map<String, dynamic> bookCategoryMap = {
   "REV": 8,
 };
 
-String getCategoryForBook(String bookId, String languageId) {
+dynamic getCategoryForBook(String bookId) {
   int bookCategoryId = bookCategoryMap[bookId];
   dynamic category = categories[bookCategoryId];
 
-  return category[languageId];
+  return category;
 }
 
-String getParentCategoryForBook(String bookId, String languageId) {
-  dynamic category = getCategoryForBook(bookId, languageId);
+dynamic getParentCategoryForBook(String bookId) {
+  dynamic category = getCategoryForBook(bookId);
 
   int parentCategoryId = category['parent_category'];
   dynamic parentCategory = parentCategories[parentCategoryId];
