@@ -52,5 +52,7 @@
 		</dict>
 		<key>WKWebView</key>
 		<true/>
+		<key>NSDocumentsDirectoryUsageDescription</key>
+		<string>We need access to save your data.</string>
 	</dict>
 </plist>

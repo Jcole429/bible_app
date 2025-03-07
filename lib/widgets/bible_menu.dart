@@ -1,13 +1,12 @@
 import 'package:bible_app/models/language.dart';
 import 'package:bible_app/utils/bible_state.dart';
+import 'package:bible_app/utils/json_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_app/widgets/language_menu.dart';
 import '../models/bible.dart';
-import '../services/api_service.dart';
 import 'package:provider/provider.dart';
 
 Future<void> showBibleMenu(BuildContext context) async {
-  final ApiService apiService = ApiService();
   TextEditingController searchController = TextEditingController();
   FocusNode searchFocusNode = FocusNode();
 
@@ -16,7 +15,7 @@ Future<void> showBibleMenu(BuildContext context) async {
   Language startingLanguage = bibleState.selectedLanguage!;
   Language selectedLanguage = startingLanguage;
 
-  final List<Bible> bibles = await apiService.fetchBibles();
+  final List<Bible> bibles = await loadBiblesFromJson();
 
   List<Bible> filteredBibles =
       bibles.where((bible) {
