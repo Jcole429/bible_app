@@ -122,7 +122,11 @@ Map<String, dynamic> bookCategoryMap = {
 };
 
 dynamic getCategoryForBook(String bookId) {
-  int bookCategoryId = bookCategoryMap[bookId];
+  int? bookCategoryId = bookCategoryMap[bookId];
+
+  if (bookCategoryId == null) {
+    return null;
+  }
   dynamic category = categories[bookCategoryId];
 
   return category;
@@ -130,6 +134,10 @@ dynamic getCategoryForBook(String bookId) {
 
 dynamic getParentCategoryForBook(String bookId) {
   dynamic category = getCategoryForBook(bookId);
+
+  if (category == null) {
+    return null;
+  }
 
   int parentCategoryId = category['parent_category'];
   dynamic parentCategory = parentCategories[parentCategoryId];

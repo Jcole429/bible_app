@@ -21,6 +21,7 @@ class ReaderPageState extends State<ReaderPage> {
 
   bool _isBookMenuOpen = false;
   bool _isBibleMenuOpen = false;
+  bool _isLoading = false;
 
   String snapshotContent = "No Data";
 
@@ -37,11 +38,17 @@ class ReaderPageState extends State<ReaderPage> {
   void _goToPreviousChapter(BibleState bibleState) async {
     Chapter? previousChapter = bibleState.selectedChapter!.previous;
     if (previousChapter != null) {
+      setState(() {
+        _isLoading = true;
+      });
       final fetchedChapter = await apiService.fetchBibleChapter(
         bibleState.selectedBible!.id,
         previousChapter.id,
       );
       bibleState.updateChapter(fetchedChapter);
+      setState(() {
+        _isLoading = false;
+      });
       _readerScrollController.jumpTo(0);
     }
   }
@@ -49,11 +56,17 @@ class ReaderPageState extends State<ReaderPage> {
   void _goToNextChapter(BibleState bibleState) async {
     Chapter? nextChapter = bibleState.selectedChapter!.next;
     if (nextChapter != null) {
+      setState(() {
+        _isLoading = true;
+      });
       final fetchedChapter = await apiService.fetchBibleChapter(
         bibleState.selectedBible!.id,
         nextChapter.id,
       );
       bibleState.updateChapter(fetchedChapter);
+      setState(() {
+        _isLoading = false;
+      });
       _readerScrollController.jumpTo(0);
     }
   }
@@ -254,6 +267,7 @@ class ReaderPageState extends State<ReaderPage> {
                     child: Icon(Icons.arrow_forward),
                   ),
                 ),
+              if (_isLoading) Center(child: CircularProgressIndicator()),
             ],
           ),
         );

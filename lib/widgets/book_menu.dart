@@ -1,4 +1,3 @@
-import 'package:bible_app/data/book_category_map.dart';
 import 'package:bible_app/utils/bible_state.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_app/models/book.dart';
@@ -10,11 +9,6 @@ Future<void> showBookMenu(BuildContext context) async {
   final ApiService apiService = ApiService();
 
   final bibleState = Provider.of<BibleState>(context, listen: false);
-
-  final List<Book> bibleBooks = await apiService.fetchBibleBooks(
-    bibleState.selectedBible!.id,
-  );
-
   if (!context.mounted) return; // Prevent execution if widget is unmounted
 
   Book? selectedBookForChapters;
@@ -41,13 +35,25 @@ Future<void> showBookMenu(BuildContext context) async {
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Consumer<BibleState>(
-                      builder: (context, bibleState, _) {
-                        return
-                        // Header with Back Button & Title
+                child: FutureBuilder<List<Book>>(
+                  future: apiService.fetchBibleBooks(
+                    bibleState.selectedBible!.id,
+                  ),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text("Error loading books"));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(child: Text("No books found"));
+                    }
+
+                    final List<Book> bibleBooks = snapshot.data!;
+
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Header
                         Row(
                           children: [
                             TextButton(
@@ -74,31 +80,14 @@ Future<void> showBookMenu(BuildContext context) async {
                             ),
                             Expanded(
                               child: Center(
-                                child: Column(
-                                  children: [
-                                    if (selectedBookForChapters == null)
-                                      Text(
-                                        "Books",
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    if (selectedBookForChapters == null &&
-                                        bibleState.sortAlphabetical)
-                                      Text("Alphabetical"),
-                                    if (selectedBookForChapters == null &&
-                                        !bibleState.sortAlphabetical)
-                                      Text("Traditional"),
-                                    if (selectedBookForChapters != null)
-                                      Text(
-                                        selectedBookForChapters!.name,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                  ],
+                                child: Text(
+                                  selectedBookForChapters == null
+                                      ? "Books"
+                                      : selectedBookForChapters!.name,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -114,26 +103,27 @@ Future<void> showBookMenu(BuildContext context) async {
                               ),
                             ),
                           ],
-                        );
-                      },
-                    ),
-
-                    const Divider(),
-
-                    // Either show Books or Chapters based on selectedBook
-                    Expanded(
-                      child:
-                          selectedBookForChapters == null
-                              ? _buildBookList(context, bibleBooks, setState, (
-                                book,
-                              ) {
-                                setState(() {
-                                  selectedBookForChapters = book;
-                                });
-                              })
-                              : _buildChapterGrid(selectedBookForChapters!),
-                    ),
-                  ],
+                        ),
+                        const Divider(),
+                        // Either show Books or Chapters based on selectedBook
+                        Expanded(
+                          child:
+                              selectedBookForChapters == null
+                                  ? _buildBookList(
+                                    context,
+                                    bibleBooks,
+                                    setState,
+                                    (book) {
+                                      setState(() {
+                                        selectedBookForChapters = book;
+                                      });
+                                    },
+                                  )
+                                  : _buildChapterGrid(selectedBookForChapters!),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               );
             },
@@ -334,14 +324,15 @@ Map<String, Map<String, List<Book>>> groupBooksByCategory(
 ) {
   Map<String, Map<String, List<Book>>> groupedBooks = {};
 
+  const String defaultParentCategory = 'Uncategorized';
+  const String defaultCategory = 'Unknown Category';
+
   for (var book in books) {
     String parentCategory =
-        book.parentCategory[bibleState.selectedLanguage?.id] ?? '';
-    String category = book.category[bibleState.selectedLanguage?.id] ?? '';
-
-    if (parentCategory.isEmpty || category.isEmpty) {
-      continue; // Skip books without valid categories
-    }
+        book.parentCategory?[bibleState.selectedLanguage?.id] ??
+        defaultParentCategory;
+    String category =
+        book.category?[bibleState.selectedLanguage?.id] ?? defaultCategory;
 
     groupedBooks.putIfAbsent(parentCategory, () => {});
     groupedBooks[parentCategory]!.putIfAbsent(category, () => []);
