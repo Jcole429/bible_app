@@ -42,13 +42,14 @@ class BibleState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateLanguage(Language newLanguage) {
+  Future<bool> updateLanguage(Language newLanguage) async {
     _selectedLanguage = newLanguage;
     SharedPreferencesHelper.saveSelectedLanguage(newLanguage);
     notifyListeners();
+    return true;
   }
 
-  void updateBible(Bible newVersion) async {
+  Future<bool> updateBible(Bible newVersion) async {
     Chapter newChapter = await apiService.fetchBibleChapter(
       newVersion.id,
       selectedChapter!.id,
@@ -67,6 +68,7 @@ class BibleState extends ChangeNotifier {
     SharedPreferencesHelper.saveSelectedChapter(newChapter);
 
     notifyListeners();
+    return true;
   }
 
   void updateBook(Book newBook) {

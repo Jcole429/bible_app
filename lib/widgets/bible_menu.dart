@@ -17,6 +17,8 @@ Future<void> showBibleMenu(BuildContext context) async {
 
   final List<Bible> bibles = await loadBiblesFromJson();
 
+  bool _isLoading = false;
+
   List<Bible> filteredBibles =
       bibles.where((bible) {
         return bible.language.id == selectedLanguage.id;
@@ -51,159 +53,179 @@ Future<void> showBibleMenu(BuildContext context) async {
             minChildSize: 0.4, // Minimum height (40%)
             maxChildSize: 0.9, // Maximum height (90%)
             builder: (context, scrollController) {
-              return Padding(
-                padding: EdgeInsets.all(0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Ensure sheet has a background
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(16),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(padding: EdgeInsets.all(5)),
-                      // Header with "Done" button
-                      Row(
+              return Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Ensure sheet has a background
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(16),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.black,
-                            ),
-                            child: Text(
-                              "Done",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                          Padding(padding: EdgeInsets.all(5)),
+                          // Header with "Done" button
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.black,
+                                ),
+                                child: Text(
+                                  "Done",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Choose a Version",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Versions: ${bibles.length} in ${bibles.map((bible) => bible.language.id).toSet() // Removes duplicates
+                                        .length} languages",
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 60), // Balancing spacing
+                            ],
+                          ),
+                          // Search Bar
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: TextField(
+                              controller: searchController,
+                              focusNode: searchFocusNode,
+                              onTap: () {
+                                searchFocusNode
+                                    .requestFocus(); // Make sure keyboard opens
+                              },
+                              onChanged: filterListFromSearch,
+                              decoration: InputDecoration(
+                                hintText: "Name or abbreviation",
+                                prefixIcon: Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10,
+                                ),
                               ),
                             ),
                           ),
+
+                          // Language selector
+                          ListTile(
+                            title: Text("Language"),
+                            leading: Icon(Icons.language),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(selectedLanguage.name),
+                                Icon(Icons.chevron_right),
+                              ],
+                            ),
+                            onTap: () {
+                              showLanguageMenu(
+                                context,
+                                bibles,
+                                selectedLanguage,
+                                (newLanguage) {
+                                  setState(() {
+                                    selectedLanguage = newLanguage;
+                                    filteredBibles =
+                                        bibles.where((bible) {
+                                          return bible.language.id ==
+                                              newLanguage.id;
+                                        }).toList();
+                                  });
+                                },
+                              );
+                            },
+                          ),
+
+                          Divider(),
+
+                          // List of Bibles
                           Expanded(
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "Choose a Version",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: filteredBibles.length,
+                              itemBuilder: (context, index) {
+                                final version = filteredBibles[index];
+                                return ListTile(
+                                  title: Text(version.abbreviationLocal),
+                                  titleTextStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    "Versions: ${bibles.length} in ${bibles.map((bible) => bible.language.id).toSet() // Removes duplicates
-                                    .length} languages",
+                                  subtitle: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        version.nameLocal,
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      if (version.descriptionLocal != null &&
+                                          version
+                                              .descriptionLocal!
+                                              .isNotEmpty &&
+                                          version.descriptionLocal !=
+                                              version.nameLocal &&
+                                          version.descriptionLocal != "Bible")
+                                        Text(
+                                          version.descriptionLocal!,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w300,
+                                            // fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                  onTap: () async {
+                                    setState(() {
+                                      _isLoading = true;
+                                    });
+                                    await bibleState.updateBible(version);
+                                    bibleState.updateLanguage(selectedLanguage);
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  trailing:
+                                      bibleState.selectedBible!.id == version.id
+                                          ? const Icon(Icons.check)
+                                          : null,
+                                );
+                              },
                             ),
                           ),
-                          SizedBox(width: 60), // Balancing spacing
+                          SizedBox(height: 10),
                         ],
                       ),
-                      // Search Bar
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
-                          controller: searchController,
-                          focusNode: searchFocusNode,
-                          onTap: () {
-                            searchFocusNode
-                                .requestFocus(); // Make sure keyboard opens
-                          },
-                          onChanged: filterListFromSearch,
-                          decoration: InputDecoration(
-                            hintText: "Name or abbreviation",
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            contentPadding: EdgeInsets.symmetric(vertical: 10),
-                          ),
-                        ),
-                      ),
-
-                      // Language selector
-                      ListTile(
-                        title: Text("Language"),
-                        leading: Icon(Icons.language),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(selectedLanguage.name),
-                            Icon(Icons.chevron_right),
-                          ],
-                        ),
-                        onTap: () {
-                          showLanguageMenu(context, bibles, selectedLanguage, (
-                            newLanguage,
-                          ) {
-                            setState(() {
-                              selectedLanguage = newLanguage;
-                              filteredBibles =
-                                  bibles.where((bible) {
-                                    return bible.language.id == newLanguage.id;
-                                  }).toList();
-                            });
-                          });
-                        },
-                      ),
-
-                      Divider(),
-
-                      // List of Bibles
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: filteredBibles.length,
-                          itemBuilder: (context, index) {
-                            final version = filteredBibles[index];
-                            return ListTile(
-                              title: Text(version.abbreviationLocal),
-                              titleTextStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              subtitle: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    version.nameLocal,
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  if (version.descriptionLocal != null &&
-                                      version.descriptionLocal!.isNotEmpty &&
-                                      version.descriptionLocal !=
-                                          version.nameLocal &&
-                                      version.descriptionLocal != "Bible")
-                                    Text(
-                                      version.descriptionLocal!,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        // fontStyle: FontStyle.italic,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              onTap: () {
-                                bibleState.updateBible(version);
-                                bibleState.updateLanguage(selectedLanguage);
-                                Navigator.pop(context);
-                              },
-                              trailing:
-                                  bibleState.selectedBible!.id == version.id
-                                      ? const Icon(Icons.check)
-                                      : null,
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                    ],
+                    ),
                   ),
-                ),
+                  if (_isLoading) Center(child: CircularProgressIndicator()),
+                ],
               );
             },
           );
