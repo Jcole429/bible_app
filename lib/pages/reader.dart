@@ -1,3 +1,4 @@
+import 'package:bible_app/pages/webview.dart';
 import 'package:bible_app/services/api_service.dart';
 import 'package:bible_app/utils/bible_state.dart';
 import 'package:flutter/material.dart';
@@ -61,11 +62,35 @@ class ReaderPageState extends State<ReaderPage> {
   Widget build(BuildContext context) {
     return Consumer<BibleState>(
       builder: (context, bibleState, _) {
+        String languageId = bibleState.selectedLanguage!.id;
+        String? url;
+        if (bibleState.selectedBook?.bpLink != null &&
+            bibleState.selectedBook?.bpLink[languageId] != null) {
+          url = bibleState.selectedBook?.bpLink[languageId];
+        }
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.grey,
             leadingWidth: 0,
             centerTitle: false,
+            actions: [
+              if (url != null)
+                TextButton(
+                  child: Icon(
+                    Icons.info_outline,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WebViewPage(url: url!),
+                      ),
+                    );
+                  },
+                ),
+            ],
             title: Container(
               height: 35,
               decoration: BoxDecoration(

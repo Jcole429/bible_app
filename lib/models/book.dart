@@ -1,3 +1,4 @@
+import 'package:bible_app/data/book_bible_project_url_map.dart';
 import 'package:bible_app/data/book_category_map.dart';
 import 'package:bible_app/models/chapter.dart';
 
@@ -10,6 +11,7 @@ class Book {
   final List<Chapter> chapters;
   final dynamic category;
   final dynamic parentCategory;
+  final dynamic bpLink;
 
   Book({
     required this.id,
@@ -19,7 +21,8 @@ class Book {
     required this.nameLong,
     required this.chapters,
   }) : category = getCategoryForBook(id),
-       parentCategory = getParentCategoryForBook(id);
+       parentCategory = getParentCategoryForBook(id),
+       bpLink = getLinkForBook(id);
 
   // Convert a JSON map to a Boook object
   factory Book.fromJson(Map<String, dynamic> json) {
