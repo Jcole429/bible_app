@@ -71,9 +71,20 @@ class _SearchPageState extends State<SearchPage> {
       builder: (context, bibleState, _) {
         return Scaffold(
           appBar: AppBar(
+            leading: TextButton(
+              onPressed: () {
+                bibleState.updateSelectedPage(0);
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.chevron_left),
+                  Text("Bible", style: TextStyle(color: Colors.black)),
+                ],
+              ),
+            ),
             title: Text("Search the Bible"),
             backgroundColor: Colors.grey,
-            leadingWidth: 0,
+            leadingWidth: 100,
             centerTitle: true,
           ),
           body: Column(
