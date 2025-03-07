@@ -1429,5 +1429,42 @@
     "copyright": "Derechos de autor © 2022 Jonathan Gallagher. Publicado bajo licencia Creative Commons Attribution-ShareAlike 4.0 Unported. Versión 1.1 beta. Para correcciones enviar correo electrónico a jonathangallagherfbv@gmail.com Copyright © 2022 Jonathan Gallagher. Dr. Jonathan Gallagher. Released under Creative Commons Attribution-ShareAlike 4.0 Unported License. Version 1.1 beta. For corrections send email to jonathangallagherfbv@gmail.com",
     "info": "<p>La traducción se ha hecho de manera directa del texto en griego estándar de Nestle-Aland. Su propósito es ser una traducción fiel a su significado original, sin términos difíciles o confusos. El estilo ha sido traducido al inglés y español contemporáneos, evitando el uso de jergas o palabras coloquiales, hablando así a nuestra sociedad moderna de una forma que todos puedan entender.</p> <p>Para más informacióny noticias actuales sobre la traducción Free Bible Version, visita a www.freebibleversion.org donde también podrás escuchar los audios en inglés.</p> <p>La traducción Free Bible Version es un proyecto del Ministerio Free Bible Ministry (www.freebibleministry.org). Gracias a todos los que han hecho posible esta nueva traducción y su publicación. No es posible mencionar a todos los que han contribuido a la revisión, edición, y los recursos para esta nueva traducción, pero ustedes saben quiénes son, y lo apreciamos en gran manera.</p> <p>Que nuestro misericordioso Dios bendiga a todos los que leen.</p>",
     "audioBibles": []
+  },
+  {
+    "id": "01",
+    "dblId": "01",
+    "relatedDbl": null,
+    "name": "TEST BIBLE",
+    "nameLocal": "TEST BIBLE",
+    "abbreviation": "TEST",
+    "abbreviationLocal": "TEST",
+    "description": null,
+    "descriptionLocal": null,
+    "language": {
+      "id": "eng",
+      "name": "English",
+      "nameLocal": "English",
+      "script": "Latin",
+      "scriptDirection": "LTR"
+    },
+    "countries": [
+      {
+        "id": "US",
+        "name": "United States of America",
+        "nameLocal": "United States of America"
+      }
+    ],
+    "type": "text",
+    "updatedAt": "2024-06-28T21:52:43.000Z",
+    "copyright": "\n          PUBLIC DOMAIN\n        ",
+    "info": "\n        See http://WorldEnglish.Bible\n      ",
+    "audioBibles": [
+      {
+        "id": "105a06b6146d11e7-01",
+        "name": "English - World English Bible 2013 (Drama NT)",
+        "nameLocal": "English - World English Bible 2013 (Drama NT)",
+        "dblId": "105a06b6146d11e7"
+      }
+    ]
   }
 ]
