@@ -102,6 +102,17 @@ class BibleState extends ChangeNotifier {
     return true;
   }
 
+  void refreshCurrentChapter() async {
+    // Refetch the current chapter with new settings
+    Chapter newChapter = await apiService.fetchBibleChapter(
+      selectedBible!.id,
+      selectedChapter!.id,
+    );
+    _selectedChapter = newChapter;
+    SharedPreferencesHelper.saveSelectedChapter(newChapter);
+    notifyListeners();
+  }
+
   void updateSortAlphabetical(bool newSortAlphabetical) {
     _sortAlphabetical = newSortAlphabetical;
     SharedPreferencesHelper.saveSortAlphabetical(newSortAlphabetical);
@@ -114,11 +125,14 @@ class BibleState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateIncludeFootnotesInContent(bool newIncludeFootnotesInContent) {
+  Future<bool> updateIncludeFootnotesInContent(
+    bool newIncludeFootnotesInContent,
+  ) async {
     _includeFootnotesInContent = newIncludeFootnotesInContent;
     SharedPreferencesHelper.saveIncludeFootnotesInContent(
       newIncludeFootnotesInContent,
     );
     notifyListeners();
+    return true;
   }
 }

@@ -28,11 +28,10 @@ class MorePage extends StatelessWidget {
                     const Spacer(), // Pushes the switch to the right
                     Switch(
                       value: bibleState.includeFootnotesInContent,
-                      onChanged: (value) {
-                        bibleState.updateIncludeFootnotesInContent(value);
-                        bibleState.updateChapterById(
-                          bibleState.selectedChapter!.id,
-                        ); // Fetch chapter again with new settings
+                      onChanged: (value) async {
+                        await bibleState.updateIncludeFootnotesInContent(value);
+                        bibleState
+                            .refreshCurrentChapter(); // Fetch chapter again with new settings
                       },
                     ),
                   ],
