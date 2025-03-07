@@ -1,6 +1,14 @@
 Map<int, dynamic> parentCategories = {
-  0: {"eng": "Old Testament", "spa": "El Antiguo Testamento"},
-  1: {"eng": "New Testament", "spa": "El Nuevo Testamento"},
+  0: {
+    "eng": "Old Testament",
+    "spa": "El Antiguo Testamento",
+    "por": "Antigo Testamento",
+  },
+  1: {
+    "eng": "New Testament",
+    "spa": "El Nuevo Testamento",
+    "por": "Novo Testamento",
+  },
 };
 
 Map<int, dynamic> categories = {
@@ -8,47 +16,61 @@ Map<int, dynamic> categories = {
     "parent_category": 0,
     "eng": "Books of the Law/The Pentateuch",
     "spa": "Pentateuco",
+    "por": "Livros da Lei/Pentateuco",
   },
   1: {
     "parent_category": 0,
     "eng": "Historical Books",
     "spa": "Libros Historicos",
+    "por": "Livros Históricos",
   },
   2: {
     "parent_category": 0,
     "eng": "Poetic Books/Books of Wisdom",
     "spa": "Libros Sapienciales",
+    "por": "Livros Poéticos/Livros de Sabedoria",
   },
   3: {
     "parent_category": 0,
     "eng": "Major Prophetic Books",
     "spa": "Profetas Mayores",
+    "por": "Livros Proféticos Maiores",
   },
   4: {
     "parent_category": 0,
     "eng": "Minor Prophetic Books",
     "spa": "Profetas Menores",
+    "por": "Livros Proféticos Menores",
   },
-  5: {"parent_category": 1, "eng": "The Gospels", "spa": "Evangelios"},
+  5: {
+    "parent_category": 1,
+    "eng": "The Gospels",
+    "spa": "Evangelios",
+    "por": "Os Evangelhos",
+  },
   6: {
     "parent_category": 1,
     "eng": "The Acts of the Apostles",
     "spa": "Historia Apostolica/Narrativa",
+    "por": "Atos dos Apóstolos",
   },
   7: {
     "parent_category": 1,
     "eng": "Paul's Letters (Epistles)",
     "spa": "Cartas (Epístolas) Paulinas",
+    "por": "Cartas (Epístolas) Paulinas",
   },
   8: {
     "parent_category": 1,
     "eng": "General Letters (Epistles)",
     "spa": "Cartas (Epístolas) Generales",
+    "por": "Cartas (Epístolas) Gerais",
   },
   9: {
     "parent_category": 1,
     "eng": "The Book of Revelations/Apocalypse",
     "spa": "Profecía/Apocalipsis",
+    "por": "Livro do Apocalipse",
   },
 };
 
