@@ -204,6 +204,7 @@ class ReaderPageState extends State<ReaderPage> {
                   bottom: 20,
                   left: 20,
                   child: FloatingActionButton(
+                    heroTag: "previous_chapter",
                     backgroundColor: Colors.grey[700],
                     onPressed: () {
                       _goToPreviousChapter(bibleState);
@@ -218,6 +219,7 @@ class ReaderPageState extends State<ReaderPage> {
                   bottom: 20,
                   right: 20,
                   child: FloatingActionButton(
+                    heroTag: "next_chapter",
                     backgroundColor: Colors.grey[700],
                     onPressed: () {
                       _goToNextChapter(bibleState);
