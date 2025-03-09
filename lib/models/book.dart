@@ -51,4 +51,22 @@ class Book {
       'chapters': chapters.map((c) => c.toJson()).toList(),
     };
   }
+
+  String? getParentCategory(String languageId) {
+    if (parentCategory != null) {
+      if (parentCategory[languageId] != null) {
+        return parentCategory[languageId];
+      }
+    }
+    return null;
+  }
+
+  String? getCategory(String languageId) {
+    if (category != null) {
+      if (category[languageId] != null) {
+        return category[languageId];
+      }
+    }
+    return null;
+  }
 }

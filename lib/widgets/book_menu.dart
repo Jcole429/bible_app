@@ -228,6 +228,11 @@ Widget _buildBookTile(
   bool includeCategories,
   Function(Book) onBookSelected,
 ) {
+  String? parentCategory = book.getParentCategory(
+    bibleState.selectedLanguage!.id,
+  );
+  String? category = book.getParentCategory(bibleState.selectedLanguage!.id);
+
   return ListTile(
     title: Row(
       mainAxisSize: MainAxisSize.min,
@@ -240,11 +245,8 @@ Widget _buildBookTile(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (includeCategories &&
-            book.parentCategory[bibleState.selectedLanguage?.id] != null)
-          Text(
-            "${book.parentCategory[bibleState.selectedLanguage!.id]} - ${book.category[bibleState.selectedLanguage!.id]}",
-          ),
+        if (includeCategories && parentCategory != null)
+          Text("$parentCategory - $category"),
         Text("${book.chapters.length} Chapters"),
       ],
     ),
@@ -298,10 +300,7 @@ Widget _buildChapterGrid(Book selectedBook) {
           bibleState.updateBook(newBook);
           bibleState.updateChapter(newChapter);
 
-          if (!context.mounted) {
-            return;
-          }
-
+          if (!context.mounted) return;
           Navigator.pop(context);
         },
         style: ElevatedButton.styleFrom(
@@ -329,10 +328,10 @@ Map<String, Map<String, List<Book>>> groupBooksByCategory(
 
   for (var book in books) {
     String parentCategory =
-        book.parentCategory?[bibleState.selectedLanguage?.id] ??
+        book.getParentCategory(bibleState.selectedLanguage!.id) ??
         defaultParentCategory;
     String category =
-        book.category?[bibleState.selectedLanguage?.id] ?? defaultCategory;
+        book.getCategory(bibleState.selectedLanguage!.id) ?? defaultCategory;
 
     groupedBooks.putIfAbsent(parentCategory, () => {});
     groupedBooks[parentCategory]!.putIfAbsent(category, () => []);
