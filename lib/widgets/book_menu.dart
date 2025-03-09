@@ -234,7 +234,6 @@ Widget _buildBookTile(
   String? category = book.getCategory(bibleState.selectedLanguage!.id);
 
   return ListTile(
-    key: key,
     title: Text(book.name),
     titleTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
     dense: true,
