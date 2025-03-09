@@ -231,7 +231,7 @@ Widget _buildBookTile(
   String? parentCategory = book.getParentCategory(
     bibleState.selectedLanguage!.id,
   );
-  String? category = book.getParentCategory(bibleState.selectedLanguage!.id);
+  String? category = book.getCategory(bibleState.selectedLanguage!.id);
 
   return ListTile(
     title: Row(
