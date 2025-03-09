@@ -168,6 +168,7 @@ Map<String, dynamic> bookCategoryMap = {
   "2MA": 10,
   "3MA": 10,
   "4MA": 10,
+  "S3Y": 10,
   "1ES": 11,
   "2ES": 11,
   "MAN": 11,
