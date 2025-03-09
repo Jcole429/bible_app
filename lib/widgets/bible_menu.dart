@@ -7,6 +7,8 @@ import '../models/bible.dart';
 import 'package:provider/provider.dart';
 
 Future<void> showBibleMenu(BuildContext context) async {
+  if (!context.mounted) return; // Ensure context is valid before starting
+
   TextEditingController searchController = TextEditingController();
   FocusNode searchFocusNode = FocusNode();
 
@@ -17,7 +19,7 @@ Future<void> showBibleMenu(BuildContext context) async {
 
   final List<Bible> bibles = await loadBiblesFromJson();
 
-  bool _isLoading = false;
+  bool isLoading = false;
 
   List<Bible> filteredBibles =
       bibles.where((bible) {
@@ -202,14 +204,16 @@ Future<void> showBibleMenu(BuildContext context) async {
                                   ),
                                   onTap: () async {
                                     setState(() {
-                                      _isLoading = true;
+                                      isLoading = true;
                                     });
                                     await bibleState.updateBible(version);
                                     bibleState.updateLanguage(selectedLanguage);
                                     setState(() {
-                                      _isLoading = false;
+                                      isLoading = false;
                                     });
-                                    Navigator.pop(context);
+                                    if (context.mounted) {
+                                      Navigator.pop(context);
+                                    }
                                   },
                                   trailing:
                                       bibleState.selectedBible!.id == version.id
@@ -224,7 +228,7 @@ Future<void> showBibleMenu(BuildContext context) async {
                       ),
                     ),
                   ),
-                  if (_isLoading) Center(child: CircularProgressIndicator()),
+                  if (isLoading) Center(child: CircularProgressIndicator()),
                 ],
               );
             },

@@ -183,9 +183,9 @@ Widget _buildBookList(
                               false,
                               onBookSelected,
                             );
-                          }).toList(),
+                          }),
                         ];
-                      }).toList(),
+                      }),
                     ];
                   }).toList(),
             ),
