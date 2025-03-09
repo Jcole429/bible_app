@@ -162,8 +162,15 @@ Map<String, dynamic> bookCategoryMap = {
   "BAR": 10,
   "LJE": 10,
   "DAG": 10,
+  "SUS": 10,
+  "BEL": 10,
+  "1MA": 10,
+  "2MA": 10,
+  "3MA": 10,
+  "4MA": 10,
   "1ES": 11,
   "2ES": 11,
+  "MAN": 11,
 };
 
 dynamic getCategoryForBook(String bookId) {
