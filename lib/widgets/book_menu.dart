@@ -234,15 +234,11 @@ Widget _buildBookTile(
   String? category = book.getCategory(bibleState.selectedLanguage!.id);
 
   return ListTile(
-    title: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(book.name, style: TextStyle(fontWeight: FontWeight.bold)),
-        Text(" (${book.abbreviation})"),
-      ],
-    ),
+    key: key,
+    title: Text(book.name),
+    titleTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+    dense: true,
     subtitle: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (includeCategories && parentCategory != null)
