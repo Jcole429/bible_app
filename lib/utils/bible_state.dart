@@ -86,10 +86,11 @@ class BibleState extends ChangeNotifier {
     return true;
   }
 
-  void updateChapter(Chapter newChapter) {
+  Future<bool> updateChapter(Chapter newChapter) async {
     _selectedChapter = newChapter;
     SharedPreferencesHelper.saveSelectedChapter(newChapter);
     notifyListeners();
+    return true;
   }
 
   Future<bool> updateChapterById(String chapterId) async {
