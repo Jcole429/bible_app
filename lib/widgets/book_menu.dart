@@ -166,6 +166,7 @@ Widget _buildBookList(
           Expanded(
             child: ListView(
               controller: ScrollController(),
+              key: PageStorageKey('bibleBookTraditionalMenuPostion'),
               children:
                   groupedBooks.entries.expand((parentEntry) {
                     String parentCategory = parentEntry.key;
@@ -206,6 +207,7 @@ Widget _buildSimpleListView(
       Expanded(
         child: ListView.builder(
           controller: ScrollController(),
+          key: PageStorageKey('bibleBookAlphabeticalMenuPostion'),
           itemCount: books.length,
           itemBuilder: (context, index) {
             return _buildBookTile(
