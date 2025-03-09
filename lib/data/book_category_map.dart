@@ -72,9 +72,19 @@ Map<int, dynamic> categories = {
     "spa": "Profecía/Apocalipsis",
     "por": "Livro do Apocalipse",
   },
-  10: {"parent_category": 0, "eng": "Deuterocanonical", "spa": "", "por": ""},
+  10: {
+    "parent_category": 0,
+    "eng": "Deuterocanonical",
+    "spa": "Deuterocanónico",
+    "por": "Deuterocanônico",
+  },
 
-  11: {"parent_category": 0, "eng": "Orthodox", "spa": "", "por": ""},
+  11: {
+    "parent_category": 0,
+    "eng": "Orthodox",
+    "spa": "Ortodoxo",
+    "por": "Ortodoxo",
+  },
 };
 
 Map<String, dynamic> bookCategoryMap = {
