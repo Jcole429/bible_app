@@ -207,7 +207,7 @@ Future<void> showBibleMenu(BuildContext context) async {
                                       isLoading = true;
                                     });
                                     await bibleState.updateBible(version);
-                                    bibleState.updateLanguage(selectedLanguage);
+                                    bibleState.updateLanguage(version.language);
                                     setState(() {
                                       isLoading = false;
                                     });
