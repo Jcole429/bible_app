@@ -35,6 +35,9 @@ class Book {
       chapters:
           (json['chapters'] as List<dynamic>?)
               ?.map((c) => Chapter.fromJson(c))
+              .where(
+                (chapter) => chapter.number != 'Intro',
+              ) // Filter out Intro chapters
               .toList() ??
           [], // Handle null case with empty list,
     );
