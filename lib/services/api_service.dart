@@ -4,6 +4,7 @@ import 'package:bible_app/models/bible.dart';
 import 'package:bible_app/models/book.dart';
 import 'package:bible_app/models/chapter.dart';
 import 'package:bible_app/models/search_response.dart';
+import 'package:bible_app/models/verse.dart';
 import 'package:bible_app/utils/shared_preferences_helper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:bible_app/utils/api_helper.dart';
@@ -144,6 +145,19 @@ class ApiService {
       cacheKey: cacheKey,
       logString: logString,
       fromJson: SearchResponse.fromJson,
+    );
+  }
+
+  Future<Verse> fetchVerse(String bibleId, String verseId) async {
+    String url = '$baseUrl/bibles/$bibleId/verses/$verseId';
+    String cacheKey = 'verse_${bibleId}_$verseId';
+    String logString = 'fetchVerse(bibleId: $bibleId, verseId: $verseId)';
+
+    return ApiHelper.cachedApiCallSingle<Verse>(
+      url: url,
+      cacheKey: cacheKey,
+      logString: logString,
+      fromJson: Verse.fromJson,
     );
   }
 }
