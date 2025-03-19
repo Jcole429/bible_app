@@ -134,7 +134,7 @@ class SearchPageState extends State<SearchPage> {
 
 Widget _buildBibleVerseTile(BibleState bibleState, Verse verse) {
   return ListTile(
-    title: Text(verse.text),
+    title: Text(verse.text ?? 'No Verse Text'),
     horizontalTitleGap: -10,
     subtitle: Text(verse.reference),
 

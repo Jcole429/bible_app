@@ -4,8 +4,10 @@ class Verse {
   final String bookId;
   final String bibleId;
   final String chapterId;
+  final String content;
   final String reference;
-  final String text;
+  final int verseCount;
+  final String? text;
 
   Verse({
     required this.id,
@@ -13,8 +15,10 @@ class Verse {
     required this.bookId,
     required this.bibleId,
     required this.chapterId,
+    required this.content,
     required this.reference,
-    required this.text,
+    required this.verseCount,
+    this.text,
   });
 
   // Convert a JSON map to a Country object
@@ -25,8 +29,10 @@ class Verse {
       bookId: json['bookId'] as String,
       bibleId: json['bibleId'] as String,
       chapterId: json['chapterId'] as String,
+      content: json['content'] as String,
       reference: json['reference'] as String,
-      text: json['text'] as String,
+      verseCount: json['verseCount'] as int,
+      text: json['text'] as String?,
     );
   }
 
@@ -38,7 +44,9 @@ class Verse {
       'bookId': bookId,
       'bibleId': bibleId,
       'chapterId': chapterId,
+      'content': content,
       'reference': reference,
+      'verseCount': verseCount,
       'text': text,
     };
   }
