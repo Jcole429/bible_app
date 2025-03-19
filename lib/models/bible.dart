@@ -20,6 +20,8 @@ class Bible {
   final String info;
   final List<AudioBible> audioBibles;
   final int? bookCount;
+  final String category;
+  final bool enabled;
 
   Bible({
     required this.id,
@@ -39,6 +41,8 @@ class Bible {
     required this.info,
     required this.audioBibles,
     this.bookCount,
+    required this.category,
+    required this.enabled,
   }) : abbreviation = abbreviation.toUpperCase(),
        abbreviationLocal = abbreviationLocal.toUpperCase(),
        description =
@@ -79,6 +83,8 @@ class Bible {
               .toList() ??
           [], // Handle null case with empty list,
       bookCount: json['bookCount'] as int?,
+      category: json['category'] as String,
+      enabled: json['enabled'] as bool,
     );
   }
 
@@ -102,6 +108,8 @@ class Bible {
       'info': info,
       'audioBibles': audioBibles.map((c) => c.toJson()).toList(),
       'bookCount': bookCount,
+      'category': category,
+      'enabled': enabled,
     };
   }
 }

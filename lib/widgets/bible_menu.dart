@@ -171,6 +171,18 @@ Future<void> showBibleMenu(BuildContext context) async {
                               itemCount: filteredBibles.length,
                               itemBuilder: (context, index) {
                                 final version = filteredBibles[index];
+                                String description = version.category;
+                                if (version.descriptionLocal != null &&
+                                    version.descriptionLocal!.isNotEmpty &&
+                                    ![
+                                      "Bible",
+                                      version.nameLocal,
+                                      version.category,
+                                    ].contains(version.descriptionLocal)) {
+                                  description +=
+                                      " - ${version.descriptionLocal!}";
+                                }
+                                description += " - ${version.bookCount} Books";
                                 return ListTile(
                                   title: Text(version.abbreviationLocal),
                                   titleTextStyle: TextStyle(
@@ -186,20 +198,13 @@ Future<void> showBibleMenu(BuildContext context) async {
                                         version.nameLocal,
                                         style: TextStyle(color: Colors.black),
                                       ),
-                                      if (version.descriptionLocal != null &&
-                                          version
-                                              .descriptionLocal!
-                                              .isNotEmpty &&
-                                          version.descriptionLocal !=
-                                              version.nameLocal &&
-                                          version.descriptionLocal != "Bible")
-                                        Text(
-                                          version.descriptionLocal!,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w300,
-                                            // fontStyle: FontStyle.italic,
-                                          ),
+                                      Text(
+                                        description,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                          // fontStyle: FontStyle.italic,
                                         ),
+                                      ),
                                     ],
                                   ),
                                   onTap: () async {
