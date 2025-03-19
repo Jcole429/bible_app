@@ -1,3 +1,5 @@
+import 'package:bible_app/models/section.dart';
+import 'package:bible_app/models/verse.dart';
 import 'package:bible_app/utils/bible_state.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_app/models/book.dart';
@@ -119,7 +121,10 @@ Future<void> showBookMenu(BuildContext context) async {
                                       });
                                     },
                                   )
-                                  : _buildChapterGrid(selectedBookForChapters!),
+                                  : _buildChapterMenu(
+                                    selectedBookForChapters!,
+                                    bibleState,
+                                  ),
                         ),
                       ],
                     );
@@ -268,71 +273,178 @@ Widget _buildSectionHeader(String title, Color color) {
   );
 }
 
-Widget _buildChapterGrid(Book selectedBook) {
+Widget _buildChapterMenu(Book selectedBook, BibleState bibleState) {
+  bool showGrid = true;
+
+  return StatefulBuilder(
+    builder: (context, setState) {
+      return Column(
+        children: [
+          Expanded(
+            child:
+                showGrid
+                    ? _buildChapterGrid(selectedBook, bibleState)
+                    : _buildSectionsMenu(selectedBook, bibleState),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ToggleButtons(
+                isSelected: [showGrid, !showGrid],
+                onPressed: (index) {
+                  setState(() {
+                    showGrid = index == 0;
+                  });
+                },
+                borderRadius: BorderRadius.circular(12),
+                borderColor: Colors.grey,
+                selectedBorderColor: Colors.blue,
+                fillColor: Colors.blue.shade100,
+                color: Colors.black,
+                selectedColor: Colors.white,
+                constraints: const BoxConstraints(minWidth: 100, minHeight: 40),
+                children: const [
+                  Text(
+                    "Chapters",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Sections",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Widget _buildSectionsMenu(Book selectedBook, BibleState bibleState) {
+  ApiService apiService = ApiService();
+
+  return FutureBuilder<List<Section>>(
+    future: ApiService().fetchBookSections(
+      selectedBook.bibleId,
+      selectedBook.id,
+    ),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasError) {
+        return Center(child: Text("Error loading sections"));
+      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        return Center(child: Text("No sections found"));
+      }
+      return ListView.builder(
+        itemCount: snapshot.data!.length,
+        itemBuilder: (context, index) {
+          final section = snapshot.data![index];
+          return ListTile(
+            title: Text(section.title),
+            subtitle: Text("${section.firstVerseId} - ${section.lastVerseId}"),
+            onTap: () async {
+              Verse newVerse = await apiService.fetchVerse(
+                section.bibleId,
+                section.firstVerseId,
+              );
+
+              Chapter newChapter = await apiService.fetchBibleChapter(
+                newVerse.bibleId,
+                newVerse.chapterId,
+              );
+
+              Book newBook = await apiService.fetchBibleBook(
+                newVerse.bibleId,
+                newVerse.bookId,
+              );
+
+              bibleState.updateBook(newBook);
+              await bibleState.updateChapter(newChapter);
+
+              if (!context.mounted) return;
+              Navigator.pop(context);
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+Widget _buildChapterGrid(Book selectedBook, BibleState bibleState) {
   int totalChapters = selectedBook.chapters.length;
   ApiService apiService = ApiService();
   bool isLoading = false;
 
   return StatefulBuilder(
     builder: (context, setState) {
-      return Stack(
+      return Column(
         children: [
-          GridView.builder(
-            itemCount: totalChapters,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+          Expanded(
+            child: Stack(
+              children: [
+                GridView.builder(
+                  itemCount: totalChapters,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                  ),
+                  itemBuilder: (context, index) {
+                    final bibleState = Provider.of<BibleState>(
+                      context,
+                      listen: false,
+                    );
+
+                    return ElevatedButton(
+                      onPressed:
+                          isLoading
+                              ? null // Disable button while loading
+                              : () async {
+                                setState(() => isLoading = true);
+
+                                Chapter newChapter = await apiService
+                                    .fetchBibleChapter(
+                                      selectedBook.bibleId,
+                                      selectedBook.chapters[index].id,
+                                    );
+
+                                Book newBook = await apiService.fetchBibleBook(
+                                  selectedBook.bibleId,
+                                  newChapter.bookId,
+                                );
+
+                                bibleState.updateBook(newBook);
+                                await bibleState.updateChapter(newChapter);
+
+                                setState(() => isLoading = false);
+
+                                if (!context.mounted) return;
+                                Navigator.pop(context);
+                              },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        selectedBook.chapters[index].number,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                if (isLoading) Center(child: CircularProgressIndicator()),
+              ],
             ),
-            itemBuilder: (context, index) {
-              final bibleState = Provider.of<BibleState>(
-                context,
-                listen: false,
-              );
-
-              return ElevatedButton(
-                onPressed:
-                    isLoading
-                        ? null // Disable button while loading
-                        : () async {
-                          setState(() => isLoading = true);
-
-                          Chapter newChapter = await apiService
-                              .fetchBibleChapter(
-                                selectedBook.bibleId,
-                                selectedBook.chapters[index].id,
-                              );
-
-                          Book newBook = await apiService.fetchBibleBook(
-                            selectedBook.bibleId,
-                            newChapter.bookId,
-                          );
-
-                          bibleState.updateBook(newBook);
-                          await bibleState.updateChapter(newChapter);
-
-                          setState(() => isLoading = false);
-
-                          if (!context.mounted) return;
-                          Navigator.pop(context);
-                        },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  selectedBook.chapters[index].number,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              );
-            },
           ),
-          if (isLoading) Center(child: CircularProgressIndicator()),
         ],
       );
     },
