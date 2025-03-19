@@ -58,38 +58,106 @@
         "name": "United Kingdom of Great Britain and Northern Ireland",
         "nameLocal": "United Kingdom of Great Britain and Northern Ireland"
       },
-      { "id": "AU", "name": "Australia", "nameLocal": "Australia" },
-      { "id": "CA", "name": "Canada", "nameLocal": "Canada" },
+      {
+        "id": "AU",
+        "name": "Australia",
+        "nameLocal": "Australia"
+      },
+      {
+        "id": "CA",
+        "name": "Canada",
+        "nameLocal": "Canada"
+      },
       {
         "id": "AG",
         "name": "Antigua and Barbuda",
         "nameLocal": "Antigua and Barbuda"
       },
-      { "id": "BS", "name": "Bahamas", "nameLocal": "Bahamas" },
-      { "id": "BB", "name": "Barbados", "nameLocal": "Barbados" },
-      { "id": "BZ", "name": "Belize", "nameLocal": "Belize" },
-      { "id": "DM", "name": "Dominica", "nameLocal": "Dominica" },
+      {
+        "id": "BS",
+        "name": "Bahamas",
+        "nameLocal": "Bahamas"
+      },
+      {
+        "id": "BB",
+        "name": "Barbados",
+        "nameLocal": "Barbados"
+      },
+      {
+        "id": "BZ",
+        "name": "Belize",
+        "nameLocal": "Belize"
+      },
+      {
+        "id": "DM",
+        "name": "Dominica",
+        "nameLocal": "Dominica"
+      },
       {
         "id": "DO",
         "name": "Dominican Republic",
         "nameLocal": "Dominican Republic"
       },
-      { "id": "AS", "name": "American Samoa", "nameLocal": "American Samoa" },
-      { "id": "GU", "name": "Guam", "nameLocal": "Guam" },
-      { "id": "HT", "name": "Haiti", "nameLocal": "Haiti" },
-      { "id": "GY", "name": "Guyana", "nameLocal": "Guyana" },
-      { "id": "IL", "name": "Israel", "nameLocal": "Israel" },
-      { "id": "IE", "name": "Ireland", "nameLocal": "Ireland" },
-      { "id": "JM", "name": "Jamaica", "nameLocal": "Jamaica" },
-      { "id": "MT", "name": "Malta", "nameLocal": "Malta" },
-      { "id": "NZ", "name": "New Zealand", "nameLocal": "New Zealand" },
-      { "id": "PH", "name": "Philippines", "nameLocal": "Philippines" },
+      {
+        "id": "AS",
+        "name": "American Samoa",
+        "nameLocal": "American Samoa"
+      },
+      {
+        "id": "GU",
+        "name": "Guam",
+        "nameLocal": "Guam"
+      },
+      {
+        "id": "HT",
+        "name": "Haiti",
+        "nameLocal": "Haiti"
+      },
+      {
+        "id": "GY",
+        "name": "Guyana",
+        "nameLocal": "Guyana"
+      },
+      {
+        "id": "IL",
+        "name": "Israel",
+        "nameLocal": "Israel"
+      },
+      {
+        "id": "IE",
+        "name": "Ireland",
+        "nameLocal": "Ireland"
+      },
+      {
+        "id": "JM",
+        "name": "Jamaica",
+        "nameLocal": "Jamaica"
+      },
+      {
+        "id": "MT",
+        "name": "Malta",
+        "nameLocal": "Malta"
+      },
+      {
+        "id": "NZ",
+        "name": "New Zealand",
+        "nameLocal": "New Zealand"
+      },
+      {
+        "id": "PH",
+        "name": "Philippines",
+        "nameLocal": "Philippines"
+      },
       {
         "id": "KN",
         "name": "Saint Kitts and Nevis",
         "nameLocal": "Saint Kitts and Nevis"
       },
-      { "id": "LC", "name": "Saint Lucia", "nameLocal": "Saint Lucia" },
+      {
+        "id": "LC",
+        "name": "Saint Lucia",
+        "nameLocal": "Saint Lucia"
+      },
       {
         "id": "VC",
         "name": "Saint Vincent and the Grenadines",
@@ -100,8 +168,16 @@
         "name": "Trinidad and Tobago",
         "nameLocal": "Trinidad and Tobago"
       },
-      { "id": "NG", "name": "Nigeria", "nameLocal": "Nigeria" },
-      { "id": "ZA", "name": "South Africa", "nameLocal": "South Africa" }
+      {
+        "id": "NG",
+        "name": "Nigeria",
+        "nameLocal": "Nigeria"
+      },
+      {
+        "id": "ZA",
+        "name": "South Africa",
+        "nameLocal": "South Africa"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-29T00:44:58.000Z",
@@ -155,8 +231,16 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "GB", "name": "United Kingdom", "nameLocal": "United Kingdom" },
-      { "id": "US", "name": "United States", "nameLocal": "United States" }
+      {
+        "id": "GB",
+        "name": "United Kingdom",
+        "nameLocal": "United Kingdom"
+      },
+      {
+        "id": "US",
+        "name": "United States",
+        "nameLocal": "United States"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T18:50:23.000Z",
@@ -183,7 +267,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "US", "name": "United States", "nameLocal": "United States" }
+      {
+        "id": "US",
+        "name": "United States",
+        "nameLocal": "United States"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T17:55:54.000Z",
@@ -295,7 +383,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "GB", "name": "United Kingdom", "nameLocal": "United Kingdom" }
+      {
+        "id": "GB",
+        "name": "United Kingdom",
+        "nameLocal": "United Kingdom"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-29T01:21:00.000Z",
@@ -322,7 +414,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "US", "name": "United States", "nameLocal": "United States" }
+      {
+        "id": "US",
+        "name": "United States",
+        "nameLocal": "United States"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-29T01:01:15.000Z",
@@ -421,10 +517,26 @@
         "name": "United Kingdom of Great Britain and Northern Ireland",
         "nameLocal": "United Kingdom of Great Britain and Northern Ireland"
       },
-      { "id": "CA", "name": "Canada", "nameLocal": "Canada" },
-      { "id": "AU", "name": "Australia", "nameLocal": "Australia" },
-      { "id": "ZA", "name": "South Africa", "nameLocal": "South Africa" },
-      { "id": "NZ", "name": "New Zealand", "nameLocal": "New Zealand" }
+      {
+        "id": "CA",
+        "name": "Canada",
+        "nameLocal": "Canada"
+      },
+      {
+        "id": "AU",
+        "name": "Australia",
+        "nameLocal": "Australia"
+      },
+      {
+        "id": "ZA",
+        "name": "South Africa",
+        "nameLocal": "South Africa"
+      },
+      {
+        "id": "NZ",
+        "name": "New Zealand",
+        "nameLocal": "New Zealand"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-27T21:39:40.000Z",
@@ -482,7 +594,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "ZZ", "name": "Unspecific", "nameLocal": "Unspecific" }
+      {
+        "id": "ZZ",
+        "name": "Unspecific",
+        "nameLocal": "Unspecific"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-29T05:31:23.000Z",
@@ -509,7 +625,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "ZZ", "name": "Unspecific", "nameLocal": "Unspecific" }
+      {
+        "id": "ZZ",
+        "name": "Unspecific",
+        "nameLocal": "Unspecific"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T15:49:57.000Z",
@@ -572,7 +692,11 @@
         "name": "United States of America",
         "nameLocal": "United States of America"
       },
-      { "id": "IL", "name": "Israel", "nameLocal": "Israel" }
+      {
+        "id": "IL",
+        "name": "Israel",
+        "nameLocal": "Israel"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-29T01:55:15.000Z",
@@ -813,7 +937,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "GB", "name": "United Kingdom", "nameLocal": "United Kingdom" }
+      {
+        "id": "GB",
+        "name": "United Kingdom",
+        "nameLocal": "United Kingdom"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T19:31:15.000Z",
@@ -867,7 +995,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "GB", "name": "United Kingdom", "nameLocal": "United Kingdom" }
+      {
+        "id": "GB",
+        "name": "United Kingdom",
+        "nameLocal": "United Kingdom"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T19:32:10.000Z",
@@ -894,7 +1026,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "GB", "name": "United Kingdom", "nameLocal": "United Kingdom" }
+      {
+        "id": "GB",
+        "name": "United Kingdom",
+        "nameLocal": "United Kingdom"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T19:32:36.000Z",
@@ -1019,7 +1155,11 @@
         "name": "United States of America",
         "nameLocal": "United States of America"
       },
-      { "id": "CA", "name": "Canada", "nameLocal": "Canada" }
+      {
+        "id": "CA",
+        "name": "Canada",
+        "nameLocal": "Canada"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T16:04:23.000Z",
@@ -1051,7 +1191,11 @@
         "name": "United States of America",
         "nameLocal": "United States of America"
       },
-      { "id": "CA", "name": "Canada", "nameLocal": "Canada" }
+      {
+        "id": "CA",
+        "name": "Canada",
+        "nameLocal": "Canada"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T16:04:50.000Z",
@@ -1083,7 +1227,11 @@
         "name": "United States of America",
         "nameLocal": "United States of America"
       },
-      { "id": "CA", "name": "Canada", "nameLocal": "Canada" }
+      {
+        "id": "CA",
+        "name": "Canada",
+        "nameLocal": "Canada"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T16:05:13.000Z",
@@ -1141,10 +1289,26 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "AU", "name": "Australia", "nameLocal": "Australia" },
-      { "id": "AS", "name": "American Samoa", "nameLocal": "American Samoa" },
-      { "id": "BS", "name": "Bahamas", "nameLocal": "Bahamas" },
-      { "id": "BZ", "name": "Belize", "nameLocal": "Belize" },
+      {
+        "id": "AU",
+        "name": "Australia",
+        "nameLocal": "Australia"
+      },
+      {
+        "id": "AS",
+        "name": "American Samoa",
+        "nameLocal": "American Samoa"
+      },
+      {
+        "id": "BS",
+        "name": "Bahamas",
+        "nameLocal": "Bahamas"
+      },
+      {
+        "id": "BZ",
+        "name": "Belize",
+        "nameLocal": "Belize"
+      },
       {
         "id": "IO",
         "name": "British Indian Ocean Territory",
@@ -1155,22 +1319,46 @@
         "name": "Virgin Islands, British",
         "nameLocal": "Virgin Islands, British"
       },
-      { "id": "CA", "name": "Canada", "nameLocal": "Canada" },
-      { "id": "KE", "name": "Kenya", "nameLocal": "Kenya" },
+      {
+        "id": "CA",
+        "name": "Canada",
+        "nameLocal": "Canada"
+      },
+      {
+        "id": "KE",
+        "name": "Kenya",
+        "nameLocal": "Kenya"
+      },
       {
         "id": "FM",
         "name": "Micronesia, Federated States of",
         "nameLocal": "Micronesia, Federated States of"
       },
-      { "id": "NZ", "name": "New Zealand", "nameLocal": "New Zealand" },
+      {
+        "id": "NZ",
+        "name": "New Zealand",
+        "nameLocal": "New Zealand"
+      },
       {
         "id": "PG",
         "name": "Papua New Guinea",
         "nameLocal": "Papua New Guinea"
       },
-      { "id": "WS", "name": "Samoa", "nameLocal": "Samoa" },
-      { "id": "SG", "name": "Singapore", "nameLocal": "Singapore" },
-      { "id": "TO", "name": "Tonga", "nameLocal": "Tonga" },
+      {
+        "id": "WS",
+        "name": "Samoa",
+        "nameLocal": "Samoa"
+      },
+      {
+        "id": "SG",
+        "name": "Singapore",
+        "nameLocal": "Singapore"
+      },
+      {
+        "id": "TO",
+        "name": "Tonga",
+        "nameLocal": "Tonga"
+      },
       {
         "id": "GB",
         "name": "United Kingdom of Great Britain and Northern Ireland",
@@ -1201,7 +1389,13 @@
       "script": "Latin",
       "scriptDirection": "LTR"
     },
-    "countries": [{ "id": "BR", "name": "Brazil", "nameLocal": "Brazil" }],
+    "countries": [
+      {
+        "id": "BR",
+        "name": "Brazil",
+        "nameLocal": "Brazil"
+      }
+    ],
     "type": "text",
     "updatedAt": "2024-06-29T03:13:31.000Z",
     "audioBibles": [],
@@ -1224,7 +1418,13 @@
       "script": "Latin",
       "scriptDirection": "LTR"
     },
-    "countries": [{ "id": "BR", "name": "Brazil", "nameLocal": "Brazil" }],
+    "countries": [
+      {
+        "id": "BR",
+        "name": "Brazil",
+        "nameLocal": "Brazil"
+      }
+    ],
     "type": "text",
     "updatedAt": "2024-06-28T21:21:32.000Z",
     "copyright": "Copyright © 2018 Ellis W. Deibler, Jr. Released under a CC-BY-SA 4.0 license.",
@@ -1250,7 +1450,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "ZZ", "name": "Unspecific", "nameLocal": "Unspecific" }
+      {
+        "id": "ZZ",
+        "name": "Unspecific",
+        "nameLocal": "Unspecific"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T18:10:04.000Z",
@@ -1280,32 +1484,96 @@
         "name": "Venezuela, Bolivarian Republic of",
         "nameLocal": "Venezuela, Bolivarian Republic of"
       },
-      { "id": "CO", "name": "Colombia", "nameLocal": "Colombia" },
-      { "id": "EC", "name": "Ecuador", "nameLocal": "Ecuador" },
+      {
+        "id": "CO",
+        "name": "Colombia",
+        "nameLocal": "Colombia"
+      },
+      {
+        "id": "EC",
+        "name": "Ecuador",
+        "nameLocal": "Ecuador"
+      },
       {
         "id": "BO",
         "name": "Bolivia, Plurinational State of",
         "nameLocal": "Bolivia, Plurinational State of"
       },
-      { "id": "PE", "name": "Peru", "nameLocal": "Peru" },
-      { "id": "AR", "name": "Argentina", "nameLocal": "Argentina" },
-      { "id": "BR", "name": "Brazil", "nameLocal": "Brazil" },
-      { "id": "PY", "name": "Paraguay", "nameLocal": "Paraguay" },
-      { "id": "UY", "name": "Uruguay", "nameLocal": "Uruguay" },
-      { "id": "SV", "name": "El Salvador", "nameLocal": "El Salvador" },
-      { "id": "NI", "name": "Nicaragua", "nameLocal": "Nicaragua" },
+      {
+        "id": "PE",
+        "name": "Peru",
+        "nameLocal": "Peru"
+      },
+      {
+        "id": "AR",
+        "name": "Argentina",
+        "nameLocal": "Argentina"
+      },
+      {
+        "id": "BR",
+        "name": "Brazil",
+        "nameLocal": "Brazil"
+      },
+      {
+        "id": "PY",
+        "name": "Paraguay",
+        "nameLocal": "Paraguay"
+      },
+      {
+        "id": "UY",
+        "name": "Uruguay",
+        "nameLocal": "Uruguay"
+      },
+      {
+        "id": "SV",
+        "name": "El Salvador",
+        "nameLocal": "El Salvador"
+      },
+      {
+        "id": "NI",
+        "name": "Nicaragua",
+        "nameLocal": "Nicaragua"
+      },
       {
         "id": "DO",
         "name": "Dominican Republic",
         "nameLocal": "Dominican Republic"
       },
-      { "id": "CU", "name": "Cuba", "nameLocal": "Cuba" },
-      { "id": "HN", "name": "Honduras", "nameLocal": "Honduras" },
-      { "id": "GT", "name": "Guatemala", "nameLocal": "Guatemala" },
-      { "id": "PA", "name": "Panama", "nameLocal": "Panama" },
-      { "id": "MX", "name": "Mexico", "nameLocal": "Mexico" },
-      { "id": "CL", "name": "Chile", "nameLocal": "Chile" },
-      { "id": "ES", "name": "Spain", "nameLocal": "Spain" }
+      {
+        "id": "CU",
+        "name": "Cuba",
+        "nameLocal": "Cuba"
+      },
+      {
+        "id": "HN",
+        "name": "Honduras",
+        "nameLocal": "Honduras"
+      },
+      {
+        "id": "GT",
+        "name": "Guatemala",
+        "nameLocal": "Guatemala"
+      },
+      {
+        "id": "PA",
+        "name": "Panama",
+        "nameLocal": "Panama"
+      },
+      {
+        "id": "MX",
+        "name": "Mexico",
+        "nameLocal": "Mexico"
+      },
+      {
+        "id": "CL",
+        "name": "Chile",
+        "nameLocal": "Chile"
+      },
+      {
+        "id": "ES",
+        "name": "Spain",
+        "nameLocal": "Spain"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T17:11:54.000Z",
@@ -1335,32 +1603,96 @@
         "name": "Venezuela, Bolivarian Republic of",
         "nameLocal": "Venezuela, Bolivarian Republic of"
       },
-      { "id": "CO", "name": "Colombia", "nameLocal": "Colombia" },
-      { "id": "EC", "name": "Ecuador", "nameLocal": "Ecuador" },
+      {
+        "id": "CO",
+        "name": "Colombia",
+        "nameLocal": "Colombia"
+      },
+      {
+        "id": "EC",
+        "name": "Ecuador",
+        "nameLocal": "Ecuador"
+      },
       {
         "id": "BO",
         "name": "Bolivia, Plurinational State of",
         "nameLocal": "Bolivia, Plurinational State of"
       },
-      { "id": "PE", "name": "Peru", "nameLocal": "Peru" },
-      { "id": "AR", "name": "Argentina", "nameLocal": "Argentina" },
-      { "id": "BR", "name": "Brazil", "nameLocal": "Brazil" },
-      { "id": "PY", "name": "Paraguay", "nameLocal": "Paraguay" },
-      { "id": "UY", "name": "Uruguay", "nameLocal": "Uruguay" },
-      { "id": "SV", "name": "El Salvador", "nameLocal": "El Salvador" },
-      { "id": "NI", "name": "Nicaragua", "nameLocal": "Nicaragua" },
+      {
+        "id": "PE",
+        "name": "Peru",
+        "nameLocal": "Peru"
+      },
+      {
+        "id": "AR",
+        "name": "Argentina",
+        "nameLocal": "Argentina"
+      },
+      {
+        "id": "BR",
+        "name": "Brazil",
+        "nameLocal": "Brazil"
+      },
+      {
+        "id": "PY",
+        "name": "Paraguay",
+        "nameLocal": "Paraguay"
+      },
+      {
+        "id": "UY",
+        "name": "Uruguay",
+        "nameLocal": "Uruguay"
+      },
+      {
+        "id": "SV",
+        "name": "El Salvador",
+        "nameLocal": "El Salvador"
+      },
+      {
+        "id": "NI",
+        "name": "Nicaragua",
+        "nameLocal": "Nicaragua"
+      },
       {
         "id": "DO",
         "name": "Dominican Republic",
         "nameLocal": "Dominican Republic"
       },
-      { "id": "CU", "name": "Cuba", "nameLocal": "Cuba" },
-      { "id": "HN", "name": "Honduras", "nameLocal": "Honduras" },
-      { "id": "GT", "name": "Guatemala", "nameLocal": "Guatemala" },
-      { "id": "PA", "name": "Panama", "nameLocal": "Panama" },
-      { "id": "MX", "name": "Mexico", "nameLocal": "Mexico" },
-      { "id": "CL", "name": "Chile", "nameLocal": "Chile" },
-      { "id": "ES", "name": "Spain", "nameLocal": "Spain" }
+      {
+        "id": "CU",
+        "name": "Cuba",
+        "nameLocal": "Cuba"
+      },
+      {
+        "id": "HN",
+        "name": "Honduras",
+        "nameLocal": "Honduras"
+      },
+      {
+        "id": "GT",
+        "name": "Guatemala",
+        "nameLocal": "Guatemala"
+      },
+      {
+        "id": "PA",
+        "name": "Panama",
+        "nameLocal": "Panama"
+      },
+      {
+        "id": "MX",
+        "name": "Mexico",
+        "nameLocal": "Mexico"
+      },
+      {
+        "id": "CL",
+        "name": "Chile",
+        "nameLocal": "Chile"
+      },
+      {
+        "id": "ES",
+        "name": "Spain",
+        "nameLocal": "Spain"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T17:12:16.000Z",
@@ -1384,7 +1716,13 @@
       "script": "Latin",
       "scriptDirection": "LTR"
     },
-    "countries": [{ "id": "MX", "name": "Mexico", "nameLocal": "Mexico" }],
+    "countries": [
+      {
+        "id": "MX",
+        "name": "Mexico",
+        "nameLocal": "Mexico"
+      }
+    ],
     "type": "text",
     "updatedAt": "2024-06-29T00:05:39.000Z",
     "copyright": "This Bible translation is in the PUBLIC DOMAIN (not copyrighted). CC0",
@@ -1409,17 +1747,61 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "ES", "name": "Spain", "nameLocal": "Spain" },
-      { "id": "MX", "name": "Mexico", "nameLocal": "Mexico" },
-      { "id": "PY", "name": "Paraguay", "nameLocal": "Paraguay" },
-      { "id": "CO", "name": "Colombia", "nameLocal": "Colombia" },
-      { "id": "CL", "name": "Chile", "nameLocal": "Chile" },
-      { "id": "EC", "name": "Ecuador", "nameLocal": "Ecuador" },
-      { "id": "HN", "name": "Honduras", "nameLocal": "Honduras" },
-      { "id": "NI", "name": "Nicaragua", "nameLocal": "Nicaragua" },
-      { "id": "PE", "name": "Peru", "nameLocal": "Peru" },
-      { "id": "PA", "name": "Panama", "nameLocal": "Panama" },
-      { "id": "CU", "name": "Cuba", "nameLocal": "Cuba" }
+      {
+        "id": "ES",
+        "name": "Spain",
+        "nameLocal": "Spain"
+      },
+      {
+        "id": "MX",
+        "name": "Mexico",
+        "nameLocal": "Mexico"
+      },
+      {
+        "id": "PY",
+        "name": "Paraguay",
+        "nameLocal": "Paraguay"
+      },
+      {
+        "id": "CO",
+        "name": "Colombia",
+        "nameLocal": "Colombia"
+      },
+      {
+        "id": "CL",
+        "name": "Chile",
+        "nameLocal": "Chile"
+      },
+      {
+        "id": "EC",
+        "name": "Ecuador",
+        "nameLocal": "Ecuador"
+      },
+      {
+        "id": "HN",
+        "name": "Honduras",
+        "nameLocal": "Honduras"
+      },
+      {
+        "id": "NI",
+        "name": "Nicaragua",
+        "nameLocal": "Nicaragua"
+      },
+      {
+        "id": "PE",
+        "name": "Peru",
+        "nameLocal": "Peru"
+      },
+      {
+        "id": "PA",
+        "name": "Panama",
+        "nameLocal": "Panama"
+      },
+      {
+        "id": "CU",
+        "name": "Cuba",
+        "nameLocal": "Cuba"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T17:10:21.000Z",
@@ -1444,17 +1826,61 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "ES", "name": "Spain", "nameLocal": "Spain" },
-      { "id": "MX", "name": "Mexico", "nameLocal": "Mexico" },
-      { "id": "PY", "name": "Paraguay", "nameLocal": "Paraguay" },
-      { "id": "CO", "name": "Colombia", "nameLocal": "Colombia" },
-      { "id": "CL", "name": "Chile", "nameLocal": "Chile" },
-      { "id": "EC", "name": "Ecuador", "nameLocal": "Ecuador" },
-      { "id": "HN", "name": "Honduras", "nameLocal": "Honduras" },
-      { "id": "NI", "name": "Nicaragua", "nameLocal": "Nicaragua" },
-      { "id": "PE", "name": "Peru", "nameLocal": "Peru" },
-      { "id": "PA", "name": "Panama", "nameLocal": "Panama" },
-      { "id": "CU", "name": "Cuba", "nameLocal": "Cuba" }
+      {
+        "id": "ES",
+        "name": "Spain",
+        "nameLocal": "Spain"
+      },
+      {
+        "id": "MX",
+        "name": "Mexico",
+        "nameLocal": "Mexico"
+      },
+      {
+        "id": "PY",
+        "name": "Paraguay",
+        "nameLocal": "Paraguay"
+      },
+      {
+        "id": "CO",
+        "name": "Colombia",
+        "nameLocal": "Colombia"
+      },
+      {
+        "id": "CL",
+        "name": "Chile",
+        "nameLocal": "Chile"
+      },
+      {
+        "id": "EC",
+        "name": "Ecuador",
+        "nameLocal": "Ecuador"
+      },
+      {
+        "id": "HN",
+        "name": "Honduras",
+        "nameLocal": "Honduras"
+      },
+      {
+        "id": "NI",
+        "name": "Nicaragua",
+        "nameLocal": "Nicaragua"
+      },
+      {
+        "id": "PE",
+        "name": "Peru",
+        "nameLocal": "Peru"
+      },
+      {
+        "id": "PA",
+        "name": "Panama",
+        "nameLocal": "Panama"
+      },
+      {
+        "id": "CU",
+        "name": "Cuba",
+        "nameLocal": "Cuba"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T17:10:29.000Z",
