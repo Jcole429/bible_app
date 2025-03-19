@@ -137,7 +137,7 @@ class ApiService {
   }) async {
     String url =
         '$baseUrl/bibles/$bibleId/search?query=$query&limit=$limit&offset=$offset&sort=$sort&fuzziness=$fuzziness';
-    String cacheKey = 'bibleBook_${bibleId}_$query';
+    String cacheKey = 'searchResponse_${bibleId}_$query';
     String logString =
         'fetchSearchResponse(bibleId: $bibleId, query: $query) | url: $url';
 
