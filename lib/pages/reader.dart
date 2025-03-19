@@ -154,7 +154,7 @@ class ReaderPageState extends State<ReaderPage> {
                     },
                     style: TextButton.styleFrom(minimumSize: Size(50, 50)),
                     child: Text(
-                      bibleState.selectedBible!.abbreviation,
+                      bibleState.selectedBible!.abbreviationLocal,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.white,
