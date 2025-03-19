@@ -182,7 +182,6 @@ Future<void> showBibleMenu(BuildContext context) async {
                                   description +=
                                       " - ${version.descriptionLocal!}";
                                 }
-                                description += " - ${version.bookCount} Books";
                                 return ListTile(
                                   title: Text(version.abbreviationLocal),
                                   titleTextStyle: TextStyle(
@@ -200,6 +199,13 @@ Future<void> showBibleMenu(BuildContext context) async {
                                       ),
                                       Text(
                                         description,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                          // fontStyle: FontStyle.italic,
+                                        ),
+                                      ),
+                                      Text(
+                                        "${version.bookCount} Books",
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w300,
                                           // fontStyle: FontStyle.italic,
