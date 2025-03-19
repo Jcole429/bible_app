@@ -805,8 +805,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-28T21:52:13.000Z",
-    "copyright": "\n          PUBLIC DOMAIN\n        ",
-    "info": "\n        See http://WorldEnglish.Bible\n      ",
+    "copyright": "PUBLIC DOMAIN",
+    "info": "See http://WorldEnglish.Bible",
     "audioBibles": [
       {
         "id": "105a06b6146d11e7-01",
@@ -843,8 +843,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-28T21:52:43.000Z",
-    "copyright": "\n          PUBLIC DOMAIN\n        ",
-    "info": "\n        See http://WorldEnglish.Bible\n      ",
+    "copyright": "PUBLIC DOMAIN",
+    "info": "See http://WorldEnglish.Bible",
     "audioBibles": [
       {
         "id": "105a06b6146d11e7-01",
@@ -881,8 +881,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-28T21:53:12.000Z",
-    "copyright": "\n          PUBLIC DOMAIN\n        ",
-    "info": "\n        See http://WorldEnglish.Bible\n      ",
+    "copyright": "PUBLIC DOMAIN",
+    "info": "See http://WorldEnglish.Bible",
     "audioBibles": [
       {
         "id": "105a06b6146d11e7-01",
@@ -919,8 +919,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-28T21:53:41.000Z",
-    "copyright": "\n          PUBLIC DOMAIN\n        ",
-    "info": "\n        See http://WorldEnglish.Bible\n      ",
+    "copyright": "PUBLIC DOMAIN",
+    "info": "See http://WorldEnglish.Bible",
     "audioBibles": [
       {
         "id": "105a06b6146d11e7-01",
@@ -1414,6 +1414,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-29T03:13:31.000Z",
+    "copyright": "Dr. Jonathan Gallagher. Lançado sob licença Creative Commons Atribuição-CompartilhaIgual 4.0 Não Adaptada. Para correções envie email para jonathangallagherfbv@gmail.com Dr. Jonathan Gallagher. Released under Creative Commons Attribution-ShareAlike 4.0 Unported License. For corrections send email to jonathangallagherfbv@gmail.com",
+    "info": "<p>Objetivo: fornecer uma tradução atualizada em português do Brasil que não seja limitada por questões usuais de direitos autorais.</p> <p>Intent: to provide an up-to-date translation in Brazilian Portugiese that is not constrained by usual copyright issues.</p>",
     "audioBibles": [],
     "bookCount": 27
   },
@@ -1474,6 +1476,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-28T18:10:04.000Z",
+    "copyright": "Reina-Valera 1909 - Dominio público. Fue realizada por Sociedades Bíblicas Unidas y publicada por primera vez en 1909.",
+    "info": "<p>Reina-Valera 1909 - Dominio público.</p> <p>Fue realizada por Sociedades Bíblicas Unidas y publicada por primera vez en 1909.</p>",
     "audioBibles": [],
     "bookCount": 66
   },
@@ -1593,6 +1597,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-28T17:11:54.000Z",
+    "copyright": "Copyright © 2020 Asociación Bíblica Latinoamericana. CC-BY",
+    "info": "<p>This text is made available to you by Asociación Bíblica Latinoamericana and <a href=\"https://eBible.org\">eBible.org</a>.</p>",
     "audioBibles": [],
     "bookCount": 66
   },
@@ -1712,6 +1718,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-28T17:12:16.000Z",
+    "copyright": "Copyright © 2020 Asociación Bíblica Latinoamericana. CC-BY",
+    "info": "<p>This text is made available to you by Asociación Bíblica Latinoamericana and <a href=\"https://eBible.org\">eBible.org</a>.</p>",
     "audioBibles": [],
     "bookCount": 29
   },
@@ -1742,6 +1750,7 @@
     "type": "text",
     "updatedAt": "2024-06-29T00:05:39.000Z",
     "copyright": "This Bible translation is in the PUBLIC DOMAIN (not copyrighted). CC0",
+    "info": "<p>Puede copiar y distribuir esta traducción libremente. Puede hacer trabajos derivados de él. Esta traducción de la Biblia es cortesía de audiotreasure.com y eBible.org.</p>",
     "audioBibles": [],
     "bookCount": 66
   },
@@ -1821,6 +1830,8 @@
     ],
     "type": "text",
     "updatedAt": "2024-06-28T17:10:21.000Z",
+    "copyright": "Derechos de autor © 2022 Jonathan Gallagher. Publicado bajo licencia Creative Commons Attribution-ShareAlike 4.0 Unported. Versión 1.1 beta. Para correcciones enviar correo electrónico a jonathangallagherfbv@gmail.com Copyright © 2022 Jonathan Gallagher. Dr. Jonathan Gallagher. Released under Creative Commons Attribution-ShareAlike 4.0 Unported License. Version 1.1 beta. For corrections send email to jonathangallagherfbv@gmail.com",
+    "info": "<p>La traducción se ha hecho de manera directa del texto en griego estándar de Nestle-Aland. Su propósito es ser una traducción fiel a su significado original, sin términos difíciles o confusos. El estilo ha sido traducido al inglés y español contemporáneos, evitando el uso de jergas o palabras coloquiales, hablando así a nuestra sociedad moderna de una forma que todos puedan entender.</p> <p>Para más informacióny noticias actuales sobre la traducción Free Bible Version, visita a www.freebibleversion.org donde también podrás escuchar los audios en inglés.</p> <p>La traducción Free Bible Version es un proyecto del Ministerio Free Bible Ministry (www.freebibleministry.org). Gracias a todos los que han hecho posible esta nueva traducción y su publicación. No es posible mencionar a todos los que han contribuido a la revisión, edición, y los recursos para esta nueva traducción, pero ustedes saben quiénes son, y lo apreciamos en gran manera.</p> <p>Que nuestro misericordioso Dios bendiga a todos los que leen.</p>",
     "audioBibles": [],
     "bookCount": 27
   },
