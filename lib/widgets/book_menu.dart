@@ -334,7 +334,9 @@ Widget _buildSectionsMenu(Book selectedBook, BibleState bibleState) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const Center(child: CircularProgressIndicator());
       } else if (snapshot.hasError) {
-        return Center(child: Text("Error loading sections"));
+        return Center(
+          child: Text("Sections are not available for this bible version"),
+        );
       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
         return Center(child: Text("No sections found"));
       }
