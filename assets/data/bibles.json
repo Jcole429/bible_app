@@ -204,7 +204,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "ZZ", "name": "Unspecific", "nameLocal": "Unspecific" }
+      {
+        "id": "ZZ",
+        "name": "Unspecific",
+        "nameLocal": "Unspecific"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T19:11:26.000Z",
@@ -298,7 +302,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "US", "name": "United States", "nameLocal": "United States" }
+      {
+        "id": "US",
+        "name": "United States",
+        "nameLocal": "United States"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T14:31:19.000Z",
@@ -325,7 +333,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "US", "name": "United States", "nameLocal": "United States" }
+      {
+        "id": "US",
+        "name": "United States",
+        "nameLocal": "United States"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T18:01:52.000Z",
@@ -968,7 +980,11 @@
       "scriptDirection": "LTR"
     },
     "countries": [
-      { "id": "GB", "name": "United Kingdom", "nameLocal": "United Kingdom" }
+      {
+        "id": "GB",
+        "name": "United Kingdom",
+        "nameLocal": "United Kingdom"
+      }
     ],
     "type": "text",
     "updatedAt": "2024-06-28T19:31:43.000Z",
