@@ -324,12 +324,10 @@ Widget _buildChapterMenu(Book selectedBook, BibleState bibleState) {
 
 Widget _buildSectionsMenu(Book selectedBook, BibleState bibleState) {
   ApiService apiService = ApiService();
+  bool isLoading = false;
 
   return FutureBuilder<List<Section>>(
-    future: ApiService().fetchBookSections(
-      selectedBook.bibleId,
-      selectedBook.id,
-    ),
+    future: apiService.fetchBookSections(selectedBook.bibleId, selectedBook.id),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const Center(child: CircularProgressIndicator());
@@ -340,35 +338,50 @@ Widget _buildSectionsMenu(Book selectedBook, BibleState bibleState) {
       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
         return Center(child: Text("No sections found"));
       }
-      return ListView.builder(
-        itemCount: snapshot.data!.length,
-        itemBuilder: (context, index) {
-          final section = snapshot.data![index];
-          return ListTile(
-            title: Text(section.title),
-            subtitle: Text("${section.firstVerseId} - ${section.lastVerseId}"),
-            onTap: () async {
-              Verse newVerse = await apiService.fetchVerse(
-                section.bibleId,
-                section.firstVerseId,
-              );
 
-              Chapter newChapter = await apiService.fetchBibleChapter(
-                newVerse.bibleId,
-                newVerse.chapterId,
-              );
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return Stack(
+            children: [
+              ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final section = snapshot.data![index];
+                  return ListTile(
+                    title: Text(section.title),
+                    subtitle: Text(
+                      "${section.firstVerseId} - ${section.lastVerseId}",
+                    ),
+                    onTap: () async {
+                      setState(() => isLoading = true);
 
-              Book newBook = await apiService.fetchBibleBook(
-                newVerse.bibleId,
-                newVerse.bookId,
-              );
+                      Verse newVerse = await apiService.fetchVerse(
+                        section.bibleId,
+                        section.firstVerseId,
+                      );
 
-              bibleState.updateBook(newBook);
-              await bibleState.updateChapter(newChapter);
+                      Chapter newChapter = await apiService.fetchBibleChapter(
+                        newVerse.bibleId,
+                        newVerse.chapterId,
+                      );
 
-              if (!context.mounted) return;
-              Navigator.pop(context);
-            },
+                      Book newBook = await apiService.fetchBibleBook(
+                        newVerse.bibleId,
+                        newVerse.bookId,
+                      );
+
+                      bibleState.updateBook(newBook);
+                      await bibleState.updateChapter(newChapter);
+
+                      if (!context.mounted) return;
+                      setState(() => isLoading = false);
+                      Navigator.pop(context);
+                    },
+                  );
+                },
+              ),
+              if (isLoading) const Center(child: CircularProgressIndicator()),
+            ],
           );
         },
       );
