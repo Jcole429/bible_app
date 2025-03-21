@@ -171,7 +171,8 @@ Future<void> showBibleMenu(BuildContext context) async {
                               itemCount: filteredBibles.length,
                               itemBuilder: (context, index) {
                                 final version = filteredBibles[index];
-                                String description = version.category;
+                                String description =
+                                    version.category ?? "No Category";
                                 if (version.descriptionLocal != null &&
                                     version.descriptionLocal!.isNotEmpty &&
                                     ![
